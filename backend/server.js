@@ -9,7 +9,6 @@ const productsRouter = require('./routes/products-route');
 app.use(express.json())
 app.use(productsRouter);
 
-
 // Run a query to establish a connection with the database
 // and then start the server
 pool
