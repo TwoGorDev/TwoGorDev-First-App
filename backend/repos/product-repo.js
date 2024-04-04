@@ -2,13 +2,18 @@ const pool = require('../pool');
 
 module.exports = {
   async find() {
-    const { rows } = await pool.query('SELECT * FROM products;');
+    const { rows } = await pool.query(
+      'SELECT * FROM products;'
+    );
 
     return rows;
   },
 
   async findById(id) {
-    const { rows } = await pool.query('SELECT * FROM products WHERE id = $1', [id]);
+    const { rows } = await pool.query(
+      'SELECT * FROM products WHERE id = $1;',
+      [id]
+    );
 
     return rows[0];
   },
@@ -24,7 +29,7 @@ module.exports = {
 
   async update(id, name, calories, proteins, carbohydrates, fats) {
     const { rows } = await pool.query(
-      'UPDATE products SET name = $1, calories = $2, proteins = $3, carbohydrates = $4, fats = $5 WHERE id = $6 RETURNING *;',
+      'UPDATE products SET name = $1, calories = $2, proteins = $3, carbohydrates = $4, fats = $5, updated_at = NOW() WHERE id = $6 RETURNING *;',
       [name, calories, proteins, carbohydrates, fats, id]
     );
 

@@ -4,7 +4,7 @@ const productRepo = require('../repos/product-repo');
 const router = express.Router();
 
 router.get('/products', async (req, res) => {
-  const products = await productrRepo.find();
+  const products = await productRepo.find();
 
   res.send(products);
 });
