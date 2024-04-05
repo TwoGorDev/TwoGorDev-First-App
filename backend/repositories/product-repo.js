@@ -1,7 +1,7 @@
 const pool = require('../pool');
 
 module.exports = {
-  async find() {
+  async findAll() {
     const { rows } = await pool.query(
       'SELECT * FROM products;'
     );

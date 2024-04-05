@@ -1,15 +1,12 @@
-const express = require('express');
-const productRepo = require('../repos/product-repo');
+const productRepo = require('../repositories/product-repo');
 
-const router = express.Router();
-
-router.get('/products', async (req, res) => {
-  const products = await productRepo.find();
+const getProducts = async (req, res) => {
+  const products = await productRepo.findAll();
 
   res.send(products);
-});
+};
 
-router.get('/products/:id', async (req, res) => {
+const getProduct = async (req, res) => {
   const { id } = req.params;
 
   const product = await productRepo.findById(id);
@@ -20,17 +17,17 @@ router.get('/products/:id', async (req, res) => {
   else {
     res.sendStatus(404);
   }
-});
+};
 
-router.post('/products', async (req, res) => {
+const createProduct = async (req, res) => {
   const { name, calories, proteins, carbohydrates, fats } = req.body;
 
   const product = await productRepo.insert(name, calories, proteins, carbohydrates, fats);
 
   res.send(product);
-});
+};
 
-router.put('/products/:id', async (req, res) => {
+const updateProduct = async (req, res) => {
   const { id } = req.params;
   const { name, calories, proteins, carbohydrates, fats } = req.body;
 
@@ -42,9 +39,9 @@ router.put('/products/:id', async (req, res) => {
   else {
     res.sendStatus(404);
   }
-});
+};
 
-router.delete('/products/:id', async (req, res) => {
+const deleteProduct = async (req, res) => {
   const { id } = req.params;
 
   const product = await productRepo.delete(id);
@@ -55,6 +52,12 @@ router.delete('/products/:id', async (req, res) => {
   else {
     res.sendStatus(404);
   }
-});
+};
 
-module.exports = router;
+module.exports = {
+  getProducts,
+  getProduct,
+  createProduct,
+  updateProduct,
+  deleteProduct
+}
