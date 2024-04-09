@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const {
   getUsers,
-  getUser,
+  getUserById,
   updateUser,
   deleteUser
 } = require('../controllers/user-controller');
 
 router.get('/users', getUsers);
 
-router.get('/users/:id', getUser);
+router.get('/users/:id', getUserById);
 
 router.put('/users/:id', updateUser);
 

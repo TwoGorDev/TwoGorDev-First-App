@@ -1,4 +1,4 @@
-const userRepo = require('../repositories/user-repo');
+const userRepo = require('../repos/user-repo');
 
 const getUsers = async (req, res) => {
   const users = await userRepo.findAll();
@@ -6,7 +6,7 @@ const getUsers = async (req, res) => {
   res.send(users);
 };
 
-const getUser = async (req, res) => {
+const getUserById = async (req, res) => {
   const { id } = req.params;
 
   const user = await userRepo.findById(id);
@@ -51,7 +51,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   getUsers,
-  getUser,
+  getUserById,
   updateUser,
   deleteUser
 };
