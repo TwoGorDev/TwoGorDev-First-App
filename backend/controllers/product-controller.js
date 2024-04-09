@@ -1,4 +1,4 @@
-const productRepo = require('../repositories/product-repo');
+const productRepo = require('../repos/product-repo');
 
 const getProducts = async (req, res) => {
   const products = await productRepo.findAll();
