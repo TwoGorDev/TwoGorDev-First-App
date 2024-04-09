@@ -1,6 +1,6 @@
 import { useState } from 'react';
-
-import './Form.css'
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa6';
+import './Form.css';
 
 export default function Form({ title, buttonText, authType, handleSubmit }) {
 	const [formData, setFormData] = useState({
@@ -9,6 +9,7 @@ export default function Form({ title, buttonText, authType, handleSubmit }) {
 		confirmPassword: '',
 		email: '',
 	});
+	const [togglePassword, setTogglePassword] = useState('password');
 
 	function handleChange(e) {
 		setFormData((prevFormData) => {
@@ -19,14 +20,23 @@ export default function Form({ title, buttonText, authType, handleSubmit }) {
 		});
 	}
 
-	// onSubmit={handleSubmit(username, password, email)}
+	const handleTogglePassword = () => {
+		setTogglePassword((prevPassword) => {
+			return prevPassword === 'password'
+				? prevPassword === 'text'
+				: prevPassword === 'password';
+		});
+	};
+	console.log(togglePassword);
+
 	return (
 		<div className='form-container'>
-			<form className='form'>
+			<form onSubmit={() => handleSubmit(formData)} className='form'>
 				<h2 className='form-title'>{title}</h2>
-				<label>
+				<label className='form-label'>
 					<h3>Username</h3>
 					<input
+						className='form-input'
 						type='text'
 						placeholder='Enter username'
 						required
@@ -36,9 +46,10 @@ export default function Form({ title, buttonText, authType, handleSubmit }) {
 					/>
 				</label>
 				{authType === 'signup' && (
-					<label>
+					<label className='form-label'>
 						<h3>E-mail</h3>
 						<input
+							className='form-input'
 							type='email'
 							placeholder='Enter email address'
 							required
@@ -48,10 +59,12 @@ export default function Form({ title, buttonText, authType, handleSubmit }) {
 						/>
 					</label>
 				)}
-				<label>
+				<label className='form-label'>
 					<h3>Password</h3>
+					<FaRegEye className='form-reg-eye' onClick={handleTogglePassword} />
 					<input
-						type='password'
+						className='form-input'
+						type={togglePassword}
 						placeholder='Enter password'
 						required
 						name='password'
@@ -60,10 +73,12 @@ export default function Form({ title, buttonText, authType, handleSubmit }) {
 					/>
 				</label>
 				{authType === 'signup' && (
-					<label>
+					<label className='form-label'>
 						<h3>Confirm password</h3>
+						<FaRegEye className='form-reg-eye' onClick={handleTogglePassword} />
 						<input
-							type='password'
+							className='form-input'
+							type={togglePassword}
 							placeholder='Confirm password'
 							required
 							name='confirmPassword'
@@ -73,7 +88,7 @@ export default function Form({ title, buttonText, authType, handleSubmit }) {
 					</label>
 				)}
 
-				<button className='submit-form'>{buttonText}</button>
+				<button className='submit-form-btn'>{buttonText}</button>
 			</form>
 		</div>
 	);
