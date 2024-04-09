@@ -15,6 +15,7 @@
 
 .logo {
 	margin-right: auto;
+    margin-left: 1em;
 }
 
 .nav-link {
@@ -22,7 +23,7 @@
 	padding: 1.5em 1em;
 	text-decoration: none;
 	text-align: center;
-	color: var(--text-color);
+	color: var(--text-color-light);
 	transition: all 0.2s;
 }
 
@@ -30,7 +31,7 @@
 	font-family: 'Clicker Script';
 	font-size: 5rem;
 	font-weight: bold;
-	color: var(--text-color);
+	color: var(--text-color-light);
 	text-decoration: none;
 }
 

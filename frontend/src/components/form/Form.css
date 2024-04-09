@@ -1,0 +1,84 @@
+.form-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.form {
+    margin-top: 3em;
+	/* width: 50%; */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 2em;
+    border: 1px solid var(--primary-color);
+    border-radius: 15px;
+    box-shadow: 4px 4px 8px var(--primary-color);
+}
+
+.form-title {
+	margin-block: 0.5em;
+	font-size: 4rem;
+	font-weight: bold;
+    color: var(--primary-color);
+}
+
+.form-label {
+    position: relative;
+	margin-block: 0.5em;
+	font-size: 1.8rem;
+}
+
+.form-label h3 {
+    color: var(--primary-color); 
+}
+
+.form-reg-eye {
+    position: absolute;
+    top: 55%;
+    right: 4%;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.form-input {
+	width: 30em;
+	margin-top: 0.4em;
+	padding: 1em;
+	border: 1px solid var(--primary-color);
+	font-size: 1.6rem;
+	color: var(--text-color-dark);
+	border-radius: 8px;
+
+    &:focus {
+        outline: none;
+        box-shadow: 1px 1px 2px var(--primary-color);
+    }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset;
+
+}
+
+.submit-form-btn {
+	margin-top: 1em;
+	padding: 0.5em 5em;
+	border: 1px solid var(--primary-color);
+	border-radius: 8px;
+	background-color: transparent;
+	font-size: 2rem;
+	color: var(--primary-color);
+	cursor: pointer;
+	transition: all 0.2s;
+
+	&:hover {
+		background-color: var(--primary-color);
+		color: var(--text-color-light);
+	}
+}
