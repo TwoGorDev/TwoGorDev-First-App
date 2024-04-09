@@ -10,14 +10,15 @@
 	font-size: 62.5%;
 	--primary-color: #0e6ba8;
 	--secondary-color: #a6e1fa27;
-	--text-color: #f2f2f2;
+	--text-color-dark: #161616;
+	--text-color-light: #f2f2f2;
 }
 
 body {
 	font-size: 1.6rem;
 	font-family: 'Roboto';
 	background-color: var(--secondary-color);
-	color: var(--text-color);
+	color: var(--text-color-dark);
 }
 
 .wrapper {

@@ -1,3 +1,9 @@
+import Form from '../../components/form/Form';
+
 export default function Register() {
-	return <div>Register</div>;
+	return (
+		<>
+			<Form title='Register' buttonText='Sign up' authType='signup' />
+		</>
+	);
 }
