@@ -23,15 +23,14 @@ export default function Form({ title, buttonText, authType, handleSubmit }) {
 	const handleTogglePassword = () => {
 		setTogglePassword((prevPassword) => {
 			return prevPassword === 'password'
-				? prevPassword === 'text'
-				: prevPassword === 'password';
+				? (prevPassword = 'text')
+				: (prevPassword = 'password');
 		});
 	};
-	console.log(togglePassword);
 
 	return (
 		<div className='form-container'>
-			<form onSubmit={() => handleSubmit(formData)} className='form'>
+			<form onSubmit={(e) => handleSubmit(e, formData)} className='form'>
 				<h2 className='form-title'>{title}</h2>
 				<label className='form-label'>
 					<h3>Username</h3>
@@ -61,7 +60,10 @@ export default function Form({ title, buttonText, authType, handleSubmit }) {
 				)}
 				<label className='form-label'>
 					<h3>Password</h3>
-					<FaRegEye className='form-reg-eye' onClick={handleTogglePassword} />
+					<FaRegEye
+						className='form-reg-eye'
+						onClick={() => handleTogglePassword}
+					/>
 					<input
 						className='form-input'
 						type={togglePassword}
@@ -75,7 +77,10 @@ export default function Form({ title, buttonText, authType, handleSubmit }) {
 				{authType === 'signup' && (
 					<label className='form-label'>
 						<h3>Confirm password</h3>
-						<FaRegEye className='form-reg-eye' onClick={handleTogglePassword} />
+						<FaRegEye
+							className='form-reg-eye'
+							onClick={() => handleTogglePassword}
+						/>
 						<input
 							className='form-input'
 							type={togglePassword}
