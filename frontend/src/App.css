@@ -8,18 +8,21 @@
 
 :root {
 	font-size: 62.5%;
-	--primary-color: #0e6ba8;
+	--primary-color: #0e6aa8e3;
 	--secondary-color: #a6e1fa27;
 	--text-color-dark: #161616;
 	--text-color-light: #f2f2f2;
-	--dark-blue: #0A2472;
+	--dark-blue: #0a2472;
+	--light-blue: #badbfe
 }
 
 body {
+	height: 100%;
 	font-size: 1.6rem;
 	font-family: 'Roboto';
 	background-color: var(--secondary-color);
 	color: var(--text-color-dark);
+	overflow: hidden;
 }
 
 .wrapper {
@@ -29,4 +32,13 @@ body {
 
 image {
 	max-width: 100%;
+}
+
+a, link {
+	text-decoration: none;
+	color: var(--text-color-light);
+}
+
+ul {
+	list-style: none;
 }

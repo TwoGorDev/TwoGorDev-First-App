@@ -1,0 +1,67 @@
+.home-container {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-image: url('../../assets/images/home-intro-large.jpg');
+	background-position: center;
+	background-size: cover;
+	color: var(--text-color-light);
+}
+
+.home-container-shadow {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.555);
+	z-index: -1;
+}
+
+.home-title {
+	font-size: 15rem;
+	font-family: 'Clicker Script';
+}
+
+.home-container h2 {
+	font-size: 7rem;
+	font-weight: 100;
+}
+
+.aboutus-btn {
+	position: relative;
+	margin-top: 1em;
+	padding: 1em 4em;
+	background-color: transparent;
+	border: 2px solid var(--text-color-light);
+	font-size: 2.5rem;
+	font-weight: bold;
+	cursor: pointer;
+	border-radius: 20px;
+	overflow: hidden;
+
+	&::before {
+		position: absolute;
+		content: '';
+		transition: all 0.7s;
+		z-index: -1;
+		top: -30px;
+		left: -130px;
+		height: 160%;
+		width: 100px;
+		background-image: linear-gradient(
+			-90deg,
+			rgba(255, 255, 255, 0.5),
+			rgba(255, 255, 255, 0)
+		);
+		transform: rotate(20deg);
+	}
+
+	&:hover::before {
+		left: 130%;
+	}
+}

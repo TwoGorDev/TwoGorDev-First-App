@@ -1,45 +1,47 @@
-.form-container {
+.register-form-container {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	margin-left: 6em;
+}
+
+.login-form-container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	width: 100vw;
+	height: 100vh;
 }
 
 .form {
-    margin-top: 3em;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	padding: 2em;
-    border: 1px solid var(--primary-color);
-    border-radius: 15px;
-    box-shadow: 4px 4px 8px var(--primary-color);
+	background-color: rgb(242, 246, 247);
+	border: 1px solid var(--primary-color);
+	border-radius: 15px;
+	box-shadow: 2px 4px 6px var(--primary-color);
 }
 
 .form-title {
 	margin-block: 0.5em;
 	font-size: 4rem;
 	font-weight: bold;
-    color: var(--primary-color);
+	color: var(--primary-color);
 }
 
 .form-label {
-    position: relative;
+	position: relative;
 	margin-block: 0.5em;
 	font-size: 1.8rem;
 }
 
 .form-label h3 {
-    color: var(--primary-color); 
-}
-
-.form-reg-eye {
-    position: absolute;
-    top: 55%;
-    right: 4%;
-    font-size: 2.5rem;
-    color: var(--primary-color);
-    cursor: pointer;
+	color: var(--primary-color);
 }
 
 .form-input {
@@ -51,22 +53,34 @@
 	color: var(--text-color-dark);
 	border-radius: 8px;
 
-    &:focus {
-        outline: none;
-        box-shadow: 1px 1px 2px var(--primary-color);
-    }
+	&:focus {
+		outline: none;
+		box-shadow: 1px 1px 2px var(--primary-color);
+	}
+}
+
+.form-input .incorrect {
+	background-color: var(--secondary-color);
 }
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px white inset;
+	-webkit-box-shadow: 0 0 0 30px white inset;
+}
 
+.login-info {
+	margin-block: 0.3em;
+}
+
+.login-info-link {
+	padding-block: 0.3em;
+	color: var(--primary-color);
 }
 
 .submit-form-btn {
-	margin-top: 1em;
+	margin-top: .6em;
 	padding: 0.5em 5em;
 	border: 1px solid var(--primary-color);
 	border-radius: 8px;
@@ -81,3 +95,12 @@ input:-webkit-autofill:active {
 		color: var(--text-color-light);
 	}
 }
+
+.register-form-info {
+	text-align: center;
+	margin-top: 1em;
+	font-size: 1.2rem;
+	color: #000000a8;
+}
+
+

@@ -1,5 +1,8 @@
 import Form from '../../components/form/Form';
 
+// styles
+import './Register.css'
+
 export default function Register() {
 	const handleRegister = async (e, formData) => {
 		e.preventDefault();
@@ -17,13 +20,13 @@ export default function Register() {
 		
 	};
 	return (
-		<>
+		<div className='register-container'>
 			<Form
 				title='Register'
 				buttonText='Sign up'
 				authType='signup'
 				handleSubmit={handleRegister}
 			/>
-		</>
+		</div>
 	);
 }
