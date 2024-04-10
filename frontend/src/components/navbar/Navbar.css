@@ -41,9 +41,34 @@
 	position: relative;
 	display: inline-block;
 	padding: 1.4em 1em;
-	text-align: center;
 	color: var(--text-color-light);
-	transition: all 0.3s;
+	/* transition: all 0.3s; */
+
+	/* &:hover {
+		transform: scale(1.05);
+	} */
+
+	&::after,
+	&::before {
+		content: '';
+		position: absolute;
+		width: 0;
+		bottom: 20px;
+		border-bottom: 2px solid var(--text-color-light);
+		transition: all 0.3s;
+	}
+
+	&::before {
+		right: 50%;
+	}
+	&::after {
+		left: 50%;
+	}
+
+	&:hover::before,
+	&:hover::after {
+		width: 45%;
+	}
 }
 
 .logo-link {
@@ -53,19 +78,13 @@
 	color: var(--text-color-light);
 }
 
-.nav-link:hover {
-	transform: scale(1.15);
-}
 .active {
-	&.nav-link::before {
-		position: absolute;
-		content: '';
-		width: 80%;
-		height: 0.1em;
-		bottom: 20px;
+	&::before {
+		right: 50%;
+		width: 45%;
+	}
+	&::after {
 		left: 50%;
-		transform: translateX(-50%);
-		
-background-color: var(--text-color-light);
+		width: 45%;
 	}
 }
