@@ -1,11 +1,12 @@
 import Form from '../../components/form/Form';
 
 // styles
-import './Register.css'
+import './Register.css';
 
 export default function Register() {
 	const handleRegister = async (e, formData) => {
 		e.preventDefault();
+
 		await fetch('http://localhost:4000/signup', {
 			method: 'POST',
 			body: JSON.stringify({
@@ -14,10 +15,9 @@ export default function Register() {
 				email: formData.email,
 			}),
 			headers: { 'Content-type': 'application/json' },
-		}).then((res) => res.json())
-		.then(data => console.log(data))
-
-		
+		})
+			.then((res) => res.json())
+			.then((data) => console.log(data));
 	};
 	return (
 		<div className='register-container'>
