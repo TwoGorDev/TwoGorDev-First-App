@@ -1,7 +1,18 @@
+// Imports
 const pool = require('../pool');
 
 module.exports = {
+  // Fetch all users
   async findAll() {
+    const { rows } = await pool.query(
+      'SELECT id, username, email, created_at, updated_at FROM users;'
+    );
+
+    return rows;
+  },
+
+  // Fetch all users' usernames and emails
+  async findAllUsernamesAndEmails() {
     const { rows } = await pool.query(
       'SELECT username, email FROM users;'
     );
@@ -9,6 +20,7 @@ module.exports = {
     return rows;
   },
 
+  // Fetch a single user by id
   async findById(id) {
     const { rows } = await pool.query(
       'SELECT * FROM users WHERE id = $1;',
@@ -18,6 +30,7 @@ module.exports = {
     return rows[0];
   },
 
+  // Fetch a single user by username
   async findByUsername(username) {
     const { rows } = await pool.query(
       'SELECT * FROM users WHERE username = $1;',
@@ -27,16 +40,10 @@ module.exports = {
     return rows[0];
   },
 
-  async findByEmail(email) {
-    const { rows } = await pool.query(
-      'SELECT * FROM users WHERE email = $1;',
-      [email]
-    );
-
-    return rows[0];
-  },
-
-  async insert(username, email, password) {
+  // Insert new user
+  async insert(user) {
+    const { username, email, password } = user;
+    
     const { rows } = await pool.query(
       'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *;',
       [username, email, password]
@@ -45,7 +52,10 @@ module.exports = {
     return rows[0];
   },
 
-  async update(id, username, email, password) {
+  // Update an existing user
+  async update(id, user) {
+    const { username, email, password } = user;
+
     const { rows } = await pool.query(
       'UPDATE users SET username = $1, email = $2, password = $3, updated_at = NOW() WHERE id = $4 RETURNING *;',
       [username, email, password, id]
@@ -54,6 +64,7 @@ module.exports = {
     return rows[0];
   },
 
+  // Delete an existing user
   async delete(id) {
     const { rows } = await pool.query(
       'DELETE FROM users WHERE id = $1 RETURNING *;',

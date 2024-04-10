@@ -1,51 +1,89 @@
+// Imports
 const userRepo = require('../repos/user-repo');
+const CustomError = require('../utilities/customError');
+const validateUser = require('../validators/userValidator');
 
-const getUsers = async (req, res) => {
-  const users = await userRepo.findAll();
+// Get all users
+const getUsers = async (req, res, next) => {
+  try {
+    const users = await userRepo.findAll();
 
-  res.send(users);
-};
+    res.status(200).send(users);
 
-const getUserById = async (req, res) => {
-  const { id } = req.params;
-
-  const user = await userRepo.findById(id);
-
-  if (user) {
-    delete user.password;
-    res.send(user);
-  }
-  else {
-    res.sendStatus(404);
+  } catch(error) {
+    next(error);
   }
 };
 
-const updateUser = async (req, res) => {
-  const { id } = req.params;
-  const { username, email, password } = req.body;
+// Get a single user
+const getUserById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
 
-  const user = await userRepo.update(id, username, email, password);
+    if (!id) {
+      throw new CustomError(500, 'User id required');
+    }
 
-  if (user) {
+    const user = await userRepo.findById(id);
+
+    if (!user) {
+      throw new CustomError(404, 'User not found');
+    }
+
     delete user.password;
-    res.send(user);
-  }
-  else {
-    res.sendStatus(404);
+    res.status(200).send(user);
+
+  } catch(error) {
+    next(error);
   }
 };
 
-const deleteUser = async (req, res) => {
-  const { id } = req.params;
+// Update an existing user
+const updateUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const updatedUser = req.body;
 
-  const user = await userRepo.delete(id);
+    if (!id) {
+      throw new CustomError(500, 'User id required');
+    }
 
-  if (user) {
+    validateUser(updatedUser);
+
+    const user = await userRepo.update(id, updatedUser);
+
+    if (!user) {
+      throw new CustomError(404, 'User not found');
+    }
+
     delete user.password;
-    res.send(user);
+    res.status(200).send(user);
+
+  } catch(error) {
+    next(error);
   }
-  else {
-    res.sendStatus(404);
+};
+
+// Delete an existing user
+const deleteUser = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      throw new CustomError(500, 'User id required');
+    }
+
+    const user = await userRepo.delete(id);
+
+    if (!user) {
+      throw new CustomError(404, 'User not found');
+    }
+
+    delete user.password;
+    res.status(200).send(user);
+
+  } catch(error) {
+    next(error);
   }
 };
 

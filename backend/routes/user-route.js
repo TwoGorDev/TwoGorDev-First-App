@@ -1,5 +1,8 @@
+// Imports
 const express = require('express');
 const router = express.Router();
+
+// Controllers
 const {
   getUsers,
   getUserById,
@@ -7,6 +10,7 @@ const {
   deleteUser
 } = require('../controllers/user-controller');
 
+// Routes
 router.get('/users', getUsers);
 
 router.get('/users/:id', getUserById);

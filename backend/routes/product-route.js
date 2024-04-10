@@ -1,5 +1,8 @@
+// Imports
 const express = require('express');
 const router = express.Router();
+
+// Controllers
 const {
   getProducts,
   getProduct,
@@ -8,6 +11,7 @@ const {
   deleteProduct
 } = require('../controllers/product-controller');
 
+// Routes
 router.get('/products', getProducts);
 
 router.get('/products/:id', getProduct);
