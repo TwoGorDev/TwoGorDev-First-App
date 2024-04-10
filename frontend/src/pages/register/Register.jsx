@@ -3,7 +3,7 @@ import Form from '../../components/form/Form';
 export default function Register() {
 	const handleRegister = async (e, formData) => {
 		e.preventDefault();
-		await fetch('localhost:4000/signup', {
+		await fetch('http://localhost:4000/signup', {
 			method: 'POST',
 			body: JSON.stringify({
 				username: formData.username,

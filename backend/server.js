@@ -1,30 +1,26 @@
+// Imports
 const express = require('express');
 const app = express();
 require('dotenv').config();
+const cors = require('cors');
+const corsOptions = require('./utilities/corsOptions');
 const pool = require('./pool');
+const { errorHandler } = require('./middleware/errors/errorHandling');
 
-// Routes
+// Routers
 const usersAuthRouter = require('./routes/user-auth-route');
 const productsRouter = require('./routes/product-route');
 const usersRouter = require('./routes/user-route');
 
+// Middleware
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(usersAuthRouter)
 app.use(productsRouter);
 app.use(usersRouter);
+app.use(errorHandler)
 
-const userRepo = require('./repos/user-repo')
-
-app.post('/register', async (req, res) => {
-  const {username, email, password} = req.body;
-
-  const user = await userRepo.insert(username, email, password)
-
-  res.send(user);
-})
-
-// Run a query to establish a connection with the database
-// and then start the server
+// Connect to db and start the server
 pool
   .query('SELECT 1 + 1;')
   .then(() => {
