@@ -6,19 +6,21 @@ import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import Dashboard from './pages/dashboard/Dashboard';
 import Account from './pages/account/Account';
+import Footer from './components/footer/Footer';
 
 function App() {
 	return (
 		<>
 			<BrowserRouter>
 				<Navbar />
-				<Routes>
-					<Route path='/' element={<Home />} />
-					<Route path='/login' element={<Login />} />
-					<Route path='/register' element={<Register />} />
-					<Route path='/dashboard' element={<Dashboard />} />
-					<Route path='/account' element={<Account />} />
-				</Routes>
+					<Routes>
+						<Route path='/' element={<Home />} />
+						<Route path='/login' element={<Login />} />
+						<Route path='/register' element={<Register />} />
+						<Route path='/dashboard' element={<Dashboard />} />
+						<Route path='/account' element={<Account />} />
+					</Routes>
+				<Footer />
 			</BrowserRouter>
 		</>
 	);

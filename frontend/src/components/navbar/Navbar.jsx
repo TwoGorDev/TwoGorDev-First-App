@@ -1,9 +1,14 @@
 import './Navbar.css';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 
 export default function Navbar() {
+	const location = useLocation();
+
+	const navClass =
+		location.pathname === '/' ? 'home-nav' : 'nav';
+
 	return (
-		<nav className='nav'>
+		<nav className={navClass}>
 			<ul className='nav-list wrapper'>
 				<li className='logo'>
 					<Link className='logo-link' to='/'>
