@@ -28,7 +28,7 @@
 }
 
 .form-title {
-	margin-block: 0.5em;
+	margin-bottom: 0.3em;
 	font-size: 4rem;
 	font-weight: bold;
 	color: var(--primary-color);
@@ -50,6 +50,7 @@
 	padding: 1em;
 	border: 1px solid var(--primary-color);
 	font-size: 1.6rem;
+	background-color: #fff;
 	color: var(--text-color-dark);
 	border-radius: 8px;
 
@@ -57,10 +58,6 @@
 		outline: none;
 		box-shadow: 1px 1px 2px var(--primary-color);
 	}
-}
-
-.form-input .incorrect {
-	background-color: var(--secondary-color);
 }
 
 input:-webkit-autofill,
@@ -77,10 +74,15 @@ input:-webkit-autofill:active {
 .login-info-link {
 	padding-block: 0.3em;
 	color: var(--primary-color);
+	transition: all .1s;
+
+	&:hover {
+		color: var(--primary-color-dark);
+	}
 }
 
 .submit-form-btn {
-	margin-top: .6em;
+	margin-top: 0.6em;
 	padding: 0.5em 5em;
 	border: 1px solid var(--primary-color);
 	border-radius: 8px;
@@ -103,4 +105,11 @@ input:-webkit-autofill:active {
 	color: #000000a8;
 }
 
+.form-input-error {
+	background-color: var(--secondary-color);
+}
 
+.form-error {
+	font-size: 1.4rem;
+	color: var(--primary-color);
+}

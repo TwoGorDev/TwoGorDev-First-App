@@ -8,21 +8,21 @@
 
 :root {
 	font-size: 62.5%;
-	--primary-color: #0e6aa8e3;
+	--primary-color: #0e6aa8d0;
 	--secondary-color: #a6e1fa27;
 	--text-color-dark: #161616;
 	--text-color-light: #f2f2f2;
-	--dark-blue: #0a2472;
+	--primary-color-dark: #0b4063e7;
 	--light-blue: #badbfe
 }
 
 body {
-	height: 100%;
+	min-height: 100vh;
 	font-size: 1.6rem;
 	font-family: 'Roboto';
 	background-color: var(--secondary-color);
 	color: var(--text-color-dark);
-	overflow: hidden;
+	/* overflow: hidden; */
 }
 
 .wrapper {
@@ -31,6 +31,7 @@ body {
 }
 
 image {
+	display: block;
 	max-width: 100%;
 }
 

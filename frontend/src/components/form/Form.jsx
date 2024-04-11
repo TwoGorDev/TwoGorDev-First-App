@@ -1,13 +1,20 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 // styles
 import './Form.css';
 
 // components
 import TogglePassword from '../../components/togglePassword/togglePassword';
-import { Link } from 'react-router-dom';
 
-export default function Form({ title, buttonText, authType, handleSubmit }) {
+export default function Form({
+	title,
+	buttonText,
+	authType,
+	handleSubmit,
+	errors,
+	errorsLogin,
+}) {
 	const [formData, setFormData] = useState({
 		username: '',
 		password: '',
@@ -37,9 +44,8 @@ export default function Form({ title, buttonText, authType, handleSubmit }) {
 		});
 	}
 
-	const formContainerClass = title === 'Register' ? 'register-form-container' : 'login-form-container';
-
-
+	const formContainerClass =
+		title === 'Register' ? 'register-form-container' : 'login-form-container';
 
 	return (
 		<div className={formContainerClass}>
@@ -48,29 +54,33 @@ export default function Form({ title, buttonText, authType, handleSubmit }) {
 				<label className='form-label'>
 					<h3>Username</h3>
 					<input
-						className='form-input'
+						className={`form-input ${
+							errors.username ? 'form-input-error' : ''
+						}`}
 						type='text'
 						placeholder='Enter username'
-						required
 						name='username'
 						onChange={handleChange}
 						value={formData.username}
 					/>
 				</label>
+				{errors.username && (
+					<span className='form-error'>{errors.username}</span>
+				)}
 				{authType === 'signup' && (
 					<label className='form-label'>
 						<h3>E-mail</h3>
 						<input
-							className='form-input'
-							type='email'
+							className={`form-input ${errors.email ? 'form-input-error' : ''}`}
+							type='text'
 							placeholder='Enter email address'
-							required
 							name='email'
 							onChange={handleChange}
 							value={formData.email}
 						/>
 					</label>
 				)}
+				{errors.email && <span className='form-error'>{errors.email}</span>}
 				<label className='form-label'>
 					<h3>Password</h3>
 					<TogglePassword
@@ -80,15 +90,19 @@ export default function Form({ title, buttonText, authType, handleSubmit }) {
 					/>
 
 					<input
-						className='form-input'
+						className={`form-input ${
+							errors.password ? 'form-input-error' : ''
+						}`}
 						type={togglePassword.password ? 'text' : 'password'}
 						placeholder='Enter password'
-						required
 						name='password'
 						onChange={handleChange}
 						value={formData.password}
 					/>
 				</label>
+				{errors.password && (
+					<span className='form-error'>{errors.password}</span>
+				)}
 				{authType === 'signup' && (
 					<label className='form-label'>
 						<h3>Confirm password</h3>
@@ -98,20 +112,35 @@ export default function Form({ title, buttonText, authType, handleSubmit }) {
 							field='confirmPassword'
 						/>
 						<input
-							className='form-input'
+							className={`form-input ${
+								errors.confirmPassword ? 'form-input-error' : ''
+							}`}
 							type={togglePassword.confirmPassword ? 'text' : 'password'}
 							placeholder='Confirm password'
-							required
 							name='confirmPassword'
 							onChange={handleChange}
 							value={formData.confirmPassword}
 						/>
 					</label>
 				)}
-				{title === 'Login' && <p className='login-info'>Don't have an account yet? 
-				<Link className='login-info-link' to='/register'> Sign up</Link></p>}
+				{errors.confirmPassword && (
+					<span className='form-error'>{errors.confirmPassword}</span>
+				)}
+				{title === 'Login' && (
+					<p className='login-info'>
+						Don't have an account yet?
+						<Link className='login-info-link' to='/register'>
+							{' '}
+							Sign up
+						</Link>
+					</p>
+				)}
 				<button className='submit-form-btn'>{buttonText}</button>
-				{title === 'Register' && <p className="register-form-info">By clicking "Sign up" you agree to our Terms and Conditions</p>}
+				{title === 'Register' && (
+					<p className='register-form-info'>
+						By clicking "Sign up" you agree to our Terms and Conditions
+					</p>
+				)}
 			</form>
 		</div>
 	);
