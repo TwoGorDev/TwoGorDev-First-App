@@ -4,14 +4,14 @@ const validator = require('validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const CustomError = require('../utilities/customError');
-const validateUser = require('../validators/userValidator');
+const { validateUser } = require('../validators/userValidator');
 
 // Create json web token
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
 
-// Log in a user
+// Login a user
 const loginUser = async (req, res, next) => {
   try {
     const user = req.body;
@@ -20,34 +20,36 @@ const loginUser = async (req, res, next) => {
       throw new CustomError(500, 'All fields are required');
     }
 
-    const users = await userRepo.findAllUsernamesAndEmails();
+    // Find user in the database
+    const existingUser = await userRepo.findByUsername(user.username);
 
-    users.filter(userData => 
-      userData.username.toLowerCase() === user.username.toLowerCase() 
-      ||
-      userData.email.toLowerCase() === user.email.toLowerCase()
-    )
+    if (!existingUser) {
+      throw new CustomError(404, 'Username or password is incorrect');
+    }
 
+    // Compare password hashes
     const match = await bcrypt.compare(user.password, existingUser.password);
 
     if (!match) {
       throw new CustomError(404, 'Username or password is incorrect');
     }
 
+    // Send back jwt upon successful login
     const token = createToken(existingUser.id);
 
-    res.status(200).send(token);
+    res.status(200).json({ token });
 
   } catch(error) {
     next(error);
   }
 };
 
-// Sign up a user
+// Signup a user
 const signupUser = async (req, res, next) => {
   try {
     const user = req.body;
     
+    // Check if user data format is correct
     validateUser(user);
 
     if (!validator.isEmail(user.email)) {
@@ -57,18 +59,36 @@ const signupUser = async (req, res, next) => {
       throw new CustomError(500, 'Password is not strong enough');
     }
 
-    const existingUser = await userRepo.findByUsername(username);
+    // Check if an account with provided username/email already exists
+    const existingUsername = await userRepo.findByUsername(user.username);
+    const existingEmail = await userRepo.findByEmail(user.email);
+
+    if (existingUsername) {
+      throw new CustomError(500, 'This username is already taken');
+    }
+    if (existingEmail) {
+      throw new CustomError(500, 'An account with this email address already exists');
+    }
     
+    // Hash user password and add him to the database
     const salt = await bcrypt.genSalt(10);
-    const hash = await bcrypt.hash(password, salt);
-    const newUser = await userRepo.insert(username, email, hash);
+    const hash = await bcrypt.hash(user.password, salt);
 
-    const token = createToken(newUser.id);
+    const newUser = {
+      username : user.username,
+      email: user.email,
+      password: hash
+    }
+    
+    const createdUser = await userRepo.insert(newUser);
 
-    res.status(200).send(token);
+    // Send back jwt upon successful signup
+    const token = createToken(createdUser.id);
+
+    res.status(200).json({ token });
 
   } catch(error) {
-    next(error)
+    next(error);
   }
 };
 

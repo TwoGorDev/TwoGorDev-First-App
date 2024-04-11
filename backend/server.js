@@ -15,10 +15,10 @@ const usersRouter = require('./routes/user-route');
 // Middleware
 app.use(cors(corsOptions));
 app.use(express.json());
-app.use(usersAuthRouter)
+app.use(usersAuthRouter);
 app.use(productsRouter);
 app.use(usersRouter);
-app.use(errorHandler)
+app.use(errorHandler);
 
 // Connect to db and start the server
 pool
