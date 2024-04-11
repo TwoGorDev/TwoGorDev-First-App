@@ -1,0 +1,45 @@
+.dashboard-nav {
+	width: fit-content;
+	margin: 7em auto 0;
+	padding: 1.5em;
+	background-color: var(--primary-color);
+	border-radius: 10%/50%;
+}
+
+.dashboard-nav-link {
+	position: relative;
+	padding: 1em;
+	font-size: 1.9rem;
+	&::after,
+	&::before {
+		content: '';
+		position: absolute;
+		width: 0;
+		bottom: 12px;
+		border-bottom: 2px solid var(--text-color-light);
+		transition: all 0.3s;
+	}
+
+	&::before {
+		right: 50%;
+	}
+	&::after {
+		left: 50%;
+	}
+
+	&:hover::before,
+	&:hover::after {
+		width: 45%;
+	}
+}
+
+.active {
+	&::before {
+		right: 50%;
+		width: 45%;
+	}
+	&::after {
+		left: 50%;
+		width: 45%;
+	}
+}

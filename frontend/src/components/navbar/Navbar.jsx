@@ -1,11 +1,12 @@
+// styles
 import './Navbar.css';
+
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
 export default function Navbar() {
 	const location = useLocation();
 
-	const navClass =
-		location.pathname === '/' ? 'home-nav' : 'nav';
+	const navClass = location.pathname === '/' ? 'home-nav' : 'nav';
 
 	return (
 		<nav className={navClass}>
@@ -16,11 +17,6 @@ export default function Navbar() {
 					</Link>
 				</li>
 				<li>
-					<NavLink className='nav-link' to='/login'>
-						Login
-					</NavLink>
-				</li>
-				<li>
 					<NavLink className='nav-link' to='/dashboard'>
 						Dashboard
 					</NavLink>
@@ -28,6 +24,16 @@ export default function Navbar() {
 				<li>
 					<NavLink className='nav-link' to='/account'>
 						Account
+					</NavLink>
+				</li>
+				<li>
+					<NavLink className='nav-link' to='/register'>
+						Register
+					</NavLink>
+				</li>
+				<li>
+					<NavLink className='nav-link' to='/login'>
+						Login
 					</NavLink>
 				</li>
 			</ul>

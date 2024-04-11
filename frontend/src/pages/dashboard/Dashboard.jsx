@@ -1,5 +1,12 @@
+//styles
+import './Dashboard.css';
+
+
+
 export default function Dashboard() {
-  return (
-    <div>Dashboard</div>
-  )
+	return (
+		<section className='dashboard wrapper'>
+      dashboard
+		</section>
+	);
 }
