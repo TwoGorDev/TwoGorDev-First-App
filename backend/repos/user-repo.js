@@ -11,10 +11,10 @@ module.exports = {
     return rows;
   },
 
-  // Fetch all users' usernames and emails
-  async findAllUsernamesAndEmails() {
+  // Fetch all users' id, usernames, emails and passwords
+  async findAllUsersCredentials() {
     const { rows } = await pool.query(
-      'SELECT username, email FROM users;'
+      'SELECT id, username, email, password FROM users;'
     );
 
     return rows;
@@ -38,6 +38,16 @@ module.exports = {
     );
 
     return rows[0];
+  },
+
+  // Fetch a single user by email
+  async findByEmail(email) {
+    const { rows } = await pool.query(
+      'SELECT * FROM users WHERE email = $1',
+      [email]
+    );
+
+    return rows[0]
   },
 
   // Insert new user
