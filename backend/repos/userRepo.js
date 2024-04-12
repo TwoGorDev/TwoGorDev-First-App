@@ -5,20 +5,12 @@ module.exports = {
   // Fetch all users
   async findAll() {
     const { rows } = await pool.query(
-      'SELECT id, username, email, created_at, updated_at FROM users;'
+      'SELECT id, username, email, role, created_at, updated_at FROM users;'
     );
 
     return rows;
   },
 
-  // Fetch all users' id, usernames, emails and passwords
-  async findAllUsersCredentials() {
-    const { rows } = await pool.query(
-      'SELECT id, username, email, password FROM users;'
-    );
-
-    return rows;
-  },
 
   // Fetch a single user by id
   async findById(id) {

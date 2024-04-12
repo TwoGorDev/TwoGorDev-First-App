@@ -1,7 +1,7 @@
 // Imports
 const CustomError = require('../utilities/customError');
 
-const validateProduct = (product) => {
+const validateProductFormat = (product) => {
   const { name, calories, proteins, carbohydrates, fats } = product;
 
   // Check if all data has been sent
@@ -31,4 +31,4 @@ const validateProduct = (product) => {
   }
 }
 
-module.exports = { validateProduct }
+module.exports = { validateProductFormat }

@@ -1,5 +1,5 @@
 // Imports
-const userRepo = require('../repos/user-repo');
+const userRepo = require('../repos/userRepo');
 const CustomError = require('../utilities/customError');
 const validateUser = require('../validators/userValidator');
 
@@ -8,7 +8,7 @@ const getUsers = async (req, res, next) => {
   try {
     const users = await userRepo.findAll();
 
-    res.status(200).send(users);
+    res.status(200).json(users);
 
   } catch(error) {
     next(error);
@@ -31,14 +31,14 @@ const getUserById = async (req, res, next) => {
     }
 
     delete user.password;
-    res.status(200).send(user);
+    res.status(200).json(user);
 
   } catch(error) {
     next(error);
   }
 };
 
-// Update an existing user
+// Update existing user
 const updateUser = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -53,18 +53,18 @@ const updateUser = async (req, res, next) => {
     const user = await userRepo.update(id, updatedUser);
 
     if (!user) {
-      throw new CustomError(404, 'User not found');
+      throw new CustomError(500, 'User signup failed');
     }
 
     delete user.password;
-    res.status(200).send(user);
+    res.status(200).json(user);
 
   } catch(error) {
     next(error);
   }
 };
 
-// Delete an existing user
+// Delete existing user
 const deleteUser = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -80,7 +80,7 @@ const deleteUser = async (req, res, next) => {
     }
 
     delete user.password;
-    res.status(200).send(user);
+    res.status(200).json(user);
 
   } catch(error) {
     next(error);
