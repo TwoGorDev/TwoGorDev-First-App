@@ -1,11 +1,16 @@
 .dashboard-summary {
 	margin-top: 2em;
 	padding: 2em;
-	border: 1px solid lightgray;
+	/* border: 1px solid lightgray; */
 	border-radius: 15px;
-	box-shadow: 1px 1px 6px lightgray;
+	box-shadow: 1px 1px 6px rgb(183, 183, 183);
 	color: var(--text-color-dark);
 	text-align: center;
+}
+
+.dashboard-summary-title {
+	font-size: 3.4rem;
+	color: var(--primary-color);
 }
 
 .dashboard-summary-calories,
@@ -22,6 +27,11 @@
 .summary-calories-remaining {
 	flex-basis: 30%;
 	padding: 0.5em;
+}
+
+.summary-calories-percentile {
+	height: 10em;
+	aspect-ratio: 1/1;
 }
 
 .calories-amount {
@@ -45,7 +55,7 @@
 
 .calories-percentile {
 	margin-block: 0 1em;
-	font-size: 1.3rem;
+	font-size: 1.6rem;
 	color: var(--text-color-dark);
 	font-weight: normal;
 	text-indent: 0;

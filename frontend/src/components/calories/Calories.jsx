@@ -8,6 +8,7 @@ import 'react-circular-progressbar/dist/styles.css';
 export default function Calories() {
 	return (
 		<div className='dashboard-summary'>
+			<h2 className='dashboard-summary-title'>Summary</h2>
 			<div className='dashboard-summary-calories'>
 				<div className='summary-calories-ingested'>
 					<h3 className='calories-amount'>205</h3>
