@@ -1,8 +1,8 @@
 // Imports
 const CustomError = require('../utilities/customError');
+const { dateRegEx } = require('../utilities/dataFormatRegEx');
 
 const MEAL_TYPES = ['Breakfast', 'Lunch', 'Dinner', 'Snacks'];
-const dateRegEx = /^\d{4}-\d{2}-\d{2}$/;
 
 const validateMealFormat = (meal) => {
   const { type, date } = meal;
@@ -16,7 +16,7 @@ const validateMealFormat = (meal) => {
   }
 
   if (!date.match(dateRegEx)) {
-    throw new CustomError(500, 'Incorrect meal date format');
+    throw new CustomError(500, 'Incorrect date format');
   }
 };
 
