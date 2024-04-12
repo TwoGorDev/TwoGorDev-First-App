@@ -8,9 +8,10 @@ const pool = require('./pool');
 const { errorHandler } = require('./middleware/errors/errorHandling');
 
 // Routers
-const usersAuthRouter = require('./routes/user-auth-route');
-const productsRouter = require('./routes/product-route');
-const usersRouter = require('./routes/user-route');
+const usersAuthRouter = require('./routes/userAuthRoute');
+const productsRouter = require('./routes/productRoute');
+const usersRouter = require('./routes/userRoute');
+const mealsRouter = require('./routes/mealRoute');
 
 // Middleware
 app.use(cors(corsOptions));
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(usersAuthRouter);
 app.use(productsRouter);
 app.use(usersRouter);
+app.use(mealsRouter);
 app.use(errorHandler);
 
 // Connect to db and start the server

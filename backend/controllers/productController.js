@@ -1,14 +1,14 @@
 // Imports
-const productRepo = require('../repos/product-repo');
+const productRepo = require('../repos/productRepo');
 const CustomError = require('../utilities/customError');
-const { validateProduct } = require('../validators/productValidator');
+const { validateProductFormat } = require('../validators/productValidator');
 
 // Get all products
 const getProducts = async (req, res, next) => {
   try {
     const products = await productRepo.findAll();
 
-    res.status(200).send(products);
+    res.status(200).json(products);
 
   } catch(error) {
     next(error);
@@ -26,7 +26,7 @@ const getProduct = async (req, res, next) => {
       throw new CustomError(404, 'Product not found');
     }
 
-    res.status(200).send(product);
+    res.status(200).json(product);
 
   } catch(error) {
     next(error);
@@ -37,23 +37,24 @@ const getProduct = async (req, res, next) => {
 const createProduct = async (req, res, next) => {
   try {
     const newProduct = req.body;
+    const { id: creatorId } = req.user;
 
-    validateProduct(newProduct);
+    validateProductFormat(newProduct);
 
-    const product = await productRepo.insert(newProduct);
+    const product = await productRepo.insert(newProduct, creatorId);
 
     if (!product) {
-      throw new CustomError(404, 'Product not found');
+      throw new CustomError(500, 'Creating new product failed');
     }
 
-    res.status(200).send(product);
+    res.status(200).json(product);
 
   } catch(error) {
     next(error);
   }
 };
 
-// Update an existing product
+// Update existing product
 const updateProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -63,7 +64,7 @@ const updateProduct = async (req, res, next) => {
       throw new CustomError(500, 'Product id required');
     }
 
-    validateProduct(updatedProduct);
+    validateProductFormat(updatedProduct);
 
     const product = await productRepo.update(id, updatedProduct);
 
@@ -71,14 +72,14 @@ const updateProduct = async (req, res, next) => {
       throw new CustomError(404, 'Product not found');
     }
 
-    res.status(200).send(product);
+    res.status(200).json(product);
 
   } catch(error) {
     next(error);
   }
 };
 
-// Delete an existing product
+// Delete existing product
 const deleteProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -93,7 +94,7 @@ const deleteProduct = async (req, res, next) => {
       throw new CustomError(404, 'Product not found');
     }
     
-    res.status(200).send(product);
+    res.status(200).json(product);
 
   } catch(error) {
     next(error);

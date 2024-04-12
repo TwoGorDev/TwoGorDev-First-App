@@ -1,5 +1,5 @@
 // Imports
-const userRepo = require('../repos/user-repo');
+const userRepo = require('../repos/userRepo');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');

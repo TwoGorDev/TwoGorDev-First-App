@@ -22,12 +22,12 @@ module.exports = {
   },
 
   // Insert a new product
-  async insert(product) {
+  async insert(product, creatorId) {
     const { name, calories, proteins, carbohydrates, fats } = product;
     
     const { rows } = await pool.query(
-      'INSERT INTO products (name, calories, proteins, carbohydrates, fats) VALUES ($1, $2, $3, $4, $5) RETURNING *;',
-      [name, calories, proteins, carbohydrates, fats]
+      'INSERT INTO products (name, calories, proteins, carbohydrates, fats, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
+      [name, calories, proteins, carbohydrates, fats, creatorId]
     );
 
     return rows[0];
