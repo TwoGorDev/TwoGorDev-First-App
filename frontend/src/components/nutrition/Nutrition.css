@@ -1,32 +1,54 @@
-.dashboard-nutrition {
-	margin-top: 2em;
-	padding: 2em;
-	/* border: 1px solid lightgray; */
-	border-radius: 15px;
+.dashboard-nutrition, .dashboard-meal-time {
+    border-radius: 15px;
 	box-shadow: 1px 1px 6px rgb(183, 183, 183);
+}
+
+.dashboard-nutrition {
+	padding: 2em;
 	color: var(--text-color-dark);
-	text-align: center;
 }
 
 .dashboard-nutrition-title {
+    text-align: center;
 	font-size: 3.4rem;
 	color: var(--primary-color);
 }
 
 .dashboard-nutrition-meal-times {
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	flex-wrap: wrap;
-	padding: 0.7em;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr) ;
+    grid-template-rows: repeat(2, 1fr);
+	gap: .8em;
+	padding: 0.8em;
 }
 
 .dashboard-meal-time {
 	display: flex;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
-    padding: 0.5em;
-    width: 50%;
+	padding: 1.5em;
 }
 
+.dashboard-meal-time-progress {
+    max-height: 4.9em;
+}
 
+.meal-time-info {
+    margin-inline: .7em
+}
+
+.add-meal-button {
+    font-size: 2.8rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: all .3s;
+
+    &:hover {
+        color: var(--primary-color-dark);
+    }
+}
+
+.dashboard-progress-icon {
+    font-size: 2.8rem;
+    color: var(--primary-color);
+}
