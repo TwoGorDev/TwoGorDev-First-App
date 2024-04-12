@@ -1,57 +1,65 @@
 import Form from '../../components/form/Form';
-import { useState } from 'react'
+import { useState } from 'react';
 
 // styles
 import './Register.css';
 
 export default function Register() {
-	const [errors, setErrors] = useState({})
-	
+	const [errors, setErrors] = useState({});
+
 	const handleRegister = async (e, formData) => {
 		e.preventDefault();
 
-		const validationErrors = {}
-    if(!formData.username.trim()) {
-        validationErrors.username = "Username is required"
-    } else if(formData.username.trim().length < 4 || formData.username.trim().length > 16) {
-		validationErrors.username = "Username should be between 4 and 16 characters"
-	}
+		const validationErrors = {};
 
-    if(!formData.email.trim()) {
-        validationErrors.email = "Email is required"
-    } else if(!/\S+@\S+\.\S+/.test(formData.email)){
-        validationErrors.email = "Email is not valid"
-    }
+		if (!formData.username.trim()) {
+			validationErrors.username = 'Username is required';
+		} else if (
+			formData.username.trim().length < 4 ||
+			formData.username.trim().length > 16
+		) {
+			validationErrors.username =
+				'Username should contain between 4 and 16 characters';
+		}
 
-    if(!formData.password.trim()) {
-        validationErrors.password = "Password is required"
-    } else if(formData.password.length < 6){
-        validationErrors.password = "Password should be at least 6 char"
-    }
+		if (!formData.email.trim()) {
+			validationErrors.email = 'Email is required';
+		} else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+			validationErrors.email = 'Email is not valid';
+		}
 
-	if(!formData.confirmPassword.trim()) {
-		validationErrors.confirmPassword = "Confirm Password is required"
-	} else if(formData.confirmPassword !== formData.password) {
-        validationErrors.confirmPassword = "Passwords do not match"
-    }
+		if (!formData.password.trim()) {
+			validationErrors.password = 'Password is required';
+		} else if (formData.password.length < 6) {
+			validationErrors.password = 'Password should be at least 6 char';
+		} else if (
+			/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.[\W]).{6,}$/.test(formData.password.trim())
+		) {
+			validationErrors.password =
+				'Password should contain at least one special character, one uppercase and lowercase letter and one number';
+		}
 
-    setErrors(validationErrors)
+		if (!formData.confirmPassword.trim()) {
+			validationErrors.confirmPassword = 'Confirm Password is required';
+		} else if (formData.confirmPassword !== formData.password) {
+			validationErrors.confirmPassword = 'Passwords do not match';
+		}
 
-    if(Object.keys(validationErrors).length === 0) {
-		await fetch('http://localhost:4000/signup', {
-			method: 'POST',
-			body: JSON.stringify({
-				username: formData.username,
-				password: formData.password,
-				email: formData.email,
-			}),
-			headers: { 'Content-type': 'application/json' },
-		})
-			// .then((res) => res.json())
-			.then((data) => console.log(data));
-    }
+		setErrors(validationErrors);
 
-		
+		if (Object.keys(validationErrors).length === 0) {
+			await fetch('http://localhost:4000/signup', {
+				method: 'POST',
+				body: JSON.stringify({
+					username: formData.username,
+					password: formData.password,
+					email: formData.email,
+				}),
+				headers: { 'Content-type': 'application/json' },
+			})
+				// .then((res) => res.json())
+				.then((data) => console.log(data));
+		}
 	};
 	return (
 		<div className='register-container'>

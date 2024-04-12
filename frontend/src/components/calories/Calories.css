@@ -1,0 +1,71 @@
+.dashboard-summary {
+	margin-top: 2em;
+	padding: 2em;
+	border: 1px solid lightgray;
+	border-radius: 15px;
+	box-shadow: 1px 1px 6px lightgray;
+	color: var(--text-color-dark);
+	text-align: center;
+}
+
+.dashboard-summary-calories,
+.dashboard-summary-macros {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	flex-wrap: wrap;
+	padding: 0.7em;
+}
+
+.summary-calories-ingested,
+.summary-calories-percentile,
+.summary-calories-remaining {
+	flex-basis: 30%;
+	padding: 0.5em;
+}
+
+.calories-amount {
+	font-size: 2.5rem;
+}
+
+.percentile-amount {
+	font-size: 3rem;
+	text-indent: 0.3em;
+}
+
+.macro-container {
+	padding: 0.5em 1em;
+}
+
+.summary-info,
+.macro-progress-bar,
+.macro-amount {
+	margin-block: 0.4em;
+}
+
+.calories-percentile {
+	margin-block: 0 1em;
+	font-size: 1.3rem;
+	color: var(--text-color-dark);
+	font-weight: normal;
+	text-indent: 0;
+}
+.macro-progress-bar,
+.macro-progress-bar-fill {
+	height: 8px;
+	border-radius: 1.5em;
+}
+
+.macro-progress-bar {
+	position: relative;
+	width: 7em;
+	background-color: #d6d6d6;
+}
+
+.macro-progress-bar-fill {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 2em;
+	background-color: var(--primary-color);
+}
