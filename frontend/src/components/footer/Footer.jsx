@@ -11,7 +11,7 @@ export default function () {
 
   return (
     <footer className={footerClass}>
-        <span>Copyright © {(new Date().getFullYear())}  HealThyBody Inc.</span>
+        <span>Copyright &copy; {(new Date().getFullYear())}  HealThyBody Inc.</span>
     </footer>
   )
 }

@@ -1,12 +1,10 @@
-.home-footer, .footer {
-	position: absolute;
-	left: 0;
-	bottom: 0;
+.home-footer, .footer { 
 	width: 100%;
+	margin-top: auto;
     padding: 1.3em;
+    font-size: 1.5rem;
 	color: var(--text-color-light);
 	text-align: center;
-    font-size: 1.5rem;
 }
 
 .home-footer {

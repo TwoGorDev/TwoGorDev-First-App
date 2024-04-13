@@ -1,9 +1,12 @@
 .login-container {
+	height: calc(100vh - 57px); 
+	/* 57px = footer height */
 	position: relative;
 	background-image: url('../../assets/images/login-large.jpg');
 	background-size: cover;
 	background-position: center;
 	backdrop-filter: blur(1px);
+	overflow: hidden;
 }
 
 .login-container-shadow {
