@@ -3,41 +3,28 @@ import './Nutrition.css';
 
 // icons
 import { FaCirclePlus } from 'react-icons/fa6';
-import { GiButterToast, GiFruitBowl, GiHotMeal, GiBowlOfRice  } from 'react-icons/gi';
+import {
+	GiButterToast,
+	GiFruitBowl,
+	GiHotMeal,
+	GiBowlOfRice,
+} from 'react-icons/gi';
 
-
-// circular progress bar
-import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+// components
+import CircularProgressBar from '../circularProgressBar/CircularProgressBar';
 
 export default function Nutrition() {
 	return (
 		<div className='dashboard-nutrition'>
 			<h2 className='dashboard-nutrition-title'>Nutrition</h2>
 			<div className='dashboard-nutrition-meal-times'>
-				<div className='dashboard-meal-time dashboard-nutrition-breakfast'>
-					<CircularProgressbarWithChildren
+				<div className='dashboard-meal-time'>
+					<CircularProgressBar
 						className='dashboard-meal-time-progress'
-						value='19'
-						strokeWidth={6}
-						styles={{
-							trail: {
-								stroke: '#d6d6d6',
-								strokeLinecap: 'round',
-								transformOrigin: 'center center',
-							},
-							path: {
-								stroke: 'var(--primary-color)',
-								strokeLinecap: 'round',
-								transformOrigin: 'center center',
-							},
-
-							text: {
-								fill: 'var(--primary-color)',
-							},
-						}}>
+						value={19}
+						strokeWidth={7}>
 						{<GiButterToast className='dashboard-progress-icon' />}
-					</CircularProgressbarWithChildren>
+					</CircularProgressBar>
 
 					<div className='meal-time-info'>
 						<h3 className='meal-time-title'>Breakfast</h3>
@@ -46,29 +33,13 @@ export default function Nutrition() {
 
 					<FaCirclePlus className='add-meal-button' />
 				</div>
-				<div className='dashboard-meal-time dashboard-nutrition-breakfast'>
-					<CircularProgressbarWithChildren
+				<div className='dashboard-meal-time'>
+					<CircularProgressBar
 						className='dashboard-meal-time-progress'
-						value='19'
-						strokeWidth={6}
-						styles={{
-							trail: {
-								stroke: '#d6d6d6',
-								strokeLinecap: 'round',
-								transformOrigin: 'center center',
-							},
-							path: {
-								stroke: 'var(--primary-color)',
-								strokeLinecap: 'round',
-								transformOrigin: 'center center',
-							},
-
-							text: {
-								fill: 'var(--primary-color)',
-							},
-						}}>
+						value={19}
+						strokeWidth={7}>
 						{<GiBowlOfRice className='dashboard-progress-icon' />}
-					</CircularProgressbarWithChildren>
+					</CircularProgressBar>
 
 					<div className='meal-time-info'>
 						<h3 className='meal-time-title'>Lunch</h3>
@@ -77,29 +48,13 @@ export default function Nutrition() {
 
 					<FaCirclePlus className='add-meal-button' />
 				</div>
-				<div className='dashboard-meal-time dashboard-nutrition-breakfast'>
-					<CircularProgressbarWithChildren
+				<div className='dashboard-meal-time'>
+					<CircularProgressBar
 						className='dashboard-meal-time-progress'
-						value='19'
-						strokeWidth={6}
-						styles={{
-							trail: {
-								stroke: '#d6d6d6',
-								strokeLinecap: 'round',
-								transformOrigin: 'center center',
-							},
-							path: {
-								stroke: 'var(--primary-color)',
-								strokeLinecap: 'round',
-								transformOrigin: 'center center',
-							},
-
-							text: {
-								fill: 'var(--primary-color)',
-							},
-						}}>
+						value={19}
+						strokeWidth={7}>
 						{<GiHotMeal className='dashboard-progress-icon' />}
-					</CircularProgressbarWithChildren>
+					</CircularProgressBar>
 
 					<div className='meal-time-info'>
 						<h3 className='meal-time-title'>Dinner</h3>
@@ -108,29 +63,13 @@ export default function Nutrition() {
 
 					<FaCirclePlus className='add-meal-button' />
 				</div>
-				<div className='dashboard-meal-time dashboard-nutrition-breakfast'>
-					<CircularProgressbarWithChildren
+				<div className='dashboard-meal-time'>
+					<CircularProgressBar
 						className='dashboard-meal-time-progress'
-						value='19'
-						strokeWidth={6}
-						styles={{
-							trail: {
-								stroke: '#d6d6d6',
-								strokeLinecap: 'round',
-								transformOrigin: 'center center',
-							},
-							path: {
-								stroke: 'var(--primary-color)',
-								strokeLinecap: 'round',
-								transformOrigin: 'center center',
-							},
-
-							text: {
-								fill: 'var(--primary-color)',
-							},
-						}}>
+						value={19}
+						strokeWidth={7}>
 						{<GiFruitBowl className='dashboard-progress-icon' />}
-					</CircularProgressbarWithChildren>
+					</CircularProgressBar>
 
 					<div className='meal-time-info'>
 						<h3 className='meal-time-title'>Snacks</h3>
@@ -139,9 +78,6 @@ export default function Nutrition() {
 
 					<FaCirclePlus className='add-meal-button' />
 				</div>
-				{/* <div className='dashboard-nutrition-lunch'></div>
-				<div className='dashboard-nutrition-dinner'></div>
-				<div className='dashboard-nutrition-snacks'></div> */}
 			</div>
 		</div>
 	);

@@ -1,0 +1,117 @@
+/* .dashboard-calculator {
+    display: grid;
+    place-content: center;
+    margin-top: 2em;
+    grid-template-rows: repeat(13, 1fr);
+    /* grid-template-columns: repeat(13, 1fr); */
+
+.dashboard-calculator {
+	max-width: 26em;
+	margin: 2em auto 1em;
+	padding: 2em;
+	border-radius: 15px;
+	box-shadow: 1px 1px 6px rgb(183, 183, 183);
+	background-color: var(--dashboard-calculator-color);
+}
+
+.dashboard-calculator-heading {
+	color: var(--primary-color);
+	font-size: 3rem;
+	margin-bottom: 0.5em;
+    text-align: center;
+}
+
+.dashboard-calculator-info {
+	margin-bottom: 1.5em;
+    text-align: center;
+}
+
+.input-box {
+	position: relative;
+	margin-block: 0.7em;
+}
+
+.input-box label {
+	position: absolute;
+	top: 28%;
+	left: 2%;
+	padding: 0 0.5em;
+	color: gray;
+	font-size: 1.4rem;
+	transition: transform 0.3s;
+	pointer-events: none;
+}
+
+.select-label {
+    text-align: left!important;
+}
+
+.dashboard-calculator-input {
+	width: 100%;
+	margin-bottom: 0.3em;
+	padding: 1em;
+	background-color: transparent;
+	border-radius: 5px;
+	border: 2px solid #ccc;
+	font-size: 1.4rem;
+	cursor: text;
+
+	&:focus {
+		outline: none;
+		border: 2px solid var(--primary-color);
+	}
+
+	&:focus ~ label,
+	&:valid ~ label {
+		transform: translateY(-130%);
+		background-color: var(--dashboard-calculator-color);
+	}
+
+	&:focus ~ label {
+		color: var(--primary-color);
+	}
+}
+
+select {
+	width: 100%;
+	margin-block: 0.6em;
+	padding: 0.8em;
+	font-size: 1.4rem;
+	border-radius: 5px;
+	border: 2px solid #ccc;
+	background-color: transparent;
+	background-image: linear-gradient(45deg, transparent 50%, gray 50%),
+		linear-gradient(135deg, gray 50%, transparent 50%),
+		radial-gradient(#ddd 70%, transparent 72%);
+	background-position: calc(100% - 20px) calc(1em + 2px),
+		calc(100% - 15px) calc(1em + 2px), calc(100% - 0.7em) 0.5em;
+	background-size: 5px 5px, 5px 5px, 1.5em 1.5em;
+	background-repeat: no-repeat;
+	appearance: none;
+
+	&:first-of-type {
+		margin-bottom: 3;
+	}
+
+	&:focus {
+		outline: none;
+		border: 2px solid var(--primary-color);
+	}
+}
+
+.submit-calculator-form-btn {
+    display: block;
+	margin: 1em auto 0;
+	padding: 1em 4em;
+	border: none;
+	border-radius: 12px;
+	background-color: var(--primary-color);
+	color: var(--text-color-light);
+	font-size: 1.6rem;
+	cursor: pointer;
+	transition: all 0.2s;
+
+	&:hover {
+		background-color: var(--primary-color-dark);
+	}
+}

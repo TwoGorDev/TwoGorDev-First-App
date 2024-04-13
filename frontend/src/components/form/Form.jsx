@@ -13,7 +13,6 @@ export default function Form({
 	authType,
 	handleSubmit,
 	errors,
-	errorsLogin,
 }) {
 	const [formData, setFormData] = useState({
 		username: '',
