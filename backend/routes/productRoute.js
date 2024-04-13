@@ -8,6 +8,7 @@ const { requireUser } = require('../middleware/auth/requireUser');
 // Controllers
 const {
   getProducts,
+  getProductsByNameSearch,
   getProduct,
   createProduct,
   updateProduct,
@@ -19,6 +20,9 @@ const {
 // Fetch all products
 router.get('/products', getProducts);
 
+// Fetch products by name search
+router.get('/products/search/:query', getProductsByNameSearch);
+
 // Fetch a single product
 router.get('/products/:id', getProduct);
 
@@ -26,9 +30,9 @@ router.get('/products/:id', getProduct);
 router.post('/products', requireUser, createProduct);
 
 // Update existing product
-router.put('/products/:id', requireUser, updateProduct);
+// router.put('/products/:id', requireUser, updateProduct);
 
 // Delete exisitng product
-router.delete('/products/:id', requireUser, deleteProduct);
+// router.delete('/products/:id', requireUser, deleteProduct);
 
 module.exports = router;

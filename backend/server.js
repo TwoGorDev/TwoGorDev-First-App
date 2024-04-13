@@ -13,6 +13,7 @@ const productsRouter = require('./routes/productRoute');
 const usersRouter = require('./routes/userRoute');
 const mealsRouter = require('./routes/mealRoute');
 const dailySummaryRouter = require('./routes/dailySummaryRoute');
+const portionRoute = require('./routes/portionRoute');
 
 // Middleware
 app.use(cors(corsOptions));
@@ -22,6 +23,7 @@ app.use(productsRouter);
 app.use(usersRouter);
 app.use(mealsRouter);
 app.use(dailySummaryRouter);
+app.use(portionRoute);
 app.use(errorHandler);
 
 // Connect to db and start the server

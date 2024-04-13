@@ -12,7 +12,7 @@ const validateProductFormat = (product) => {
     typeof carbohydrates === 'undefined' ||
     typeof fats === 'undefined'
   ) {
-    throw new CustomError(500, 'All data is required')
+    throw new CustomError(500, 'All fields required')
   }
 
   // Check if calories are between 0 and 900
@@ -28,7 +28,7 @@ const validateProductFormat = (product) => {
     (proteins + carbohydrates + fats) > 100
   ) {
     throw new CustomError(500, 'Macronutrients must be between 0 and 100');
-  }
-}
+  };
+};
 
 module.exports = { validateProductFormat }
