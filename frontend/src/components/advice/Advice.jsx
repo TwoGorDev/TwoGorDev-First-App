@@ -5,10 +5,10 @@ import './Advice.css';
 import { MdOutlineTipsAndUpdates } from 'react-icons/md';
 import { LuRefreshCw } from 'react-icons/lu';
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
 export default function () {
-    const [advice, setAdvice] = useState('')
+	const [advice, setAdvice] = useState('');
 
 	const advices = [
 		'Try to consume a variety of foods to provide your body with a diverse range of nutrients.',
@@ -37,12 +37,15 @@ export default function () {
 		'Be aware of the amount of calories you consume and adjust your diet to your individual needs.',
 		'Remember the importance of balance and moderation in everything you eat.',
 	];
-    const randomNumber = Math.floor(Math.random() * advices.length);
-	
-    useEffect(() => {
-        setAdvice(advices[randomNumber]);
-    }, []);
-	
+
+	useEffect(() => {
+		handleClick();
+	}, []);
+
+	const handleClick = () => {
+		const randomNumber = Math.floor(Math.random() * advices.length);
+		setAdvice(advices[randomNumber]);
+	};
 
 	return (
 		<div className='dashboard-advice'>
@@ -50,12 +53,8 @@ export default function () {
 				<MdOutlineTipsAndUpdates className='health-advice-icon' />
 				Health advice
 			</h2>
-			<p className='health-advice-content'>
-				{advice}
-			</p>
-			<button
-				className='get-random-advice-btn'
-				onClick={() => setAdvice(advices[randomNumber])}>
+			<p className='health-advice-content'>{advice}</p>
+			<button className='get-random-advice-btn' onClick={handleClick}>
 				<LuRefreshCw />
 			</button>
 		</div>

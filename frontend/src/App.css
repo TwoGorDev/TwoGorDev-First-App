@@ -44,6 +44,10 @@ image {
 	max-width: 100%;
 }
 
+button:active {
+		transform: scale(.95);	
+}
+
 a,
 link {
 	text-decoration: none;
@@ -53,3 +57,9 @@ link {
 ul {
 	list-style: none;
 }
+
+.fwb {
+	font-weight: bold;
+}
+
+

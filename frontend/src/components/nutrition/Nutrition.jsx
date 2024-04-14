@@ -13,7 +13,15 @@ import {
 // components
 import CircularProgressBar from '../circularProgressBar/CircularProgressBar';
 
-export default function Nutrition() {
+export default function Nutrition({ caloriesReq }) {
+
+	const mealCalories = {
+		breakfast: Math.floor(caloriesReq * 0.25),
+		lunch:  Math.floor(caloriesReq * 0.4),
+		dinner:  Math.floor(caloriesReq * 0.22),
+		snacks:  Math.floor(caloriesReq * 0.13)
+	}
+		
 	return (
 		<div className='dashboard-nutrition'>
 			<h2 className='dashboard-nutrition-title'>Nutrition</h2>
@@ -28,7 +36,7 @@ export default function Nutrition() {
 
 					<div className='meal-time-info'>
 						<h3 className='meal-time-title'>Breakfast</h3>
-						<p className='meal-time-calories'>205 / 431 kcal</p>
+						<p className='meal-time-calories'>205 / {mealCalories?.breakfast  ?? '0'} kcal</p>
 					</div>
 
 					<FaCirclePlus className='add-meal-button' />
@@ -43,7 +51,7 @@ export default function Nutrition() {
 
 					<div className='meal-time-info'>
 						<h3 className='meal-time-title'>Lunch</h3>
-						<p className='meal-time-calories'>0 / 632 kcal</p>
+						<p className='meal-time-calories'>0 / {mealCalories?.lunch ?? '0'} kcal</p>
 					</div>
 
 					<FaCirclePlus className='add-meal-button' />
@@ -58,7 +66,7 @@ export default function Nutrition() {
 
 					<div className='meal-time-info'>
 						<h3 className='meal-time-title'>Dinner</h3>
-						<p className='meal-time-calories'>0 / 523 kcal</p>
+						<p className='meal-time-calories'>0 / {mealCalories?.dinner ?? '0'} kcal</p>
 					</div>
 
 					<FaCirclePlus className='add-meal-button' />
@@ -73,7 +81,7 @@ export default function Nutrition() {
 
 					<div className='meal-time-info'>
 						<h3 className='meal-time-title'>Snacks</h3>
-						<p className='meal-time-calories'>0 / 212 kcal</p>
+						<p className='meal-time-calories'>0 / {mealCalories?.snacks ?? '0'} kcal</p>
 					</div>
 
 					<FaCirclePlus className='add-meal-button' />

@@ -4,11 +4,10 @@ import './Calories.css';
 // components
 import CircularProgressBar from '../circularProgressBar/CircularProgressBar';
 
-import { useState } from 'react'
+import { useState } from 'react';
 
-export default function Calories() {
-	const [progressBarValue, setProgressBarValue] = useState('19')
-
+export default function Calories({ caloriesReq, macrosReq }) {
+	const [progressBarValue, setProgressBarValue] = useState('98');
 	const macros = ['Carbohydrates', 'Proteins', 'Fats'];
 
 	return (
@@ -24,7 +23,7 @@ export default function Calories() {
 						className='percentile-amount'
 						value={progressBarValue}
 						circleRatio={0.75}
-						strokeWidth={8}
+						strokeWidth={7}
 						transformDeg='-135'>
 						<h3 className='percentile-amount'>
 							{`${progressBarValue}%`}
@@ -37,20 +36,26 @@ export default function Calories() {
 					</CircularProgressBar>
 				</div>
 				<div className='summary-calories-remaining'>
-					<h3 className='calories-amount'>1232</h3>
+					<h3 className='calories-amount'>{caloriesReq}</h3>
 					<p className='summary-info calories-ingested'>Remaining</p>
 				</div>
 			</div>
 
 			<div className='dashboard-summary-macros'>
-				{macros.map((macro) => {
+				{macros.map((macro, id) => {
 					return (
-						<div className='macro-container carbohydrates'>
+						<div key={id} className='macro-container carbohydrates'>
 							<p className='summary-info'>{macro}</p>
 							<div className='macro-progress-bar'>
 								<div className='macro-progress-bar-fill'></div>
 							</div>
-							<h4 className='macro-amount'>23 / 175 g</h4>
+							<h4 className='macro-amount'>
+								23 /{' '}
+								{macrosReq[macro.toLowerCase()] !== ''
+									? macrosReq[macro.toLowerCase()]
+									: '0'}{' '}
+								g
+							</h4>
 						</div>
 					);
 				})}

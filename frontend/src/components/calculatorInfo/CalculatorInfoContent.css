@@ -1,0 +1,51 @@
+.dashboard-calculator-info-content,
+.dashboard-calculator-info-content-save {
+	line-height: 1.5;
+	text-align: justify;
+	margin-bottom: 1em;
+}
+
+.dashboard-calculator-info-content-heading {
+	margin-top: 1em;
+	text-align: center;
+	font-size: 2.1rem;
+}
+
+.dasboard-calculator-calories-req {
+	display: inline-block;
+	margin-top: 0.4em;
+	font-size: 4rem;
+	color: var(--primary-color);
+}
+
+.dashboard-calculator-info-macro {
+	width: 100%;
+	display: flex;
+	justify-content: space-around;
+	margin-top: 0.5em;
+	font-size: 1.6rem;
+	text-align: center;
+	/* color: var(--primary-color); */
+	/* font-weight: bold; */
+}
+
+.dashboard-calculator-info-macro span {
+	flex-basis: 30%;
+}
+
+.fwb {
+	font-weight: normal;
+}
+
+.fwn {
+	display: inline-block;
+	margin: 0.2em 0 0.5em 0;
+	font-size: 2.2rem;
+	font-weight: bold;
+	color: var(--primary-color);
+}
+
+.dashboard-calculator-info-content-save {
+	margin-top: 3.2em;
+	text-align: center;
+}
