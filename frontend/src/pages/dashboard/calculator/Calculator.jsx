@@ -1,7 +1,14 @@
 // styles
 import './Calculator.css';
 
-import { useState } from 'react';
+// components
+import CalculatorInfoContent from '../../../components/calculatorInfo/CalculatorInfoContent'
+
+
+
+// context
+import { DashboardContext } from '../../../layouts/DashboardLayout';
+import { useContext, useState, useEffect } from 'react';
 
 export default function Calculator() {
 	const [result, setResult] = useState({
@@ -17,7 +24,7 @@ export default function Calculator() {
 		fats: '',
 	});
 
-	console.log(result);
+	const { setCalculatorData } = useContext(DashboardContext);
 
 	function handleChange(e) {
 		setResult((prevResult) => {
@@ -101,12 +108,12 @@ export default function Calculator() {
 	};
 
 	return (
-		<>
-			<form className='dashboard-calculator wrapper'>
+		<div className='dashboard-calculator-container wrapper'>
+			<div className='dashboard-calculator'>
 				<h2 className='dashboard-calculator-heading'>
 					Calorie Intake Calculator
 				</h2>
-				<p className='dashboard-calculator-info'>
+				<p className='dashboard-calculator-heading-text'>
 					Check your daily caloric requirement!
 				</p>
 
@@ -190,8 +197,9 @@ export default function Calculator() {
 					onClick={(e) => handleCalculate(e)}>
 					Calculate
 				</button>
-			</form>
-			<p>Your daily requirement: {result.calories} kcal</p>
-		</>
+			</div>
+
+			<CalculatorInfoContent result={result} />
+		</div>
 	);
 }

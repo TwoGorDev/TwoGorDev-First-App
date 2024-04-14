@@ -1,7 +1,5 @@
 .register-container {
+	display: flex;
 	height: calc(100vh - 57px);
 	background-image: url('../../assets/images/register-large.jpg');
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }
