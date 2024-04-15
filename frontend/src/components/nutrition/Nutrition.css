@@ -21,34 +21,3 @@
 	gap: .8em;
 	padding: 0.8em;
 }
-
-.dashboard-meal-time {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 1.5em;
-}
-
-.dashboard-meal-time-progress {
-    max-height: 4.9em;
-}
-
-.meal-time-info {
-    margin-inline: .7em
-}
-
-.add-meal-button {
-    font-size: 2.8rem;
-    color: var(--primary-color);
-    cursor: pointer;
-    transition: all .3s;
-
-    &:hover {
-        color: var(--primary-color-dark);
-    }
-}
-
-.dashboard-progress-icon {
-    font-size: 2.8rem;
-    color: var(--primary-color);
-}
