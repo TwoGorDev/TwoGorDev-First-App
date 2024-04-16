@@ -6,7 +6,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 export default function Navbar() {
 	const location = useLocation();
 
-	const navClass = location.pathname === '/' ? 'home-nav' : 'nav';
+	const navClass = ['/', '/register', '/login'].includes(location.pathname)? 'home-nav' : 'nav';
 
 	return (
 		<nav className={navClass}>

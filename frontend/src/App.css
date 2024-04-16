@@ -19,6 +19,7 @@
 
 body {
 	min-height: 100vh;
+	
 	scroll-behavior: smooth;
 	font-size: 1.6rem;
 	font-family: 'Roboto';
@@ -45,7 +46,7 @@ image {
 }
 
 button:active {
-		transform: scale(.95);	
+	transform: scale(0.97);
 }
 
 a,
@@ -61,5 +62,4 @@ ul {
 .fwb {
 	font-weight: bold;
 }
-
 
