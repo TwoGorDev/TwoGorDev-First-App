@@ -1,8 +1,11 @@
+import { useState } from 'react';
+
 // styles
-import './MealTime.css'
+import './MealTime.css';
 
 // components
 import CircularProgressBar from '../circularProgressBar/CircularProgressBar';
+import AddProductModal from '../addProductPopup/AddProductModal';
 
 // icons
 import { FaCirclePlus } from 'react-icons/fa6';
@@ -13,7 +16,9 @@ import {
 	GiBowlOfRice,
 } from 'react-icons/gi';
 
-const MealTime = ({ mealTime, calories, progress }) => {
+export default function MealTime({ mealTime, calories, progress }) {
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
 	const getProgressIcon = () => {
 		switch (mealTime) {
 			case 'breakfast':
@@ -30,24 +35,30 @@ const MealTime = ({ mealTime, calories, progress }) => {
 	};
 
 	return (
-		<div className='dashboard-meal-time'>
-			<CircularProgressBar
-				className='dashboard-meal-time-progress'
-				value={progress}
-				strokeWidth={7}>
-				{getProgressIcon()}
-			</CircularProgressBar>
-			<div className='meal-time-info'>
-				<h3 className='meal-time-title'>
-					{mealTime.charAt(0).toUpperCase() + mealTime.slice(1)}
-				</h3>
-				<p className='meal-time-calories'>
-					{Math.round(progress * calories)} / {calories} kcal
-				</p>
+		<>
+			<div className='dashboard-meal-time'>
+				<CircularProgressBar
+					className='dashboard-meal-time-progress'
+					value={progress}
+					strokeWidth={7}>
+					{getProgressIcon()}
+				</CircularProgressBar>
+				<div className='meal-time-info'>
+					<h3 className='meal-time-title'>
+						{mealTime.charAt(0).toUpperCase() + mealTime.slice(1)}
+					</h3>
+					<p className='meal-time-calories'>
+						{Math.round(progress * calories)} / {calories} kcal
+					</p>
+				</div>
+				<FaCirclePlus
+					onClick={() => setIsModalOpen((prevState) => !prevState)}
+					className='add-meal-button'
+				/>
 			</div>
-			<FaCirclePlus className='add-meal-button' />
-		</div>
+			{isModalOpen && (
+				<AddProductModal title={mealTime} setIsModalOpen={setIsModalOpen} />
+			)}
+		</>
 	);
-};
-
-export default MealTime;
+}

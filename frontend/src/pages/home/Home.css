@@ -6,8 +6,8 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background-image: url('../../assets/images/home-intro-large4.jpg');
-	background-position: center;
+	background-image: url('../../assets/images/Home-background-large.png');
+	background-position: top;
 	background-size: cover;
 	color: var(--text-color-light);
 }
@@ -18,7 +18,7 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0, 0, 0, 0.555);
+	background-color: rgba(0, 0, 0, 0.2);
 	z-index: -1;
 }
 

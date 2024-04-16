@@ -41,7 +41,6 @@ export default function Login() {
 	return (
 		<div className='login-container'>
 			<Form title='Login' buttonText='Log in' handleSubmit={handleLogin} errors={errors}/>
-			<div className='login-container-shadow'></div>
 		</div>
 	);
 }

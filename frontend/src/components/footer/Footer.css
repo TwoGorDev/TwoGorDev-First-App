@@ -8,7 +8,7 @@
 }
 
 .home-footer {
-	background-color: (255,255,255,.5);
+	background-color: rgb(255,255,255,.05);
     backdrop-filter: blur(5px);
 }
 

@@ -1,0 +1,52 @@
+.products-table {
+	border-spacing: 0 0.7em;
+}
+
+thead {
+	position: sticky;
+	top: 0;
+	background-color: #706e6e3d;
+	backdrop-filter: blur(10px);
+	border-radius: 15px;
+}
+
+.table-headings td {
+	font-weight: bold;
+	color: var(--primary-color);
+}
+
+.products-table-data td {
+	padding: 0.9em;
+
+	&:nth-child(2) {
+		text-align: left;
+		font-weight: bold;
+	}
+}
+
+.product {
+	border-radius: 15px;
+	box-shadow: 1px 1px 6px rgb(183, 183, 183);
+}
+
+.products-table {
+	border-collapse: separate;
+	display: block;
+	height: 70vh;
+	padding-inline: 1em;
+	overflow-y: scroll;
+	scrollbar-width: thin;
+	scrollbar-color: var(--primary-color) var(--secondary-color);
+}
+
+.add-meal-button {
+    font-size: 2.8rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: all .3s;
+
+    &:hover {
+        color: var(--primary-color-dark);
+    }
+}
+

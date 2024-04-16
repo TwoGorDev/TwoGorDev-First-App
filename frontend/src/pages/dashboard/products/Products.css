@@ -8,27 +8,4 @@
 	font-size: 1.8rem;
 }
 
-.products-table {
-  border-spacing: 0 .7em;
-}
-
-.table-headings td {
-	font-weight: bold;
-	color: var(--primary-color);
-}
-
-.products-table-data td {
-	padding: .9em;
-
-	&:nth-child(2) {
-        /* color: var(--primary-color); */
-		text-align: left;
-        font-weight: bold;
-	}  
-}
-
-.product {
-	border-radius: 15px;
-	box-shadow: 1px 1px 6px rgb(183, 183, 183);
-}
 

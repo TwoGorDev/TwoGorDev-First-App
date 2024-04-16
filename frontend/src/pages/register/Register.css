@@ -1,5 +1,18 @@
 .register-container {
+	position: fixed;
+	height: 100%;
+	width: 100%;
 	display: flex;
-	height: calc(100vh - 57px);
-	background-image: url('../../assets/images/register-large.jpg');
+	background-image: url('../../assets/images/Register-background-large.png');
+	background-position: center;
+	background-size: cover;
+}
+
+.register-form-container {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	width: 100%;
+	/* height: 100%; */
+	margin-left: 8em;
 }
