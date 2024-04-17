@@ -2,7 +2,22 @@
 import './Nutrition.css';
 
 // components
-import MealTime from '../../components/mealTime/MealTime';
+import MealCard from '../mealTime/MealCard';
+
+// icons
+import {
+	GiButterToast,
+	GiFruitBowl,
+	GiHotMeal,
+	GiBowlOfRice,
+} from 'react-icons/gi';
+
+const ICONS = [
+	<GiButterToast className='dashboard-progress-icon' />,
+	<GiFruitBowl className='dashboard-progress-icon' />,
+	<GiHotMeal className='dashboard-progress-icon' />,
+	<GiBowlOfRice className='dashboard-progress-icon' />
+]
 
 export default function Nutrition({ caloriesReq, meals }) {
 	const mealCalories = {
@@ -27,11 +42,12 @@ export default function Nutrition({ caloriesReq, meals }) {
 				<h2 className='dashboard-nutrition-title'>Nutrition</h2>
 				<div className='dashboard-nutrition-meal-times'>
 					{Object.entries(mealCalories).map(([mealTime, calories], index) => (
-						<MealTime
+						<MealCard
+						  children={ICONS[index]}
 							key={index}
 							mealTime={mealTime}
-							calories={calories}
-							progress={(calculateMealCalories(meals[index]) / calories) * 100}
+							caloriesToConsume={calories}
+							progress={calculateMealCalories(meals[index])}
 						/>
 					))}
 				</div>

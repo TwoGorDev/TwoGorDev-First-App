@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // styles
 import './ProductsTable.css';
@@ -157,6 +157,7 @@ export default function ProductsTable({ addProduct }) {
 	const handleAddProduct = (product) => {
 		addProduct(product);
 	};
+
 
 	return (
 		<table className='products-table'>
