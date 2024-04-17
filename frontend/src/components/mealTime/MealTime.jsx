@@ -17,7 +17,7 @@ import {
 } from 'react-icons/gi';
 
 export default function MealTime({ mealTime, calories, progress }) {
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
 
 	const getProgressIcon = () => {
 		switch (mealTime) {
@@ -52,12 +52,15 @@ export default function MealTime({ mealTime, calories, progress }) {
 					</p>
 				</div>
 				<FaCirclePlus
-					onClick={() => setIsModalOpen((prevState) => !prevState)}
+					onClick={() => setIsAddProductModalOpen((prevState) => !prevState)}
 					className='add-meal-button'
 				/>
 			</div>
-			{isModalOpen && (
-				<AddProductModal title={mealTime} setIsModalOpen={setIsModalOpen} />
+			{isAddProductModalOpen && (
+				<AddProductModal
+					title={mealTime}
+					setIsAddProductModalOpen={setIsAddProductModalOpen}
+				/>
 			)}
 		</>
 	);

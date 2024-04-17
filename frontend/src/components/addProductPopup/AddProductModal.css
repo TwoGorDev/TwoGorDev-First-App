@@ -1,4 +1,4 @@
-.overlay {
+.add-product-overlay {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -8,10 +8,10 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	z-index: 5000;
+	z-index: 2000;
 }
 
-.add-product-popup {
+.product-modal-popup {
 	position: relative;
 	width: fit-content;
 	padding: 2em;
