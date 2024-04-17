@@ -24,8 +24,8 @@
 .modal-close-icon {
 	position: absolute;
 	top: 0.2em;
-	right: .3em;
-	padding: .2em;
+	right: 0.3em;
+	padding: 0.2em;
 	font-size: 5rem;
 	cursor: pointer;
 	transition: all 0.1s;
@@ -53,7 +53,8 @@
 }
 
 .modal-added-products {
-	max-height: 70vh;
+	position: relative;
+	max-height: 65vh;
 	/* margin-top: 0.7em; */
 	padding-inline: 1em;
 	border-radius: 15px;
@@ -72,17 +73,19 @@
 
 .added-products-item {
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-between;
 	align-items: center;
-	margin: 1em;
+	gap: 2em;
+	margin: 1em 0.2em;
 	padding: 0.8em;
 	border-radius: 12px;
 	box-shadow: 1px 1px 6px rgb(183, 183, 183);
 	font-size: 1.8rem;
 }
 
-.added-products-item-kcal {
-	padding-inline: 0.3em;
+.added-product-name {
+	flex-basis: 30%;
+	text-align: left;
 }
 
 .remove-product-icon {
@@ -108,5 +111,18 @@
 
 	&:hover {
 		background-color: var(--primary-color-dark);
+	}
+}
+
+.added-products-total-calories {
+	position: absolute;
+	bottom: 9%;
+	right: 12%;
+	font-size: 1.8rem;
+
+	& span {
+		font-size: 2.5rem;
+		color: var(--primary-color);
+		font-weight: bold;
 	}
 }

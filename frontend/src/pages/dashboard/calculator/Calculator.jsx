@@ -26,14 +26,14 @@ export default function Calculator() {
 
 	const { setCalculatorData } = useContext(DashboardContext);
 
-	function handleChange(e) {
-		setResult((prevResult) => {
-			return {
-				...prevResult,
-				[e.target.name]: e.target.value,
-			};
-		});
-	}
+	const handleChange = (e) => {
+  const { name, value } = e.target;
+  if (['age', 'weight', 'height'].includes(name) && /^[0-9\b]+$/.test(value) || e.target.value === '') {
+    setResult((prevResult) => ({...prevResult, [name]: value }));
+  } else if (['gender', 'activity', 'goal'].includes(name)) {
+    setResult((prevResult) => ({...prevResult, [name]: value }));
+  }
+};
 
 	// function that calculates caloric requirement
 	const handleCalculate = (e) => {

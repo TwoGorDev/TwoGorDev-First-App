@@ -7,21 +7,31 @@ export default function ProductServingModal({
 	setOpenServingModal,
 	product,
 	addProduct,
-	setTotalProductCalories
+	setTotalProductCalories,
 }) {
-	const [serving, setServing] = useState('0');
-	const totalProductCaloriesAmount = Math.round((serving / 100) * product.calories);
+	const [ showError, setShowError ] = useState(false)
+	const [serving, setServing] = useState('');
+	const totalProductCaloriesAmount = Math.round(
+		(serving / 100) * product.calories
+	);
 
 	function handleChange(e) {
-		setServing(e.target.value);
+		if (/^[0-9\b]+$/.test(e.target.value)) {
+			setServing(e.target.value);
+		}
 	}
 
-	console.log(product);
-
 	const handleAddProduct = () => {
-		addProduct(product)
-		setTotalProductCalories(totalProductCaloriesAmount)
-		setOpenServingModal(false)
+		if (serving !== '') {
+			addProduct(product);
+			setTotalProductCalories((prevState) => [
+				...prevState,
+				totalProductCaloriesAmount,
+			]);
+			setOpenServingModal(false);
+		} else {
+			setShowError(true)
+		}
 	};
 
 	return (
@@ -44,6 +54,7 @@ export default function ProductServingModal({
 					/>
 					<span className='serving-input-info'>grams of {product.name}</span>
 				</div>
+				{showError && <p className='serving-input-error'>Incorrect serving quantity!</p>}
 				<p className='serving-total-kcal-info'>
 					Calories: {totalProductCaloriesAmount} kcal
 				</p>

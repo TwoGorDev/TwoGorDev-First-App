@@ -44,6 +44,12 @@
 	}
 }
 
+.serving-input-error {
+	margin-block: .3em;
+	/* font-size: 1.4rem; */
+	color: var(--primary-color);
+}
+
 .serving-total-kcal-info {
 	margin-top: 0.5em;
 }
