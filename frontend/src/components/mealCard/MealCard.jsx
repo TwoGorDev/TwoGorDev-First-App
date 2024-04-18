@@ -10,12 +10,7 @@ import AddProductModal from '../addProductPopup/AddProductModal';
 // icons
 import { FaCirclePlus } from 'react-icons/fa6';
 
-export default function MealCard({
-	children,
-	mealTime,
-	caloriesToConsume,
-	progress,
-}) {
+export default function MealCard({ children, mealTime, caloriesToConsume, progress }) {
 	const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
 
 	return (

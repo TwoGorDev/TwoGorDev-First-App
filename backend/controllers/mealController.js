@@ -7,11 +7,11 @@ const { validateMealFormat } = require('../validators/mealValidator');
 const createMeal = async (req, res, next) => {
   try {
     const newMeal = req.body;
-    const { id: creatorId } = req.user;
+    const { id: userId } = req.user;
 
     validateMealFormat(newMeal);
 
-    const meal = await mealRepo.insert(newMeal, creatorId);
+    const meal = await mealRepo.insert(newMeal, userId);
 
     if (!meal) {
       throw new CustomError(500, 'Creating new meal failed');

@@ -2,7 +2,7 @@
 import './Nutrition.css';
 
 // components
-import MealCard from '../mealTime/MealCard';
+import MealCard from '../mealCard/MealCard';
 
 // icons
 import {
@@ -12,6 +12,8 @@ import {
 	GiBowlOfRice,
 } from 'react-icons/gi';
 
+import useCalculateNutritionValues from '../../hooks/useCalculateNutritionValues';
+
 const ICONS = [
 	<GiButterToast className='dashboard-progress-icon' />,
 	<GiFruitBowl className='dashboard-progress-icon' />,
@@ -20,21 +22,13 @@ const ICONS = [
 ]
 
 export default function Nutrition({ caloriesReq, meals }) {
-	const mealCalories = {
-		breakfast: Math.floor(caloriesReq * 0.25),
-		lunch: Math.floor(caloriesReq * 0.4),
-		dinner: Math.floor(caloriesReq * 0.22),
-		snacks: Math.floor(caloriesReq * 0.13),
-	};
+	const { calculateMealNutrition } = useCalculateNutritionValues();
 
-	// Sum the calories of all the portions inside a meal
-	const calculateMealCalories = (meal) => {
-		return Math.round(
-			meal.reduce(
-				(sum, portion) => sum + (portion.serving / 100) * portion.calories,
-				0
-			)
-		);
+	const mealCalories = {
+		breakfast: Math.round(caloriesReq * 0.25),
+		lunch: Math.round(caloriesReq * 0.4),
+		dinner: Math.round(caloriesReq * 0.22),
+		snacks: Math.round(caloriesReq * 0.13),
 	};
 
 	return (
@@ -47,7 +41,7 @@ export default function Nutrition({ caloriesReq, meals }) {
 							key={index}
 							mealTime={mealTime}
 							caloriesToConsume={calories}
-							progress={calculateMealCalories(meals[index])}
+							progress={calculateMealNutrition(meals[index]).consumedCalories}
 						/>
 					))}
 				</div>
