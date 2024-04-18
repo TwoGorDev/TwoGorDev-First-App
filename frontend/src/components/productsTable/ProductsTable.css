@@ -1,13 +1,36 @@
+.products-table-search {
+	padding: .8em;
+	border-radius: 12px;
+	box-shadow: 1px 1px 3px rgb(183, 183, 183);
+	border: 1px solid transparent;
+	font-size: 1.6rem;
+	width: 70%;
+	margin-block: .5em;
+
+	&:focus {
+		outline: none;
+		border: 1px solid var(--primary-color);
+		box-shadow: none;
+	}
+}
+
 .products-table {
+	border-collapse: separate;
 	border-spacing: 0 0.7em;
+	display: block;
+	height: 50vh;
+	padding-inline: 1em;
+	overflow-y: scroll;
+	scrollbar-width: thin;
+	scrollbar-color: var(--primary-color) var(--secondary-color);
 }
 
 thead {
 	position: sticky;
 	top: 0;
-	background-color: #706e6e3d;
-	backdrop-filter: blur(10px);
+	background-color: #e4f1f7;
 	border-radius: 15px;
+	z-index: 215609;
 }
 
 .table-headings td {
@@ -27,16 +50,6 @@ thead {
 .product {
 	border-radius: 15px;
 	box-shadow: 1px 1px 6px rgb(183, 183, 183);
-}
-
-.products-table {
-	border-collapse: separate;
-	display: block;
-	height: 70vh;
-	padding-inline: 1em;
-	overflow-y: scroll;
-	scrollbar-width: thin;
-	scrollbar-color: var(--primary-color) var(--secondary-color);
 }
 
 .add-meal-button {

@@ -30,7 +30,7 @@ export default function MealCard({
 
 				<div className='meal-time-info'>
 					<h3 className='meal-time-title'>
-						{mealTime.charAt(0).toUpperCase() + mealTime.slice(1)}
+						{mealTime[0].toUpperCase() + mealTime.slice(1)}
 					</h3>
 
 					<p className='meal-time-calories'>

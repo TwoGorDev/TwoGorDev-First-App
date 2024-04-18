@@ -4,11 +4,10 @@ import './Calories.css';
 // components
 import CircularProgressBar from '../circularProgressBar/CircularProgressBar';
 
-import { useState } from 'react';
 
-const MACROS = ['Carbohydrates', 'Proteins', 'Fats'];
 
 export default function Calories({ caloriesReq, macrosReq, meals}) {
+	const MACROS = ['Carbohydrates', 'Proteins', 'Fats'];
 
 	// Calculate total calories of the day
 	const calculateTotalCalories = () => {
