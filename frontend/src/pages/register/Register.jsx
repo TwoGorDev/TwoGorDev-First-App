@@ -4,8 +4,13 @@ import { useState } from 'react';
 // styles
 import './Register.css';
 
+// utilities
+import useDataApi from '../../hooks/useDataApi';
+
 export default function Register() {
 	const [errors, setErrors] = useState({});
+	const { isPending, error, data, postData } = useDataApi();
+
 
 	const handleRegister = async (e, formData) => {
 		e.preventDefault();
@@ -48,19 +53,14 @@ export default function Register() {
 		setErrors(validationErrors);
 
 		if (Object.keys(validationErrors).length === 0) {
-			await fetch('http://localhost:4000/signup', {
-				method: 'POST',
-				body: JSON.stringify({
-					username: formData.username,
-					password: formData.password,
-					email: formData.email,
-				}),
-				headers: { 'Content-type': 'application/json' },
+			postData('/signup', {
+				username: formData.username,
+				password: formData.password,
+				email: formData.email,
 			})
-				// .then((res) => res.json())
-				.then((data) => console.log(data));
 		}
 	};
+
 	return (
 		<div className='register-container'>
 			<Form

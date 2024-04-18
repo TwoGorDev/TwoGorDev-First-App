@@ -10,6 +10,9 @@ import { FaCircleMinus } from 'react-icons/fa6';
 // components
 import ProductsTable from '../productsTable/ProductsTable';
 
+// utilities
+import getFormattedDate from '../../utilities/getFormattedDate';
+
 export default function AddProductModal({ title, setIsAddProductModalOpen }) {
 	const [addedProducts, setAddedProducts] = useState([]);
 	const [totalProductCalories, setTotalProductCalories] = useState([]);
@@ -41,7 +44,7 @@ export default function AddProductModal({ title, setIsAddProductModalOpen }) {
 	const addProductsToMeal = () => {
 		const newMeal = {
 			type: title,
-			date: formattedDate
+			date: getFormattedDate(new Date())
 		}
 
 

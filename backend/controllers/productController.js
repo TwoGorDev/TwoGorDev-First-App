@@ -54,11 +54,11 @@ const getProduct = async (req, res, next) => {
 const createProduct = async (req, res, next) => {
   try {
     const newProduct = req.body;
-    const { id: creatorId } = req.user;
+    const { id: userId } = req.user;
 
     validateProductFormat(newProduct);
 
-    const product = await productRepo.insert(newProduct, creatorId);
+    const product = await productRepo.insert(newProduct, userId);
 
     if (!product) {
       throw new CustomError(500, 'Creating new product failed');

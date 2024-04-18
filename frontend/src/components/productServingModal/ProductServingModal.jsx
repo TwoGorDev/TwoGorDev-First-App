@@ -2,7 +2,10 @@ import { useState } from 'react';
 
 // styles
 import './ProductServingModal.css';
+
+// icons
 import { IoMdClose } from 'react-icons/io';
+
 export default function ProductServingModal({
 	setOpenServingModal,
 	product,

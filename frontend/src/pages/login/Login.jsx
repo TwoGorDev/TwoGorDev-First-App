@@ -4,10 +4,14 @@ import Form from '../../components/form/Form';
 // styles
 import './Login.css';
 
-import { useState } from 'react'
+// utilities
+import useDataApi from '../../hooks/useDataApi';
+import { useState } from 'react';
 
 export default function Login() {
 	const [errors, setErrors] = useState({});
+	const { isPending, error, data, postData } = useDataApi();
+
 	const handleLogin = async (e, formData) => {
 		e.preventDefault();
 
@@ -20,24 +24,21 @@ export default function Login() {
         validationErrors.password = "Incorrect password"
     }
 
-    setErrors(validationErrors)
+    setErrors(validationErrors);
 
     if(Object.keys(validationErrors).length === 0) {
-		await fetch('http://localhost:4000/login', {
-			method: 'POST',
-			body: JSON.stringify({
+			await postData('/login', {
 				username: formData.username,
-				password: formData.password,
-			}),
-			headers: { 'Content-type': 'application/json' },
-		})
-			.then((res) => res.json())
-			.then((data) => console.log(data));
+				password: formData.password
+			})
     }
 
-
-		
+		if (data) {
+			localStorage.setItem('user-token', JSON.stringify(data.token));
+		}
 	};
+
+
 	return (
 		<div className='login-container'>
 			<Form title='Login' buttonText='Log in' handleSubmit={handleLogin} errors={errors}/>
