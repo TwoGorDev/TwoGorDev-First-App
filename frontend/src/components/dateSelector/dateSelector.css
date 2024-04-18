@@ -1,0 +1,19 @@
+.date-selector {
+  padding: 1em 2em;
+  margin-top: 1em;
+  font-size: 1.9rem;
+  background-color: var(--primary-color);
+  color: var(--text-color-light);
+  border: none;
+  border-radius: 17%/50%;
+  cursor: pointer;
+  transition: all 300ms;
+}
+
+.date-selector:hover {
+  background-color: var(--primary-color-dark);
+}
+
+.react-datepicker {
+  scale: 175%;
+}

@@ -14,13 +14,14 @@ export default function Form({
 	handleSubmit,
 	errors,
 }) {
+	
 	const [formData, setFormData] = useState({
 		username: '',
 		password: '',
 		confirmPassword: '',
 		email: '',
 	});
-	
+  
 	const [togglePassword, setTogglePassword] = useState({
 		password: false,
 		confirmPassword: false,

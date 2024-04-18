@@ -1,18 +1,16 @@
-//styles
+// styles
 import './Dashboard.css';
 
-//components
+// components
 import Calories from '../../components/calories/Calories';
 import Nutrition from '../../components/nutrition/Nutrition';
 import Advice from '../../components/advice/Advice';
+import DateSelector from '../../components/dateSelector/DateSelector';
 
-// contexts
-import { DashboardContext } from '../../layouts/DashboardLayout';
-
-// utils
-import { useContext, useEffect } from 'react';
+// utilities
+import { useEffect, useState } from 'react';
 import useDataApi from '../../hooks/useDataApi';
-import currentDate from '../../utilities/getCurrentDate';
+import getFormattedDate from '../../utilities/getFormattedDate';
 
 const FAKE_BREAKFAST = [
 	{serving: 50, calories: 100, proteins: 10, carbohydrates: 30, fats: 5},
@@ -44,13 +42,13 @@ const FAKE_SNACKS = [
 ]
 
 export default function Dashboard() {
-	// const { calculatorData } = useContext(DashboardContext);
-	const { isPending, error, data, getData } = useDataApi(`daily-summary/2024-04-13`);
+	const [date, setDate] = useState(getFormattedDate(new Date))
+	const { isPending, error, data, getData } = useDataApi();
 
 	// Fetch user's daily summary from the server
 	// useEffect(() => {
-	// 	getData()
-	// }, []);
+	// 	getData(`/daily-summary/${date}`);
+	// }, [date]);
 	
 	// Filter meals from daily summary into their respected arrays
 	const breakfast = [];
@@ -87,6 +85,9 @@ export default function Dashboard() {
 
 	return (
 		<div className='wrapper center'>
+			<div className="date-selector-container">
+				<DateSelector date={date} setDate={setDate}/>	
+			</div>
 			<div className='dashboard-tables'>
 				<Calories caloriesReq={caloriesReq} macrosReq={macrosReq} meals={[FAKE_BREAKFAST, FAKE_LUNCH, FAKE_DINNER, FAKE_SNACKS]}/>
 				<Nutrition caloriesReq={caloriesReq} meals={[FAKE_BREAKFAST, FAKE_LUNCH, FAKE_DINNER, FAKE_SNACKS]}/>
