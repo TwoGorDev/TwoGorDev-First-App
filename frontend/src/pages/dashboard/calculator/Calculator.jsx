@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 // styles
 import './Calculator.css';
 
 // components
-import CalculatorInfoContent from '../../../components/calculatorInfo/CalculatorInfoContent'
+import CalculatorInfoContent from '../../../components/calculatorInfo/CalculatorInfoContent';
 
 export default function Calculator() {
 	const [result, setResult] = useState({
@@ -20,85 +20,104 @@ export default function Calculator() {
 		fats: '',
 	});
 
+	const [errors, setErrors] = useState({});
+
 	const handleChange = (e) => {
-  const { name, value } = e.target;
-  if (['age', 'weight', 'height'].includes(name) && /^[0-9\b]+$/.test(value) || e.target.value === '') {
-    setResult((prevResult) => ({...prevResult, [name]: value }));
-  } else if (['gender', 'activity', 'goal'].includes(name)) {
-    setResult((prevResult) => ({...prevResult, [name]: value }));
-  }
-};
+		const { name, value } = e.target;
+		if (
+			(['age', 'weight', 'height'].includes(name) &&
+				/^[0-9\b]+$/.test(value)) ||
+			e.target.value === ''
+		) {
+			setResult((prevResult) => ({ ...prevResult, [name]: value }));
+		} else if (['gender', 'activity', 'goal'].includes(name)) {
+			setResult((prevResult) => ({ ...prevResult, [name]: value }));
+		}
+	};
 
 	// function that calculates caloric requirement
 	const handleCalculate = (e) => {
 		e.preventDefault();
-
+		const validationErrors = {}
 		//========== CALORIES ==========//
-		let calories = {};
-		// gender check
-		if (result.gender === 'male') {
-			calories.initialValue = 66.473;
-			calories.weightMultiplier = 13.752;
-			calories.heightMultiplier = 5.003;
-			calories.ageMultiplier = 6.75;
-		} else {
-			calories.initialValue = 655.1;
-			calories.weightMultiplier = 9.563;
-			calories.heightMultiplier = 1.85;
-			calories.ageMultiplier = 4.676;
+		if (!result.age.trim()) {
+			validationErrors.age = true
 		}
-
-		// activity check
-		switch (result.activity) {
-			case 'sedentary':
-				calories.activityMultiplier = 1.2;
-				break;
-			case 'lightly-active':
-				calories.activityMultiplier = 1.4;
-				break;
-			case 'moderately-active':
-				calories.activityMultiplier = 1.6;
-				break;
-			case 'very-active':
-				calories.activityMultiplier = 1.9;
-				break;
+		if (!result.weight.trim()) {
+			validationErrors.weight = true
 		}
-
-		// goal check
-		switch (result.goal) {
-			case 'weight-loss':
-				calories.goalMultiplier = -0.15;
-				break;
-			case 'maintenance':
-				calories.goalMultiplier = 0;
-				break;
-			case 'weight-gain':
-				calories.goalMultiplier = 0.15;
-				break;
+		if (!result.height.trim()) {
+			validationErrors.height = true
 		}
+		setErrors(validationErrors)
 
-		// calories calculations
-		let weightCalc = calories.weightMultiplier * parseInt(result.weight),
-			heightCalc = calories.heightMultiplier * parseInt(result.height),
-			ageCalc = calories.ageMultiplier * parseInt(result.age),
-			BMR = calories.initialValue + weightCalc + heightCalc - ageCalc,
-			activeBMR = BMR * calories.activityMultiplier,
-			TDEE = Math.floor(activeBMR + activeBMR * calories.goalMultiplier);
+		if(Object.keys(validationErrors).length === 0) {
+			const calories = {};
+			// gender check
+			if (result.gender === 'male') {
+				calories.initialValue = 66.473;
+				calories.weightMultiplier = 13.752;
+				calories.heightMultiplier = 5.003;
+				calories.ageMultiplier = 6.75;
+			} else {
+				calories.initialValue = 655.1;
+				calories.weightMultiplier = 9.563;
+				calories.heightMultiplier = 1.85;
+				calories.ageMultiplier = 4.676;
+			}
 
-		//=========== MACRO ===========/
-		let carbohydrates = Math.floor((TDEE * 0.45) / 4),
-			proteins = Math.floor((TDEE * 0.25) / 4),
-			fats = Math.floor((TDEE * 0.3) / 9);
+			// activity check
+			switch (result.activity) {
+				case 'sedentary':
+					calories.activityMultiplier = 1.2;
+					break;
+				case 'lightly-active':
+					calories.activityMultiplier = 1.4;
+					break;
+				case 'moderately-active':
+					calories.activityMultiplier = 1.6;
+					break;
+				case 'very-active':
+					calories.activityMultiplier = 1.9;
+					break;
+			}
 
-		setResult((prevResult) => {
-			return {
-				...prevResult,
-				calories: TDEE,
-				carbohydrates,
-				proteins,
-				fats,
-			};
-		});
+			// goal check
+			switch (result.goal) {
+				case 'weight-loss':
+					calories.goalMultiplier = -0.15;
+					break;
+				case 'maintenance':
+					calories.goalMultiplier = 0;
+					break;
+				case 'weight-gain':
+					calories.goalMultiplier = 0.15;
+					break;
+			}
+
+			// calories calculations
+			let weightCalc = calories.weightMultiplier * parseInt(result.weight),
+				heightCalc = calories.heightMultiplier * parseInt(result.height),
+				ageCalc = calories.ageMultiplier * parseInt(result.age),
+				BMR = calories.initialValue + weightCalc + heightCalc - ageCalc,
+				activeBMR = BMR * calories.activityMultiplier,
+				TDEE = Math.floor(activeBMR + activeBMR * calories.goalMultiplier);
+
+			//=========== MACRO ===========/
+			let carbohydrates = Math.floor((TDEE * 0.45) / 4),
+				proteins = Math.floor((TDEE * 0.25) / 4),
+				fats = Math.floor((TDEE * 0.3) / 9);
+
+			setResult((prevResult) => {
+				return {
+					...prevResult,
+					calories: TDEE,
+					carbohydrates,
+					proteins,
+					fats,
+				};
+			});
+		}
 	};
 
 	return (
@@ -125,7 +144,9 @@ export default function Calculator() {
 						name='age'
 						id='age-input'
 						type='text'
-						className='dashboard-calculator-input'
+						className={`dashboard-calculator-input ${
+							errors.age ? 'input-error' : ''
+						}`}
 						value={result.age}
 						onChange={handleChange}
 					/>
@@ -138,7 +159,9 @@ export default function Calculator() {
 						name='weight'
 						id='weight-input'
 						type='text'
-						className='dashboard-calculator-input'
+						className={`dashboard-calculator-input ${
+							errors.weight ? 'input-error' : ''
+						}`}
 						value={result.weight}
 						onChange={handleChange}
 					/>
@@ -151,7 +174,9 @@ export default function Calculator() {
 						name='height'
 						id='height-input'
 						type='text'
-						className='dashboard-calculator-input'
+						className={`dashboard-calculator-input ${
+							errors.height ? 'input-error' : ''
+						}`}
 						value={result.height}
 						onChange={handleChange}
 					/>
@@ -185,6 +210,10 @@ export default function Calculator() {
 						<option value='weight-gain'>Weight gain</option>
 					</select>
 				</label>
+
+				{Object.values(errors).some(value => value !== '') && (
+					<p className='calculator-error-info'>All fields must be completed!</p>
+				)}
 
 				<button
 					className='submit-calculator-form-btn'

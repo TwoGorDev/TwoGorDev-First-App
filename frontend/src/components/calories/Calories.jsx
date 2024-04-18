@@ -3,15 +3,18 @@ import './Calories.css';
 
 // components
 import CircularProgressBar from '../circularProgressBar/CircularProgressBar';
+import SimpleProgressBar from '../simpleProgressBar/SimpleProgressBar';
+import React from 'react';
 
 // utilities
 import useCalculateNutritionValues from '../../hooks/useCalculateNutritionValues';
 import capitalizeFirstLetter from '../../utilities/capitalizeFirstLetter';
 
-export default function Calories({ caloriesReq, macrosReq, meals}) {
+export default function Calories({ caloriesReq, macrosReq, meals }) {
 	const { calculateDailyNutrition } = useCalculateNutritionValues();
-	const {consumedCalories, consumedProteins, consumedCarbs, consumedFats } = calculateDailyNutrition(meals);
-	const totalMacros = [consumedProteins, consumedCarbs, consumedFats];
+	const { consumedCalories, consumedProteins, consumedCarbs, consumedFats } =
+		calculateDailyNutrition(meals);
+	const totalMacros = [consumedCarbs, consumedFats, consumedProteins];
 
 	return (
 		<div className='dashboard-summary'>
@@ -20,48 +23,35 @@ export default function Calories({ caloriesReq, macrosReq, meals}) {
 			{/* CALORIES */}
 			<div className='dashboard-summary-calories'>
 				<div className='summary-calories-ingested'>
+					<h3 className='calories-amount'>{consumedCalories}</h3>
 
-					<h3 className='calories-amount'>
-						{consumedCalories}
-					</h3>
-
-					<p className='summary-info calories-ingested'>
-						Ingested
-					</p>
-
+					<p className='summary-info calories-ingested'>Ingested</p>
 				</div>
 
 				<div className='summary-calories-percentile'>
 					<CircularProgressBar
 						className='percentile-amount'
-						value={consumedCalories / caloriesReq * 100}
+						value={(consumedCalories / caloriesReq) * 100}
+						progress={consumedCalories}
+						maxProgress={caloriesReq}
 						circleRatio={0.75}
 						strokeWidth={7}
-						transformDeg='-135'
-					>
-
+						transformDeg='-135'>
 						<h3 className='percentile-amount'>
-							{`${Math.round(consumedCalories / caloriesReq * 100)}%`}
+							{`${Math.round((consumedCalories / caloriesReq) * 100)}%`}
 							<p className='summary-info calories-percentile'>
 								Daily
 								<br />
 								requirement
 							</p>
 						</h3>
-
 					</CircularProgressBar>
 				</div>
 
 				<div className='summary-calories-remaining'>
+					<h3 className='calories-amount'>{caloriesReq}</h3>
 
-					<h3 className='calories-amount'>
-						{caloriesReq}
-					</h3>
-
-					<p className='summary-info calories-ingested'>
-						Remaining
-					</p>
-
+					<p className='summary-info calories-ingested'>Remaining</p>
 				</div>
 			</div>
 
@@ -70,21 +60,13 @@ export default function Calories({ caloriesReq, macrosReq, meals}) {
 				{Object.entries(macrosReq).map(([macro, value], id) => {
 					return (
 						<div key={id} className='macro-container carbohydrates'>
+							<p className='summary-info'>{capitalizeFirstLetter(macro)}</p>
 
-							<p className='summary-info'>
-								{capitalizeFirstLetter(macro)}
-							</p>
-
-							<div className='macro-progress-bar'>
-								<div className='macro-progress-bar-fill'>
-									{/* Progress bar do zmiany na ten z biblioteki */}
-								</div>
-							</div>
+							<SimpleProgressBar value={totalMacros[id]} max={value} />
 
 							<h4 className='macro-amount'>
 								{`${totalMacros[id]} / ${value} g`}
 							</h4>
-
 						</div>
 					);
 				})}
