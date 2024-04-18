@@ -17,7 +17,6 @@
 .dashboard-nutrition-meal-times {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr) ;
-    grid-template-rows: repeat(2, 1fr);
 	gap: .8em;
 	padding: 0.8em;
 }

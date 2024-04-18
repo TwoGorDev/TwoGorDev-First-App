@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 
 // styles
 import './AddProductModal.css';
@@ -12,13 +12,13 @@ import ProductsTable from '../productsTable/ProductsTable';
 
 // utilities
 import getFormattedDate from '../../utilities/getFormattedDate';
+import capitalizeFirstLetter from '../../utilities/capitalizeFirstLetter';
 
 export default function AddProductModal({ title, setIsAddProductModalOpen }) {
 	const [addedProducts, setAddedProducts] = useState([]);
 	const [totalProductCalories, setTotalProductCalories] = useState([]);
-	const uppercaseTitle = title[0].toUpperCase() + title.slice(1);
-	const [newPortion, setNewPortion] = useState([])
-	console.log(newPortion);
+	const [newPortion, setNewPortion] = useState([]) // productId and serving
+
 	const totalAmountOfCalories = totalProductCalories.reduce(
 		(acc, curr) => acc + curr,
 		0
@@ -46,8 +46,6 @@ export default function AddProductModal({ title, setIsAddProductModalOpen }) {
 			type: title,
 			date: getFormattedDate(new Date())
 		}
-
-
 			// setIsAddProductModalOpen(false)
 	}
 
@@ -58,7 +56,7 @@ export default function AddProductModal({ title, setIsAddProductModalOpen }) {
 					className='modal-close-icon serving-modal-close-icon'
 					onClick={() => setIsAddProductModalOpen(false)}
 				/>
-				<h2 className='modal-title'>{uppercaseTitle}</h2>
+				<h2 className='modal-title'>{capitalizeFirstLetter(title)}</h2>
 				<p className='modal-choose-product-text'>
 					Choose your product from the list:
 				</p>
