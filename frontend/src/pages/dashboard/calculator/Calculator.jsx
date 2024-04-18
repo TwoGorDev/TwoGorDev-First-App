@@ -1,14 +1,10 @@
+import { useState } from 'react'
+
 // styles
 import './Calculator.css';
 
 // components
 import CalculatorInfoContent from '../../../components/calculatorInfo/CalculatorInfoContent'
-
-
-
-// context
-import { DashboardContext } from '../../../layouts/DashboardLayout';
-import { useContext, useState, useEffect } from 'react';
 
 export default function Calculator() {
 	const [result, setResult] = useState({
@@ -23,8 +19,6 @@ export default function Calculator() {
 		carbohydrates: '',
 		fats: '',
 	});
-
-	const { setCalculatorData } = useContext(DashboardContext);
 
 	const handleChange = (e) => {
   const { name, value } = e.target;

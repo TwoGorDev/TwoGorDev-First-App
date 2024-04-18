@@ -46,7 +46,6 @@
 
 .serving-input-error {
 	margin-block: .3em;
-	/* font-size: 1.4rem; */
 	color: var(--primary-color);
 }
 

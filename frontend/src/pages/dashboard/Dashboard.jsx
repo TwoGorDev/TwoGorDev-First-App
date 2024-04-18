@@ -32,11 +32,11 @@ const FAKE_DINNER = [
 
 ]
 const FAKE_SNACKS = [
-	{serving: 25, calories: 50, proteins: 10, carbohydrates: 30, fats: 5},
-	{serving: 25, calories: 50, proteins: 10, carbohydrates: 30, fats: 5},
-	{serving: 25, calories: 75, proteins: 10, carbohydrates: 30, fats: 5},
-	{serving: 25, calories: 75, proteins: 10, carbohydrates: 30, fats: 5}
-]
+	{ serving: 25, calories: 50, proteins: 10, carbohydrates: 30, fats: 5 },
+	{ serving: 25, calories: 50, proteins: 10, carbohydrates: 30, fats: 5 },
+	{ serving: 25, calories: 75, proteins: 10, carbohydrates: 30, fats: 5 },
+	{ serving: 25, calories: 75, proteins: 10, carbohydrates: 30, fats: 5 },
+];
 
 export default function Dashboard() {
 	const [date, setDate] = useState(getFormattedDate(new Date()));
@@ -108,8 +108,16 @@ export default function Dashboard() {
 				<DateSelector date={date} setDate={setDate}/>	
 			</div>
 			<div className='dashboard-tables'>
-				<Calories caloriesReq={caloriesReq} macrosReq={macrosReq} meals={[FAKE_BREAKFAST, FAKE_LUNCH, FAKE_DINNER, FAKE_SNACKS]}/>
-				<Nutrition caloriesReq={caloriesReq} meals={[FAKE_BREAKFAST, FAKE_LUNCH, FAKE_DINNER, FAKE_SNACKS]}/>
+				<Calories
+					caloriesReq={caloriesReq}
+					macrosReq={macrosReq}
+					meals={[FAKE_BREAKFAST, FAKE_LUNCH, FAKE_DINNER, FAKE_SNACKS]}
+				/>
+
+				<Nutrition
+					caloriesReq={caloriesReq}
+					meals={[FAKE_BREAKFAST, FAKE_LUNCH, FAKE_DINNER, FAKE_SNACKS]}
+				/>
 			</div>
 			<Advice />
 		</div>

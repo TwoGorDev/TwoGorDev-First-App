@@ -9,10 +9,17 @@ import { FaCirclePlus } from 'react-icons/fa6';
 // components
 import ProductServingModal from '../productServingModal/ProductServingModal';
 
-export default function ProductsTable({ addProduct, setTotalProductCalories }) {
+export default function ProductsTable({
+	addProduct,
+	setTotalProductCalories,
+	setNewPortion,
+	productsPage,
+}) {
 	const [isProductServingModalOpen, setIsProductServingModalOpen] =
 		useState(false);
-		const [selectedProduct, setSelectedProduct] = useState(null);
+	const [selectedProduct, setSelectedProduct] = useState(null);
+	// search state
+	const [searchTerm, setSearchTerm] = useState('');
 
 	const products = [
 		{
@@ -45,14 +52,27 @@ export default function ProductsTable({ addProduct, setTotalProductCalories }) {
 	];
 
 	const handleIconClick = (item) => {
-		setIsProductServingModalOpen(true)
-		setSelectedProduct(item)
-	}
+		setIsProductServingModalOpen(true);
+		setSelectedProduct(item);
+	};
 
+	// search functionality
+	const filteredProducts = products.filter((product) =>
+		product.name.toLowerCase().includes(searchTerm.toLowerCase())
+	);
 
 	return (
-		<>
-			<table className='products-table'>
+		<div>
+			<input
+				className='products-table-search'
+				type='text'
+				placeholder='Search products...'
+				value={searchTerm}
+				onChange={(e) => setSearchTerm(e.target.value)}
+			/>
+			<table
+				className='products-table'
+				style={productsPage && { height: '60vh' }}>
 				<thead>
 					<tr className='products-table-data table-headings'>
 						<td className='spacer'></td>
@@ -65,7 +85,7 @@ export default function ProductsTable({ addProduct, setTotalProductCalories }) {
 					</tr>
 				</thead>
 				<tbody>
-					{products.map((item) => (
+					{filteredProducts.map((item) => (
 						<tr key={item.id} className='products-table-data product'>
 							<td className='spacer'></td>
 							<td>{item.name}</td>
@@ -74,16 +94,20 @@ export default function ProductsTable({ addProduct, setTotalProductCalories }) {
 							<td>{`${item.proteins}g`}</td>
 							<td>{`${item.fats}g`}</td>
 							<td>
-								<FaCirclePlus
-									className='add-meal-button'
-									onClick={() => handleIconClick(item)}
-								/>
+								{!productsPage && (
+									<FaCirclePlus
+										className='add-meal-button'
+										onClick={() => handleIconClick(item)}
+									/>
+								)}
+
 								{isProductServingModalOpen && (
 									<ProductServingModal
 										setOpenServingModal={setIsProductServingModalOpen}
-										setTotalProductCalories={setTotalProductCalories}
 										product={selectedProduct}
 										addProduct={addProduct}
+										setTotalProductCalories={setTotalProductCalories}
+										setNewPortion={setNewPortion}
 									/>
 								)}
 							</td>
@@ -91,6 +115,6 @@ export default function ProductsTable({ addProduct, setTotalProductCalories }) {
 					))}
 				</tbody>
 			</table>
-		</>
+		</div>
 	);
 }

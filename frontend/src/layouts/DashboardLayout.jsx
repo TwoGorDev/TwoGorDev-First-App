@@ -1,12 +1,9 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import { createContext, useState } from 'react';
 
 // styles
 import './DashboardLayout.css';
 
 export default function DashboardLayout() {
-	const [calculatorData, setCalculatorData] = useState(null);
-
 	return (
 		<>
 			<nav className='dashboard-nav'>
@@ -20,11 +17,7 @@ export default function DashboardLayout() {
 					Calculator
 				</NavLink>
 			</nav>
-			<DashboardContext.Provider value={{ calculatorData, setCalculatorData }}>
-				<Outlet />
-			</DashboardContext.Provider>
+			<Outlet />
 		</>
 	);
 }
-
-export const DashboardContext = createContext();

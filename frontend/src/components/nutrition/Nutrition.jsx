@@ -14,12 +14,12 @@ import {
 
 import useCalculateNutritionValues from '../../hooks/useCalculateNutritionValues';
 
-const ICONS = [
-	<GiButterToast className='dashboard-progress-icon' />,
-	<GiFruitBowl className='dashboard-progress-icon' />,
-	<GiHotMeal className='dashboard-progress-icon' />,
-	<GiBowlOfRice className='dashboard-progress-icon' />
-]
+	const ICONS = [
+		<GiButterToast className='dashboard-progress-icon' />,
+		<GiFruitBowl className='dashboard-progress-icon' />,
+		<GiHotMeal className='dashboard-progress-icon' />,
+		<GiBowlOfRice className='dashboard-progress-icon' />
+	]
 
 export default function Nutrition({ caloriesReq, meals }) {
 	const { calculateMealNutrition } = useCalculateNutritionValues();
