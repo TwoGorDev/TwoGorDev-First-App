@@ -21,7 +21,7 @@ export default function Form({
 		confirmPassword: '',
 		email: '',
 	});
-
+  
 	const [togglePassword, setTogglePassword] = useState({
 		password: false,
 		confirmPassword: false,
