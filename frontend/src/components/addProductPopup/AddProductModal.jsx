@@ -23,7 +23,7 @@ export default function AddProductModal({ title, setIsAddProductModalOpen }) {
 		(acc, curr) => acc + curr,
 		0
 	);
-
+  
 	const addProduct = (product) => {
 		setAddedProducts((prevProducts) => [...prevProducts, product]);
 	};
