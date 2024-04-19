@@ -1,6 +1,10 @@
 .home-nav,
 .nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	position: fixed;
+	/* height: 100px; */
 	z-index: 1000;
 }
 
@@ -21,15 +25,24 @@
 	background-color: var(--primary-color);
 }
 
-.nav-list {
+.nav-headings-container {
 	display: flex;
 	align-items: center;
+	margin-inline: auto;
+}
+
+.hamburger {
+	display: none;
+}
+
+.nav-list {
+	display: flex;
+	gap: 0.5em;
 	font-size: 2.2rem;
 }
 
 .logo {
-	margin-right: auto;
-	margin-left: 1em;
+	padding: 1em;
 	transition: all 0.3s;
 
 	&:hover {
@@ -40,12 +53,8 @@
 .nav-link {
 	position: relative;
 	display: inline-block;
-	padding: 1.4em 1em;
+	padding: 1.5em 1em;
 	color: var(--text-color-light);
-
-	&:last-of-type {
-		margin-right: 1em;
-	}
 
 	&::after,
 	&::before {
@@ -89,36 +98,54 @@
 }
 
 @media (max-width: 968px) {
-	.nav {
-		transform: translateY(-100%);
-	  }
-	
-	.nav-list.active {
-		display: flex;
-	  }
-	
-	 .nav.active {
-		transform: translateY(0);
-	  }
-	  
+	.nav,
+	.home-nav {
+		flex-direction: column;
+		justify-content: space-around;
+		/* height: 60%; */
+	}
+
+	.nav-headings-container {
+		width: 90%;
+		justify-content: space-between;
+	}
+
 	.nav-list {
-		width: 100%;
+		max-height: 0;
+		overflow: hidden;
 		flex-direction: column;
 		align-items: center;
-		padding: 1em;
+		justify-content: start;
+		transition: all 0.4s;
+	}
+
+	.home-nav.mobile-active .nav-list,
+	.nav.mobile-active .nav-list {
+		margin-bottom: 2em;
+		max-height: 500px;
+		overflow: visible;
 	}
 
 	.nav-link {
-		display: none;
-		width: 50vw;
+		opacity: 1;
+		width: 65vw;
 		text-align: center;
 		margin: 0.5em 0;
 		border-radius: 15px;
-		box-shadow: 0px 0px 8px white;
+		box-shadow: 0px 0px 8px #f2f2f2;
+		opacity: 0;
+		transform: scale(0.5);
+		transition: all 0.6s ease-in-out;
+
+		&:hover {
+			scale: 1.05;
+		}
 	}
 
-	.nav.active.nav-link {
-		display: inline;
+	.home-nav.mobile-active .nav-link,
+	.nav.mobile-active .nav-link {
+		opacity: 1;
+		transform: scale(1);
 	}
 
 	.logo {
@@ -127,10 +154,13 @@
 
 	.hamburger {
 		display: block;
-		position: absolute;
-		top: 2em;
-		right: 2em;
+		border-radius: 2px solid red;
 		cursor: pointer;
+		transition: all .3s;
+
+		&:hover {
+			scale: 1.2
+		}
 	}
 
 	.hamburger-line {
@@ -139,19 +169,21 @@
 		background-color: var(--text-color-light);
 		margin: 0.5em 0;
 		border-radius: 2em;
+		transition: all 0.3s ease-out;
 	}
 
-	.nav {
-		position: absolute;
-		top: 100%;
-		left: 0;
-		width: 100%;
-		background-color: var(--primary-color);
-		transform: translateY(-100%);
-		transition: transform 0.3s;
+	.home-nav.mobile-active .hamburger-line:nth-child(1),
+	.nav.mobile-active .hamburger-line:nth-child(1) {
+		transform: translateY(9px) rotate(45deg);
 	}
 
-	.nav.active {
-		transform: translateY(0);
+	.home-nav.mobile-active .hamburger-line:nth-child(2),
+	.nav.mobile-active .hamburger-line:nth-child(2) {
+		opacity: 0;
+	}
+
+	.home-nav.mobile-active .hamburger-line:nth-child(3),
+	.nav.mobile-active .hamburger-line:nth-child(3) {
+		transform: translateY(-15px) rotate(-45deg);
 	}
 }
