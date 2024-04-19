@@ -10,7 +10,7 @@ import { useState } from 'react';
 
 export default function Login() {
 	const [errors, setErrors] = useState({});
-	const { isPending, error, data, postData } = useDataApi();
+	const { isPending, error, postData } = useDataApi();
 
 	const handleLogin = async (e, formData) => {
 		e.preventDefault();
@@ -27,15 +27,15 @@ export default function Login() {
     setErrors(validationErrors);
 
     if(Object.keys(validationErrors).length === 0) {
-			await postData('/login', {
+			const data = await postData('/login', {
 				username: formData.username,
 				password: formData.password
 			})
+			
+			if (data) {
+				localStorage.setItem('user-token', JSON.stringify(data.token));
+			}
     }
-
-		if (data) {
-			localStorage.setItem('user-token', JSON.stringify(data.token));
-		}
 	};
 
 

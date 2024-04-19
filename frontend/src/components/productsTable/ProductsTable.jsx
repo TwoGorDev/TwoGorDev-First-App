@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // styles
 import './ProductsTable.css';
@@ -8,6 +8,7 @@ import { FaCirclePlus } from 'react-icons/fa6';
 
 // components
 import ProductServingModal from '../productServingModal/ProductServingModal';
+import useDataApi from '../../hooks/useDataApi';
 
 export default function ProductsTable({
 	addProduct,
@@ -15,6 +16,7 @@ export default function ProductsTable({
 	setNewPortion,
 	productsPage,
 }) {
+	const { isPending, error, data, getData } = useDataApi();
 	const [isProductServingModalOpen, setIsProductServingModalOpen] =
 		useState(false);
 	const [selectedProduct, setSelectedProduct] = useState(null);
@@ -61,6 +63,10 @@ export default function ProductsTable({
 		product.name.toLowerCase().includes(searchTerm.toLowerCase())
 	);
 
+	useEffect(() => {
+		getData('/products');
+	}, [])
+
 	return (
 		<div>
 			<input
@@ -85,7 +91,7 @@ export default function ProductsTable({
 					</tr>
 				</thead>
 				<tbody>
-					{filteredProducts.map((item) => (
+					{data && data.map((item) => (
 						<tr key={item.id} className='products-table-data product'>
 							<td className='spacer'></td>
 							<td>{item.name}</td>

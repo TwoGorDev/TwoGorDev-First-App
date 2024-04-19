@@ -3,15 +3,34 @@ import './CalculatorInfoContent.css';
 
 import { useState } from 'react';
 
-export default function CalculatorInfoContent({ result }) {
+// utilities
+import useDataApi from '../../hooks/useDataApi';
+
+export default function CalculatorInfoContent({ userNutritionNeeds }) {
+	const { isPending, error, data, postData } = useDataApi();
+	const { calories, proteins, carbohydrates, fats } = userNutritionNeeds;
 	const [isSaved, setIsSaved] = useState(false);
 
-	const handleClick = () => {
-		localStorage.setItem('calculatorData', JSON.stringify(result));
-		setIsSaved(true);
-		setTimeout(() => {
-			setIsSaved(false);
-		}, 2500);
+	const handleClick = async () => {
+		const res = await postData('/goals', {
+			calories,
+			proteins,
+			carbohydrates,
+			fats
+		})
+		if (res) {
+			setIsSaved(true)
+			setTimeout(() => {
+					setIsSaved(false);
+				}, 2500);
+		}
+
+		// --------- DEVELOPMENT DATA ----------
+		// localStorage.setItem('calculatorData', JSON.stringify(userNutritionData));
+		// setIsSaved(true);
+		// setTimeout(() => {
+		// 	setIsSaved(false);
+		// }, 2500);
 	};
 
 	return (
@@ -23,7 +42,7 @@ export default function CalculatorInfoContent({ result }) {
 				<b>(TDEE)</b>, you can determine the number of calories you need to
 				consume each day to achieve your weight goals.
 			</p>
-			{result.calories === '' ? (
+			{calories === 0 ? (
 				<>
 					<p className='dashboard-calculator-info-content'>
 						For <b>men</b>, the equation is: BMR = 66.5 + (13.75 × weight in kg)
@@ -47,7 +66,7 @@ export default function CalculatorInfoContent({ result }) {
 					<h3 className='dashboard-calculator-info-content-heading'>
 						Your daily caloric requirement:{' '}
 						<span className='dasboard-calculator-calories-req'>
-							{result.calories ? result.calories : '0'} kcal
+							{calories ? calories : '0'} kcal
 						</span>
 					</h3>
 					<h3 className='dashboard-calculator-info-content-heading'>
@@ -57,17 +76,17 @@ export default function CalculatorInfoContent({ result }) {
 						<span className='fwb'>
 							Carbohydrates: <br />
 							<span className='fwn'>
-								{result.carbohydrates ? result.carbohydrates : '0'}g
+								{carbohydrates ? carbohydrates : '0'}g
 							</span>
 						</span>
 						<span className='fwb'>
 							Fats: <br />
-							<span className='fwn'>{result.fats ? result.fats : '0'}g</span>
+							<span className='fwn'>{fats ? fats : '0'}g</span>
 						</span>
 						<span className='fwb'>
 							Proteins: <br />{' '}
 							<span className='fwn'>
-								{result.proteins ? result.proteins : '0'}g
+								{proteins ? proteins : '0'}g
 							</span>
 						</span>
 					</p>
@@ -79,7 +98,7 @@ export default function CalculatorInfoContent({ result }) {
 					<button
 						onClick={handleClick}
 						className='dashboard-calculator-info-btn'>
-						{isSaved ? 'Your data has been saved!' : 'Save in my profile'}
+						{isSaved ? 'Your data has been saved!' : 'Save to my profile'}
 					</button>
 				</>
 			)}

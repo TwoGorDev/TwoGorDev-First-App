@@ -1,122 +1,77 @@
-import { useState } from 'react';
-
 // styles
 import './Calculator.css';
 
 // components
 import CalculatorInfoContent from '../../../components/calculatorInfo/CalculatorInfoContent';
 
+// utils
+import { useState } from 'react';
+import calculateNutritionNeeds from '../../../utilities/calculateNutritionNeeds';
+
 export default function Calculator() {
-	const [result, setResult] = useState({
+	const [errors, setErrors] = useState({});
+	const [userData, setUserData] = useState({
 		gender: 'male',
 		age: '',
 		weight: '',
 		height: '',
 		activity: 'sedentary',
-		goal: 'weight-loss',
-		calories: '',
-		proteins: '',
-		carbohydrates: '',
-		fats: '',
+		goal: 'weight-loss'
+	});
+	const [userNutritonNeeds, setUserNutritionNeeds] = useState({
+		calories: 0,
+		proteins: 0,
+		carbohydrates: 0,
+		fats: 0
 	});
 
-	const [errors, setErrors] = useState({});
-
+	// Handle change on user inputs
 	const handleChange = (e) => {
 		const { name, value } = e.target;
-		if (
-			(['age', 'weight', 'height'].includes(name) &&
-				/^[0-9\b]+$/.test(value)) ||
-			e.target.value === ''
-		) {
-			setResult((prevResult) => ({ ...prevResult, [name]: value }));
-		} else if (['gender', 'activity', 'goal'].includes(name)) {
-			setResult((prevResult) => ({ ...prevResult, [name]: value }));
+
+		// If the user is editing age, weight or height - run this code
+		if (['age', 'weight', 'height'].includes(name)) {
+
+			// Check if user input is numbers only
+			if(/^(\s*|\d+)$/.test(value)) {
+				setUserData((prevData) => ({...prevData, [name]: value }));
+			}
+
+		// If the user is editing gender, activity or goal - run this code instead
+		} else {
+			setUserData((prevData) => ({...prevData, [name]: value }));
 		}
 	};
 
-	// function that calculates caloric requirement
+	// Calculate total nutrition requirements based on user data
 	const handleCalculate = (e) => {
 		e.preventDefault();
+    
+    // User data validation
 		const validationErrors = {}
-		//========== CALORIES ==========//
-		if (!result.age.trim()) {
+		
+		if (!userData.age.trim()) {
 			validationErrors.age = true
 		}
-		if (!result.weight.trim()) {
+		if (!userData.weight.trim()) {
 			validationErrors.weight = true
 		}
-		if (!result.height.trim()) {
+		if (!userData.height.trim()) {
 			validationErrors.height = true
 		}
 		setErrors(validationErrors)
 
-		if(Object.keys(validationErrors).length === 0) {
-			const calories = {};
-			// gender check
-			if (result.gender === 'male') {
-				calories.initialValue = 66.473;
-				calories.weightMultiplier = 13.752;
-				calories.heightMultiplier = 5.003;
-				calories.ageMultiplier = 6.75;
-			} else {
-				calories.initialValue = 655.1;
-				calories.weightMultiplier = 9.563;
-				calories.heightMultiplier = 1.85;
-				calories.ageMultiplier = 4.676;
-			}
+    // If there's no errors - commence the calculation
+		if (Object.keys(validationErrors).length === 0) {
+      
+      const { TDEE: calories, proteins, carbohydrates, fats } = calculateNutritionNeeds(userData);
 
-			// activity check
-			switch (result.activity) {
-				case 'sedentary':
-					calories.activityMultiplier = 1.2;
-					break;
-				case 'lightly-active':
-					calories.activityMultiplier = 1.4;
-					break;
-				case 'moderately-active':
-					calories.activityMultiplier = 1.6;
-					break;
-				case 'very-active':
-					calories.activityMultiplier = 1.9;
-					break;
-			}
-
-			// goal check
-			switch (result.goal) {
-				case 'weight-loss':
-					calories.goalMultiplier = -0.15;
-					break;
-				case 'maintenance':
-					calories.goalMultiplier = 0;
-					break;
-				case 'weight-gain':
-					calories.goalMultiplier = 0.15;
-					break;
-			}
-
-			// calories calculations
-			let weightCalc = calories.weightMultiplier * parseInt(result.weight),
-				heightCalc = calories.heightMultiplier * parseInt(result.height),
-				ageCalc = calories.ageMultiplier * parseInt(result.age),
-				BMR = calories.initialValue + weightCalc + heightCalc - ageCalc,
-				activeBMR = BMR * calories.activityMultiplier,
-				TDEE = Math.floor(activeBMR + activeBMR * calories.goalMultiplier);
-
-			//=========== MACRO ===========/
-			let carbohydrates = Math.floor((TDEE * 0.45) / 4),
-				proteins = Math.floor((TDEE * 0.25) / 4),
-				fats = Math.floor((TDEE * 0.3) / 9);
-
-			setResult((prevResult) => {
-				return {
-					...prevResult,
-					calories: TDEE,
-					carbohydrates,
-					proteins,
-					fats,
-				};
-			});
+      setUserNutritionNeeds({
+        calories,
+        carbohydrates,
+        proteins,
+        fats,
+      });
 		}
 	};
 
@@ -132,7 +87,7 @@ export default function Calculator() {
 
 				<label className='select-label'>
 					Gender:
-					<select name='gender' value={result.gender} onChange={handleChange}>
+					<select name='gender' value={userData.gender} onChange={handleChange}>
 						<option value='male'>Male</option>
 						<option value='female'>Female</option>
 					</select>
@@ -144,10 +99,10 @@ export default function Calculator() {
 						name='age'
 						id='age-input'
 						type='text'
+						value={userData.age}
 						className={`dashboard-calculator-input ${
 							errors.age ? 'input-error' : ''
 						}`}
-						value={result.age}
 						onChange={handleChange}
 					/>
 					<label htmlFor='age-input'>Age</label>
@@ -159,10 +114,10 @@ export default function Calculator() {
 						name='weight'
 						id='weight-input'
 						type='text'
+						value={userData.weight}
 						className={`dashboard-calculator-input ${
 							errors.weight ? 'input-error' : ''
 						}`}
-						value={result.weight}
 						onChange={handleChange}
 					/>
 					<label htmlFor='weight-input'>Weight (kg)</label>
@@ -174,10 +129,10 @@ export default function Calculator() {
 						name='height'
 						id='height-input'
 						type='text'
+						value={userData.height}
 						className={`dashboard-calculator-input ${
 							errors.height ? 'input-error' : ''
 						}`}
-						value={result.height}
 						onChange={handleChange}
 					/>
 					<label htmlFor='height-input'>Height (cm)</label>
@@ -187,7 +142,7 @@ export default function Calculator() {
 					Activity level:
 					<select
 						name='activity'
-						value={result.activity}
+						value={userData.activity}
 						onChange={handleChange}>
 						<option value='sedentary'>Sedentary (little to no activity)</option>
 						<option value='lightly-active'>
@@ -204,7 +159,7 @@ export default function Calculator() {
 
 				<label className='select-label'>
 					Goal:
-					<select name='goal' value={result.goal} onChange={handleChange}>
+					<select name='goal' value={userData.goal} onChange={handleChange}>
 						<option value='weight-loss'>Weight loss</option>
 						<option value='maintenance'>Maintenance</option>
 						<option value='weight-gain'>Weight gain</option>
@@ -222,7 +177,7 @@ export default function Calculator() {
 				</button>
 			</div>
 
-			<CalculatorInfoContent result={result} />
+			<CalculatorInfoContent userNutritionNeeds={userNutritonNeeds} />
 		</div>
 	);
 }

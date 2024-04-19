@@ -11,7 +11,6 @@ export default function Register() {
 	const [errors, setErrors] = useState({});
 	const { isPending, error, data, postData } = useDataApi();
 
-
 	const handleRegister = async (e, formData) => {
 		e.preventDefault();
 
@@ -35,7 +34,7 @@ export default function Register() {
 
 		if (!formData.password.trim()) {
 			validationErrors.password = 'Password is required';
-		} else if (formData.password.length < 6) {
+		} else if (formData.password.length < 8) {
 			validationErrors.password = 'Password should be at least 6 char';
 		} else if (
 			/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.[\W]).{6,}$/.test(formData.password.trim())
@@ -53,11 +52,15 @@ export default function Register() {
 		setErrors(validationErrors);
 
 		if (Object.keys(validationErrors).length === 0) {
-			postData('/signup', {
+			const data = await postData('/signup', {
 				username: formData.username,
 				password: formData.password,
 				email: formData.email,
 			})
+
+			if (data) {
+				localStorage.setItem('user-token', JSON.stringify(data.token));
+			}
 		}
 	};
 
