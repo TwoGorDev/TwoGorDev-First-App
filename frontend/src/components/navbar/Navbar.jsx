@@ -6,7 +6,7 @@ import './Navbar.css';
 
 export default function Navbar() {
 	const location = useLocation();
-	const [navMobileActive, setNavMobileActive] = useState(true);
+	const [navMobileActive, setNavMobileActive] = useState(false);
 
 	const navClass = ['/', '/register', '/login'].includes(location.pathname)
 		? 'home-nav'

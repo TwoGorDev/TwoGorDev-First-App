@@ -9,6 +9,7 @@
 	background-image: url('../../assets/images/Home-background-large.png');
 	background-position: top;
 	background-size: cover;
+	text-align: center;
 	color: var(--text-color-light);
 }
 
@@ -23,12 +24,13 @@
 }
 
 .home-title {
-	font-size: 15rem;
+	margin-inline: 30px;
+	font-size: clamp(4rem, 18vw, 15rem);
 	font-family: 'Clicker Script';
 }
 
-.home-container h2 {
-	font-size: 7rem;
+.home-title-info {
+	font-size: clamp(1.5rem, 9vw, 7rem);
 	font-weight: 100;
 }
 
@@ -38,7 +40,7 @@
 	padding: 1em 4em;
 	background-color: transparent;
 	border: 2px solid var(--text-color-light);
-	font-size: 2.5rem;
+	font-size: clamp(1.5rem, 4vw, 2.5rem);
 	font-weight: bold;
 	cursor: pointer;
 	border-radius: 20px;
@@ -47,7 +49,7 @@
 	&::before {
 		position: absolute;
 		content: '';
-		transition: all 0.7s;
+		transition: all 0.6s;
 		z-index: -1;
 		top: -30px;
 		left: -130px;

@@ -13,19 +13,20 @@
 
 .form-title {
 	margin-bottom: 0.3em;
-	font-size: 4rem;
+	font-size: clamp(1.8rem, 7.5vw, 3.6rem);
 	font-weight: bold;
 	color: var(--primary-color);
 }
 
 .form-label {
-	width: 100%;
 	position: relative;
+	width: 100%;
 	margin-block: 0.5em;
 	font-size: 1.8rem;
 }
 
 .form-label h3 {
+	font-size: clamp(1.4rem, 4vw, 2rem);
 	color: var(--primary-color);
 }
 
@@ -35,7 +36,7 @@
 	margin-top: 0.4em;
 	padding: 1em;
 	border: 1px solid var(--primary-color);
-	font-size: 1.6rem;
+	font-size: clamp(1.1rem, 3vw, 1.6rem);
 	background-color: #fff;
 	color: var(--text-color-dark);
 	border-radius: 8px;
@@ -55,12 +56,13 @@ input:-webkit-autofill:active {
 
 .login-info {
 	margin-block: 0.3em;
+	font-size: clamp(1.2rem, 4vw, 1.6rem);
 }
 
 .login-info-link {
 	padding-block: 0.3em;
 	color: var(--primary-color);
-	transition: all .1s;
+	transition: all 0.1s;
 
 	&:hover {
 		color: var(--primary-color-dark);
@@ -74,7 +76,7 @@ input:-webkit-autofill:active {
 	border: 1px solid var(--primary-color);
 	border-radius: 12px;
 	background-color: transparent;
-	font-size: 2rem;
+	font-size: clamp(1.4rem, 1.297rem + 0.516vw, 1.7rem);
 	color: var(--primary-color);
 	cursor: pointer;
 	transition: all 0.2s;
@@ -88,7 +90,7 @@ input:-webkit-autofill:active {
 .register-form-info {
 	text-align: center;
 	margin-top: 1em;
-	font-size: 1.2rem;
+	font-size: clamp(1rem, 3vw, 1.2rem);
 	color: #000000a8;
 }
 
@@ -97,8 +99,20 @@ input:-webkit-autofill:active {
 }
 
 .form-error {
-	font-size: 1.4rem;
+	font-size: clamp(1rem, 0.794rem + 1.032vw, 1.6rem);
 	color: var(--primary-color);
 }
 
+@media (width < 380px) {
+	.form {
+		padding: 1em;
+	}
 
+	.form-input {
+		padding: 0.8em;
+	}
+
+	.form-label {
+		margin-block: 0.2em;
+	}
+}
