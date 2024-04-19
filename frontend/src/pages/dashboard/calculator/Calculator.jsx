@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 // styles
 import './Calculator.css';
 
@@ -9,7 +7,6 @@ import CalculatorInfoContent from '../../../components/calculatorInfo/Calculator
 // utils
 import { useState } from 'react';
 import calculateNutritionNeeds from '../../../utilities/calculateNutritionNeeds';
-
 
 export default function Calculator() {
 	const [errors, setErrors] = useState({});
@@ -53,13 +50,13 @@ export default function Calculator() {
     // User data validation
 		const validationErrors = {}
 		
-		if (!result.age.trim()) {
+		if (!userData.age.trim()) {
 			validationErrors.age = true
 		}
-		if (!result.weight.trim()) {
+		if (!userData.weight.trim()) {
 			validationErrors.weight = true
 		}
-		if (!result.height.trim()) {
+		if (!userData.height.trim()) {
 			validationErrors.height = true
 		}
 		setErrors(validationErrors)
@@ -102,7 +99,6 @@ export default function Calculator() {
 						name='age'
 						id='age-input'
 						type='text'
-						className='dashboard-calculator-input'
 						value={userData.age}
 						className={`dashboard-calculator-input ${
 							errors.age ? 'input-error' : ''
@@ -118,7 +114,6 @@ export default function Calculator() {
 						name='weight'
 						id='weight-input'
 						type='text'
-						className='dashboard-calculator-input'
 						value={userData.weight}
 						className={`dashboard-calculator-input ${
 							errors.weight ? 'input-error' : ''
@@ -134,7 +129,6 @@ export default function Calculator() {
 						name='height'
 						id='height-input'
 						type='text'
-						className='dashboard-calculator-input'
 						value={userData.height}
 						className={`dashboard-calculator-input ${
 							errors.height ? 'input-error' : ''

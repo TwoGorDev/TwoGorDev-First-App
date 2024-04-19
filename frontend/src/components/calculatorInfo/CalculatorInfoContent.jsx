@@ -12,19 +12,25 @@ export default function CalculatorInfoContent({ userNutritionNeeds }) {
 	const [isSaved, setIsSaved] = useState(false);
 
 	const handleClick = async () => {
-		// await postData('/goals', {
-		// 	calories,
-		// 	proteins,
-		// 	carbohydrates,
-		// 	fats
-		// })
+		const res = await postData('/goals', {
+			calories,
+			proteins,
+			carbohydrates,
+			fats
+		})
+		if (res) {
+			setIsSaved(true)
+			setTimeout(() => {
+					setIsSaved(false);
+				}, 2500);
+		}
 
 		// --------- DEVELOPMENT DATA ----------
-		localStorage.setItem('calculatorData', JSON.stringify(userNutritionData));
-		setIsSaved(true);
-		setTimeout(() => {
-			setIsSaved(false);
-		}, 2500);
+		// localStorage.setItem('calculatorData', JSON.stringify(userNutritionData));
+		// setIsSaved(true);
+		// setTimeout(() => {
+		// 	setIsSaved(false);
+		// }, 2500);
 	};
 
 	return (
@@ -92,7 +98,7 @@ export default function CalculatorInfoContent({ userNutritionNeeds }) {
 					<button
 						onClick={handleClick}
 						className='dashboard-calculator-info-btn'>
-						{isSaved ? 'Your data has been saved!' : 'Save in my profile'}
+						{isSaved ? 'Your data has been saved!' : 'Save to my profile'}
 					</button>
 				</>
 			)}

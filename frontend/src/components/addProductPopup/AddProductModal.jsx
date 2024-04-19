@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 // styles
 import './AddProductModal.css';
 
@@ -11,13 +9,18 @@ import { FaCircleMinus } from 'react-icons/fa6';
 import ProductsTable from '../productsTable/ProductsTable';
 
 // utilities
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import getFormattedDate from '../../utilities/getFormattedDate';
 import capitalizeFirstLetter from '../../utilities/capitalizeFirstLetter';
+import useDataApi from '../../hooks/useDataApi';
 
-export default function AddProductModal({ title, setIsAddProductModalOpen }) {
+export default function AddProductModal({ title, setIsAddProductModalOpen, mealId }) {
+	const { isPending, error, postData } = useDataApi();
 	const [addedProducts, setAddedProducts] = useState([]);
 	const [totalProductCalories, setTotalProductCalories] = useState([]);
-	const [newPortion, setNewPortion] = useState([]) // productId and serving
+	const [newPortion, setNewPortion] = useState([])
+	const navigate = useNavigate();
 
 	const totalAmountOfCalories = totalProductCalories.reduce(
 		(acc, curr) => acc + curr,
@@ -41,12 +44,34 @@ export default function AddProductModal({ title, setIsAddProductModalOpen }) {
 		});
 	};
 
-	const addProductsToMeal = () => {
+	const addProductsToMeal = async (e) => {
 		const newMeal = {
-			type: title,
+			type: capitalizeFirstLetter(title),
 			date: getFormattedDate(new Date())
 		}
-			// setIsAddProductModalOpen(false)
+
+		// Sprawdzić czy istnieje już meal_id, jeśli nie to stworzyć nowy meal w bazie danych
+		let newMealId = 0;
+		
+		if (mealId === 0) {
+			const res = await postData('/meals', newMeal);
+
+			newMealId = res.id;
+		}
+		
+
+		await Promise.all(
+			newPortion.map(async (item) => {
+				return await postData('/portions', {
+					mealId: mealId === 0 ? newMealId : mealId,
+					productId: item.productId,
+					serving: item.serving
+				})
+			})
+		)
+		
+		navigate(0);
+
 	}
 
 	return (

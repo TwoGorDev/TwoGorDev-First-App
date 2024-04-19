@@ -16,7 +16,7 @@ module.exports = {
     const { calories, proteins, carbohydrates, fats } = goal;
 
     const { rows } = await pool.query(
-      'INSERT INTO goals (user_id, daily_calories, daily_proteins, daily_carbohydrates, daily_fats) VALUES ($1, $2, $3, $3, $5) RETURNING *;',
+      'INSERT INTO goals (user_id, daily_calories, daily_proteins, daily_carbohydrates, daily_fats) VALUES ($1, $2, $3, $4, $5) RETURNING *;',
       [creatorId, calories, proteins, carbohydrates, fats]
     )
 

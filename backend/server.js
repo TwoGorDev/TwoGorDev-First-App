@@ -18,6 +18,7 @@ const goalRouter = require('./routes/goalRoute');
 
 // Middleware
 app.use(cors(corsOptions));
+app.use((req, res, next) => {console.log('Request made'); next()})
 app.use(express.json());
 app.use(usersAuthRouter);
 app.use(productsRouter);
