@@ -1,6 +1,5 @@
-
-
 .form {
+	width: min(90%, 35em);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -20,6 +19,7 @@
 }
 
 .form-label {
+	width: 100%;
 	position: relative;
 	margin-block: 0.5em;
 	font-size: 1.8rem;
@@ -30,7 +30,8 @@
 }
 
 .form-input {
-	width: 30em;
+	width: 100%;
+	/* min-width: 30vw; */
 	margin-top: 0.4em;
 	padding: 1em;
 	border: 1px solid var(--primary-color);
@@ -67,10 +68,11 @@ input:-webkit-autofill:active {
 }
 
 .submit-form-btn {
+	width: 60%;
 	margin-top: 0.6em;
-	padding: 0.5em 5em;
+	padding: 0.5em 2em;
 	border: 1px solid var(--primary-color);
-	border-radius: 8px;
+	border-radius: 12px;
 	background-color: transparent;
 	font-size: 2rem;
 	color: var(--primary-color);
@@ -98,3 +100,5 @@ input:-webkit-autofill:active {
 	font-size: 1.4rem;
 	color: var(--primary-color);
 }
+
+
