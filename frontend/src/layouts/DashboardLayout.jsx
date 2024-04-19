@@ -5,7 +5,7 @@ import './DashboardLayout.css';
 
 export default function DashboardLayout() {
 	return (
-		<>
+		<div className='dashboard-nav-container'>
 			<nav className='dashboard-nav'>
 				<NavLink className='dashboard-nav-link' to='.' end>
 					Dashboard
@@ -18,6 +18,6 @@ export default function DashboardLayout() {
 				</NavLink>
 			</nav>
 			<Outlet />
-		</>
+		</div>
 	);
 }

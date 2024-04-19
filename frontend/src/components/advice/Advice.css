@@ -1,5 +1,6 @@
 .dashboard-advice {
 	/* queries margin: 1.2em or width: 80% */
+	background-color: var(--dashboard-color);
 	margin-block: 1em; 
 	padding: 2em;
 	border-radius: 15px;

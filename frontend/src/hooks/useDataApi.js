@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 
 // Get userToken from local storage - if it doesnt exist, set it to an empty string
-const userToken = JSON.parse(localStorage.getItem('user-token')) || '';
+// const userToken = JSON.parse(localStorage.getItem('user-token')) || '';
 
 export default function useDataApi() {
   const [error, setError] = useState('');
