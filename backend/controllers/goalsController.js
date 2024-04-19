@@ -30,7 +30,7 @@ const createGoal = async (req, res, next) => {
 
     validateGoal(newGoal);
 
-    const goal = await goalsRepo.insert(goal, userId);
+    const goal = await goalsRepo.insert(newGoal, userId);
 
     if (!goal) {
       throw new CustomError(404, 'Goal not found');

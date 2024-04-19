@@ -43,64 +43,66 @@ export default function Dashboard() {
 	
 	// -------------- PRODUCTION DATA ---------------
 
-	// const { data: summary, getData: getSummary } = useDataApi();
-	// const { data: goals, getData: getGoals } = useDataApi();
+	const { data: summary, getData: getSummary } = useDataApi();
+	const { data: goals, getData: getGoals } = useDataApi();
 
-	// Fetch user's daily summary from the server
-	// useEffect(() => {
-	// 	Promise.all([
-	// 		getSummary(`/daily-summary/${date}`),
-	// 		getGoals(`/goals/${date}`)
-	// 	])
-	// }, [date]);
+	// // Fetch user's daily summary from the server
+	useEffect(() => {
+		Promise.all([
+			getSummary(`/daily-summary/${date}`),
+			getGoals(`/goals/${date}`)
+		])
+	}, [date]);
 
-	// Filter meals from daily summary into their respected arrays
-	// let breakfast = [];
-	// let lunch = [];
-	// let dinner = [];
-	// let snacks = [];
+	// // Filter meals from daily summary into their respected arrays
+	let breakfast = [];
+	let lunch = [];
+	let dinner = [];
+	let snacks = [];
 
-	// if (summary.length > 0) {
-	// 	summary.map(meal => {
-	// 		switch (meal.meal_type) {
-	// 			case 'Breakfast':
-	// 				breakfast.push(meal);
-	// 				break;
-	// 			case 'Lunch':
-	// 				lunch.push(meal);
-	// 				break;
-	// 			case 'Dinner':
-	// 				dinner.push(meal);
-	// 				break;
-	// 			case 'Snacks':
-	// 				snacks.push(meal);
-	// 				break;
-	// 		}
-	// 	})
-	// }
+	if (summary.length > 0) {
+		summary.map(meal => {
+			switch (meal.meal_type) {
+				case 'Breakfast':
+					breakfast.push(meal);
+					break;
+				case 'Lunch':
+					lunch.push(meal);
+					break;
+				case 'Dinner':
+					dinner.push(meal);
+					break;
+				case 'Snacks':
+					snacks.push(meal);
+					break;
+			}
+		})
+	}
 	
-	// let caloriesReq = 0;
-	// let macrosReq = {
-	// 	carbohydrates: 0,
-	// 	fats: 0,
-	// 	proteins: 0
-	// }
+	let caloriesReq = 0;
+	let macrosReq = {
+		carbohydrates: 0,
+		fats: 0,
+		proteins: 0
+	}
 
-	// if (goals) {
-	// 	caloriesReq = goals.daily_calories || 0;
-	// 	macrosReq.carbohydrates = goals.daily_carbohydrates || 0,
-	// 	macrosReq.fats = goals.daily_fats || 0,
-	// 	macrosReq.proteins = goals.daily_proteins || 0
-	// };
+	if (goals) {
+		caloriesReq = goals.daily_calories || 0;
+		macrosReq.carbohydrates = goals.daily_carbohydrates || 0,
+		macrosReq.fats = goals.daily_fats || 0,
+		macrosReq.proteins = goals.daily_proteins || 0
+	};
+
+	// --------------------------------------------------------------
 
 	// --------------------- DEVELOPMENT DATA ----------------------
-	const nutritionData = JSON.parse(localStorage.getItem('calculatorData'));
-	const caloriesReq = nutritionData?.calories ?? 0;
-	const macrosReq = {
-		carbohydrates: nutritionData?.carbohydrates ?? 0,
-		fats: nutritionData?.fats ?? 0,
-		proteins: nutritionData?.proteins ?? 0,
-	};
+	// const nutritionData = JSON.parse(localStorage.getItem('calculatorData'));
+	// const caloriesReq = nutritionData?.calories ?? 0;
+	// const macrosReq = {
+	// 	carbohydrates: nutritionData?.carbohydrates ?? 0,
+	// 	fats: nutritionData?.fats ?? 0,
+	// 	proteins: nutritionData?.proteins ?? 0,
+	// };
 
 	return (
 		<div className='wrapper center'>
@@ -111,12 +113,12 @@ export default function Dashboard() {
 				<Calories
 					caloriesReq={caloriesReq}
 					macrosReq={macrosReq}
-					meals={[FAKE_BREAKFAST, FAKE_LUNCH, FAKE_DINNER, FAKE_SNACKS]}
+					meals={[breakfast, lunch, dinner, snacks]}
 				/>
 
 				<Nutrition
 					caloriesReq={caloriesReq}
-					meals={[FAKE_BREAKFAST, FAKE_LUNCH, FAKE_DINNER, FAKE_SNACKS]}
+					meals={[breakfast, lunch, dinner, snacks]}
 				/>
 			</div>
 			<Advice />

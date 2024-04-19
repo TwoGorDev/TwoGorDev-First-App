@@ -6,11 +6,6 @@ const jwt = require('jsonwebtoken');
 const CustomError = require('../utilities/customError');
 const { validateUser } = require('../validators/userValidator');
 
-// Create json web token
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
-};
-
 // Login a user
 const loginUser = async (req, res, next) => {
   try {
@@ -35,7 +30,7 @@ const loginUser = async (req, res, next) => {
     }
 
     // Send back jwt upon successful login
-    const token = createToken(existingUser.id);
+    const token = jwt.sign({ id: existingUser.id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 
     res.status(200).json({ token });
 
@@ -81,11 +76,13 @@ const signupUser = async (req, res, next) => {
     }
     
     const createdUser = await userRepo.insert(newUser);
+    console.log(createdUser)
 
     // Send back jwt upon successful signup
-    const token = createToken(createdUser.id);
+    const token = jwt.sign({ id: createdUser.id }, process.env.JWT_SECRET, { expiresIn: "30d" });
+    console.log(token)
 
-    res.status(200).json({ token });
+    res.status(200).json({ token: token });
 
   } catch(error) {
     next(error);

@@ -23,7 +23,6 @@ import useCalculateNutritionValues from '../../hooks/useCalculateNutritionValues
 
 export default function Nutrition({ caloriesReq, meals }) {
 	const { calculateMealNutrition } = useCalculateNutritionValues();
-
 	const mealCalories = {
 		breakfast: Math.round(caloriesReq * 0.25),
 		lunch: Math.round(caloriesReq * 0.4),
@@ -42,6 +41,7 @@ export default function Nutrition({ caloriesReq, meals }) {
 							mealTime={mealTime}
 							caloriesToConsume={calories}
 							progress={calculateMealNutrition(meals[index]).consumedCalories}
+							meal={meals[index]}
 						/>
 					))}
 				</div>

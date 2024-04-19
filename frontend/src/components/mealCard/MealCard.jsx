@@ -10,8 +10,15 @@ import AddProductModal from '../addProductPopup/AddProductModal';
 // icons
 import { FaCirclePlus } from 'react-icons/fa6';
 
-export default function MealCard({ children, mealTime, caloriesToConsume, progress }) {
+export default function MealCard({ children, mealTime, caloriesToConsume, progress, meal }) {
 	const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
+
+	let mealId = 0;
+	
+	if (meal.length > 0) {
+		mealId = meal[0].meal_id;
+	}
+
 	return (
 		<>
 			<div className='dashboard-meal-time'>
@@ -45,6 +52,7 @@ export default function MealCard({ children, mealTime, caloriesToConsume, progre
 				<AddProductModal
 					title={mealTime}
 					setIsAddProductModalOpen={setIsAddProductModalOpen}
+					mealId={mealId}
 				/>
 			)}
 		</>
