@@ -31,11 +31,21 @@ export default function useDataApi() {
   }
 
   const postData = async (endpoint, body) => {
-    await axios.post(
-      `http://localhost:4000${endpoint}`,
-      body,
-      { headers: {'Authorization': `Bearer ${userToken}`} }
-    )
+    try {
+      await axios.post(
+        `http://localhost:4000${endpoint}`,
+        body,
+        { headers: {'Authorization': `Bearer ${userToken}`} }
+      )
+      
+      setData(res.data);
+    } catch(error) {
+      console.log(error)
+      error.response && setError(error.response.data.error)
+      !error.response && setError(error.message)
+    } finally {
+      setIsPending(false);
+    }
   }
 
   return { isPending, error, data, getData, postData }
