@@ -38,7 +38,7 @@ export default function Calories({ caloriesReq, macrosReq, meals }) {
 						strokeWidth={7}
 						transformDeg='-135'>
 						<h3 className='percentile-amount'>
-							{`${Math.round((consumedCalories / caloriesReq) * 100)}%`}
+							{`${consumedCalories ? Math.round((consumedCalories / caloriesReq) * 100) : '0'}%`}
 							<p className='summary-info calories-percentile'>
 								Daily
 								<br />
