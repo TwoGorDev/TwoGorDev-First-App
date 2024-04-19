@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 // styles
 import './Calculator.css';
 
@@ -8,8 +10,9 @@ import CalculatorInfoContent from '../../../components/calculatorInfo/Calculator
 import { useState } from 'react';
 import calculateNutritionNeeds from '../../../utilities/calculateNutritionNeeds';
 
+
 export default function Calculator() {
-	const [error, setError] = useState('')
+	const [errors, setErrors] = useState({});
 	const [userData, setUserData] = useState({
 		gender: 'male',
 		age: '',
@@ -23,7 +26,7 @@ export default function Calculator() {
 		proteins: 0,
 		carbohydrates: 0,
 		fats: 0
-	})
+	});
 
 	// Handle change on user inputs
 	const handleChange = (e) => {
@@ -46,15 +49,33 @@ export default function Calculator() {
 	// Calculate total nutrition requirements based on user data
 	const handleCalculate = (e) => {
 		e.preventDefault();
+    
+    // User data validation
+		const validationErrors = {}
+		
+		if (!result.age.trim()) {
+			validationErrors.age = true
+		}
+		if (!result.weight.trim()) {
+			validationErrors.weight = true
+		}
+		if (!result.height.trim()) {
+			validationErrors.height = true
+		}
+		setErrors(validationErrors)
 
-		const { TDEE: calories, proteins, carbohydrates, fats } = calculateNutritionNeeds(userData);
+    // If there's no errors - commence the calculation
+		if (Object.keys(validationErrors).length === 0) {
+      
+      const { TDEE: calories, proteins, carbohydrates, fats } = calculateNutritionNeeds(userData);
 
-		setUserNutritionNeeds({
-			calories,
-			carbohydrates,
-			proteins,
-			fats,
-		});
+      setUserNutritionNeeds({
+        calories,
+        carbohydrates,
+        proteins,
+        fats,
+      });
+		}
 	};
 
 	return (
@@ -83,6 +104,9 @@ export default function Calculator() {
 						type='text'
 						className='dashboard-calculator-input'
 						value={userData.age}
+						className={`dashboard-calculator-input ${
+							errors.age ? 'input-error' : ''
+						}`}
 						onChange={handleChange}
 					/>
 					<label htmlFor='age-input'>Age</label>
@@ -96,6 +120,9 @@ export default function Calculator() {
 						type='text'
 						className='dashboard-calculator-input'
 						value={userData.weight}
+						className={`dashboard-calculator-input ${
+							errors.weight ? 'input-error' : ''
+						}`}
 						onChange={handleChange}
 					/>
 					<label htmlFor='weight-input'>Weight (kg)</label>
@@ -109,6 +136,9 @@ export default function Calculator() {
 						type='text'
 						className='dashboard-calculator-input'
 						value={userData.height}
+						className={`dashboard-calculator-input ${
+							errors.height ? 'input-error' : ''
+						}`}
 						onChange={handleChange}
 					/>
 					<label htmlFor='height-input'>Height (cm)</label>
@@ -141,6 +171,10 @@ export default function Calculator() {
 						<option value='weight-gain'>Weight gain</option>
 					</select>
 				</label>
+
+				{Object.values(errors).some(value => value !== '') && (
+					<p className='calculator-error-info'>All fields must be completed!</p>
+				)}
 
 				<button
 					className='submit-calculator-form-btn'

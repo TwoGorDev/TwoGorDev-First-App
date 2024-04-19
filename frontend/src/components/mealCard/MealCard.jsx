@@ -12,20 +12,22 @@ import { FaCirclePlus } from 'react-icons/fa6';
 
 export default function MealCard({ children, mealTime, caloriesToConsume, progress }) {
 	const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
-
 	return (
 		<>
 			<div className='dashboard-meal-time'>
 				<CircularProgressBar
 					className='dashboard-meal-time-progress'
 					value={(progress / caloriesToConsume) * 100}
-					strokeWidth={7}>
+					progress={progress}
+					maxProgress={caloriesToConsume}
+					strokeWidth={7}
+					>
 					{children}
 				</CircularProgressBar>
 
 				<div className='meal-time-info'>
 					<h3 className='meal-time-title'>
-						{mealTime.charAt(0).toUpperCase() + mealTime.slice(1)}
+						{mealTime[0].toUpperCase() + mealTime.slice(1)}
 					</h3>
 
 					<p className='meal-time-calories'>

@@ -4,7 +4,7 @@
 	flex-direction: row;
 	justify-content: space-around;
 	flex-wrap: wrap;
-    gap: 1em;
+	gap: 1em;
     margin-top: 1em;
 }
 
