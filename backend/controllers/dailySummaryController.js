@@ -8,7 +8,6 @@ const getSummary = async (req, res, next) => {
   try {
     const { date } = req.params;
     const { id: userId } = req.user;
-    console.log('DAILY SUMMARY REQUEST RECIEVED')
 
     if (!date.match(dateRegEx)) {
       throw new CustomError(500, 'Invalid date format');
