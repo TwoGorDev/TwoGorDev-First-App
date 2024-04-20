@@ -1,4 +1,6 @@
 .home-footer, .footer { 
+	line-height: 30px;
+	height: 60px;
 	width: 100%;
 	margin-top: auto;
     padding: 1.3em;
