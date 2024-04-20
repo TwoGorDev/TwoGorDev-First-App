@@ -72,11 +72,11 @@ input:-webkit-autofill:active {
 .submit-form-btn {
 	width: 60%;
 	margin-top: 0.6em;
-	padding: 0.5em 2em;
+	padding: 0.7em 2em;
 	border: 1px solid var(--primary-color);
 	border-radius: 12px;
 	background-color: transparent;
-	font-size: clamp(1.4rem, 1.297rem + 0.516vw, 1.7rem);
+	font-size: clamp(1.4rem, 1.297rem + 0.6vw, 1.8rem);
 	color: var(--primary-color);
 	cursor: pointer;
 	transition: all 0.2s;
@@ -114,5 +114,9 @@ input:-webkit-autofill:active {
 
 	.form-label {
 		margin-block: 0.2em;
+	}
+
+	.submit-form-btn {
+		padding: 0.3em;
 	}
 }
