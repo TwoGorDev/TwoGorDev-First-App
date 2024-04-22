@@ -1,5 +1,3 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 // styles
 import './App.css';
 
@@ -16,19 +14,28 @@ import Calculator from './pages/dashboard/calculator/Calculator';
 import Layout from './layouts/Layout';
 import DashboardLayout from './layouts/DashboardLayout';
 
+// utilities
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { UserAuthContext } from './contexts/UserAuthContext';
+import getFormattedDate from './utilities/getFormattedDate';
+
 function App() {
+	const { userToken } = useContext(UserAuthContext);
+
 	return (
 		<>
 			<BrowserRouter>
 					<Routes>
 						<Route path='/' element={<Layout />}>
 							<Route index element={<Home />} />
-							<Route path='login' element={<Login />} />
-							<Route path='register' element={<Register />} />
-							<Route path='/account' element={<Account />} />
+							<Route path='login' element={userToken ? <Navigate to={`/dashboard/${getFormattedDate(new Date())}`}/> : <Login />} />
+							<Route path='register' element={userToken ? <Navigate to={`/dashboard/${getFormattedDate(new Date())}`}/> : <Register />} />
+							<Route path='/account' element={!userToken ? <Login /> : <Account />} />
 
-							<Route path='dashboard' element={<DashboardLayout />}>
-								<Route index element={<Dashboard />} />
+							<Route path='dashboard' element={!userToken ? <Login /> : <DashboardLayout />}>
+								<Route path=':date' element={<Dashboard />}/>
 								<Route path="products" element={<Products />} />
 								<Route path="calculator" element={<Calculator />} />
 							</Route>

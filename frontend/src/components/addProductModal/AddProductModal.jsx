@@ -11,17 +11,19 @@ import Loader from '../loader/Loader';
 
 // utilities
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import getFormattedDate from '../../utilities/getFormattedDate';
 import capitalizeFirstLetter from '../../utilities/capitalizeFirstLetter';
 import useDataApi from '../../hooks/useDataApi';
 import useDebounce from '../../hooks/useDebounce';
 
 export default function AddProductModal({ title, setIsAddProductModalOpen, mealId }) {
-	const { isPending, error, data, getData, postData } = useDataApi();
+	const { error, getData, postData } = useDataApi();
+	const [products, setProducts] = useState([]);
 	const [addedProducts, setAddedProducts] = useState([]);
 	const [totalProductCalories, setTotalProductCalories] = useState([]);
 	const [newPortions, setNewPortions] = useState([])
+	const { date } = useParams();
 	const [query, setQuery] = useState('');
 	const firstRender = useRef(true);
 	const navigate = useNavigate();
@@ -31,6 +33,12 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 
 	// Fetch products from the server on component mount
 	useEffect(() => {
+		// Fetching function
+		const fetch = async (endpoint) => {
+			const products = await getData(endpoint);
+			setProducts(products);
+		}
+
 		// Prevent double data fetch
 		if (firstRender.current) {
 			firstRender.current = false;
@@ -39,9 +47,9 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 
 		// Fetch data from the server on every change in user's search bar input
 		if (debouncedQuery) {
-			getData(`/products/search/${debouncedQuery}`)
+			fetch(`/products/search/${debouncedQuery}`)
 		} else {
-			getData('/products');
+			fetch('/products');
 		}
 	}, [debouncedQuery])
 
@@ -77,7 +85,7 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 		if (mealId === 0) {
 			const newMeal = {
 				type: capitalizeFirstLetter(title),
-				date: getFormattedDate(new Date())
+				date: date
 			}
 
 			const res = await postData('/meals', newMeal);
@@ -102,7 +110,7 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 	return (
 		<div className='add-product-overlay'>
 			<div className='product-modal-popup'>
-				{data.length > 0 ? 
+				{products.length > 0 ? 
 					<>
 						<IoMdClose
 							className='modal-close-icon serving-modal-close-icon'
@@ -125,7 +133,7 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 									addProduct={addProduct}
 									setTotalProductCalories={setTotalProductCalories}
 									setNewPortions={setNewPortions}
-									products={data}
+									products={products}
 								/>
 							</div>
 							<div className='modal-added-products'>

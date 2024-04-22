@@ -5,13 +5,15 @@ import './Register.css';
 import Form from '../../components/form/Form';
 
 // utilities
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import useDataApi from '../../hooks/useDataApi';
 import { useNavigate } from 'react-router-dom';
+import { UserAuthContext } from '../../contexts/UserAuthContext';
 
 export default function Register() {
 	const [errors, setErrors] = useState({});
-	const { isPending, error, data, postData } = useDataApi();
+	const { isPending, error, postData } = useDataApi();
+	const { setUserToken } = useContext(UserAuthContext);
 	const navigate = useNavigate();
 
 	const handleRegister = async (e, formData) => {
@@ -63,7 +65,8 @@ export default function Register() {
 
 			if (data) {
 				localStorage.setItem('user-token', JSON.stringify(data.token));
-				navigate('/dashboard');
+				setUserToken(data.token);
+				navigate('/dashboard/calculator');
 			}
 		}
 	};

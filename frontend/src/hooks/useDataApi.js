@@ -1,14 +1,12 @@
-// Imports
+// utilities
 import axios from 'axios';
-import { useState } from 'react';
-
-// Get userToken from local storage - if it doesnt exist, set it to an empty string
-const userToken = JSON.parse(localStorage.getItem('user-token'));
+import { useContext, useState } from 'react';
+import { UserAuthContext } from '../contexts/UserAuthContext';
 
 export default function useDataApi() {
   const [error, setError] = useState('');
   const [isPending, setIsPending] = useState(false);
-  const [data, setData] = useState([]);
+  const { userToken } = useContext(UserAuthContext);
 
   const getData = async (endpoint) =>{
     setIsPending(true);
@@ -20,7 +18,7 @@ export default function useDataApi() {
         { headers: {'Authorization': `Bearer ${userToken}`} }
       )
 
-      setData(res.data);
+      return res.data;
 
     } catch(error) {
       console.log(error)
@@ -53,5 +51,5 @@ export default function useDataApi() {
     }
   }
 
-  return { isPending, error, data, getData, postData }
+  return { isPending, error, getData, postData }
 }

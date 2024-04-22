@@ -1,12 +1,23 @@
-import { Link, NavLink, useLocation } from 'react-router-dom';
-import { useState } from 'react';
-
 // styles
 import './Navbar.css';
 
+// utilities
+import getFormattedDate from '../../utilities/getFormattedDate';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { UserAuthContext } from '../../contexts/UserAuthContext';
+
 export default function Navbar() {
+	const { userToken } = useContext(UserAuthContext);
 	const location = useLocation();
 	const [navMobileActive, setNavMobileActive] = useState(true);
+	const navigate = useNavigate()
+
+	// Logout function
+	const logout = () => {
+		localStorage.removeItem('user-token');
+		navigate(0)
+	}
 
 	const navClass = ['/', '/register', '/login'].includes(location.pathname)
 		? 'home-nav'
@@ -31,27 +42,40 @@ export default function Navbar() {
 			</div>
 
 			<ul className='nav-list wrapper'>
-        <li>
-          <NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/dashboard'>
-            Dashboard
-          </NavLink>
-        </li>
-      
-        <li>
-          <NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/account'>
-            Account
-          </NavLink>
-        </li>
-        <li>
-          <NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/register'>
-            Register
-          </NavLink>
-        </li>
-        <li>
-          <NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/login'>
-            Login
-          </NavLink>
-        </li>
+				{userToken ?
+				<>
+					<li>
+						<NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to={`/dashboard/${getFormattedDate(new Date())}`}>
+							Dashboard
+						</NavLink>
+					</li>
+				
+					<li>
+						<NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/account'>
+							Account
+						</NavLink>
+					</li>
+
+					<li>
+						<Link onClick={() => logout()} className='nav-link' to='.'>
+							Logout
+						</Link>
+					</li>
+				</>
+				: 
+				<>
+					<li>
+						<NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/register'>
+							Register
+						</NavLink>
+					</li>
+					<li>
+						<NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/login'>
+							Login
+						</NavLink>
+					</li>
+				</>
+				}
 			</ul>
 		</nav>
 	);

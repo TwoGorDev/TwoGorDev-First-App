@@ -6,22 +6,26 @@ import Calories from '../../components/calories/Calories';
 import Nutrition from '../../components/nutrition/Nutrition';
 import Advice from '../../components/advice/Advice';
 import DateSelector from '../../components/dateSelector/DateSelector';
+import Loader from '../../components/loader/Loader';
 
 // utilities
 import { useEffect, useState } from 'react';
 import useDataApi from '../../hooks/useDataApi';
-import getFormattedDate from '../../utilities/getFormattedDate';
+import { useParams } from 'react-router-dom';
 
 export default function Dashboard() {
-	const [date, setDate] = useState(getFormattedDate(new Date()));
-	const { data: summary, getData: getSummary } = useDataApi();
+	const [summary, setSummary] = useState([]);
+	const { error, getData } = useDataApi();
+	const { date } = useParams();
 
-	// // Fetch user's daily summary from the server
 	useEffect(() => {
-		Promise.all([
-			getSummary(`/daily-summary/${date}`),
-		])
-	}, [date]);
+		const fetch = async () => {
+			const data = await getData(`/daily-summary/${date}`)
+			setSummary(data);
+		}
+
+		fetch();
+	}, [date])
 
 	// Create empty object to populate with data on server response
 	let breakfast = [];
@@ -38,49 +42,66 @@ export default function Dashboard() {
 
 	// If server doesn't find corresponding data, it'll return an empty array
 	// If the response is not an array, it means that the server found some data so the next step is to populate local variables with response data
-	if (!Array.isArray(summary)) {
+	if (!Array.isArray(summary) && typeof summary !== 'undefined') {
+
+		const { dailyGoal, dailyProgress } = summary;
 
 		// Populate progress data
-		summary.dailyProgress.map(meal => {
-			switch (meal.meal_type) {
-				case 'Breakfast':
-					breakfast.push(meal);
-					break;
-				case 'Lunch':
-					lunch.push(meal);
-					break;
-				case 'Dinner':
-					dinner.push(meal);
-					break;
-				case 'Snacks':
-					snacks.push(meal);
-					break;
-			}
-		})
+		if (dailyProgress.length > 0) {
+			dailyProgress.map(meal => {
+				switch (meal.meal_type) {
+					case 'Breakfast':
+						breakfast.push(meal);
+						break;
+					case 'Lunch':
+						lunch.push(meal);
+						break;
+					case 'Dinner':
+						dinner.push(meal);
+						break;
+					case 'Snacks':
+						snacks.push(meal);
+						break;
+				}
+			})
+		}
 
 		// Populate goal data
-		caloriesReq = summary.dailyGoal.daily_calories || 0;
-		macrosReq.carbohydrates = summary.dailyGoal.daily_carbohydrates || 0,
-		macrosReq.fats = summary.dailyGoal.daily_fats || 0,
-		macrosReq.proteins = summary.dailyGoal.daily_proteins || 0
+		if (typeof dailyGoal === 'object') {
+			caloriesReq =  dailyGoal.daily_calories;
+			macrosReq.carbohydrates =  dailyGoal.daily_carbohydrates,
+			macrosReq.fats = dailyGoal.daily_fats,
+			macrosReq.proteins = dailyGoal.daily_proteins
+		}
 	}
 
 	return (
 		<div className='wrapper center'>
 			<div className="date-selector-container">
-				<DateSelector date={date} setDate={setDate}/>	
+				<DateSelector />	
 			</div>
 			<div className='dashboard-tables'>
-				<Calories
-					caloriesReq={caloriesReq}
-					macrosReq={macrosReq}
-					meals={[breakfast, lunch, dinner, snacks]}
-				/>
-
-				<Nutrition
-					caloriesReq={caloriesReq}
-					meals={[breakfast, lunch, dinner, snacks]}
-				/>
+				{!error ? 
+					<>
+						{summary && 
+							<>
+								{Object.keys(summary).length > 0 ?
+									<>
+										<Calories caloriesReq={caloriesReq} macrosReq={macrosReq} meals={[breakfast, lunch, dinner, snacks]} />
+										<Nutrition caloriesReq={caloriesReq} meals={[breakfast, lunch, dinner, snacks]} />
+									</>
+								:
+									<>
+										<Loader style={{ height: '40vh' }}/>
+										<Loader style={{ height: '40vh' }}/>
+									</>
+								}
+							</>
+						}
+					</>
+				: 
+					<p className='error'>{error}</p>
+				}
 			</div>
 			<Advice />
 		</div>

@@ -10,8 +10,11 @@ import DatePicker from 'react-datepicker';
 
 // utilites
 import getFormattedDate from '../../utilities/getFormattedDate';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export default function DateSelector({ date, setDate }) {
+export default function DateSelector() {
+  const navigate = useNavigate();
+  const { date } = useParams();
 
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <button className="date-selector" onClick={onClick} ref={ref}>
@@ -23,7 +26,7 @@ export default function DateSelector({ date, setDate }) {
     <DatePicker
       dateFormat="dd / MM / yyyy"
       selected={date}
-      onChange={(date) => setDate(getFormattedDate(date))}
+      onChange={(date) => navigate(`/dashboard/${getFormattedDate(date)}`)}
       customInput={<CustomInput />}
       withPortal
     />

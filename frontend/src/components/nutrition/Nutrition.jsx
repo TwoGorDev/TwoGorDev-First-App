@@ -26,20 +26,20 @@ export default function Nutrition({ caloriesReq, meals }) {
 	};
 
 	return (
-			<div className='dashboard-nutrition'>
-				<h2 className='dashboard-nutrition-title'>Nutrition</h2>
-				<div className='dashboard-nutrition-meal-times'>
-					{Object.entries(mealCalories).map(([mealTime, calories], index) => (
-						<MealCard
-						  children={ICONS[index]}
-							key={index}
-							mealTime={mealTime}
-							caloriesToConsume={calories}
-							progress={calculateMealNutrition(meals[index]).consumedCalories}
-							meal={meals[index]}
-						/>
-					))}
-				</div>
+		<div className='dashboard-nutrition'>
+			<h2 className='dashboard-nutrition-title'>Nutrition</h2>
+			<div className='dashboard-nutrition-meal-times'>
+				{Object.entries(mealCalories).map(([mealTime, calories], index) => (
+					<MealCard
+						children={ICONS[index]}
+						key={index}
+						mealTime={mealTime}
+						caloriesToConsume={calories}
+						progress={calculateMealNutrition(meals[index]).consumedCalories}
+						meal={meals[index]}
+					/>
+				))}
 			</div>
+		</div>
 	);
 }
