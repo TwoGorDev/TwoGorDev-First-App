@@ -11,10 +11,10 @@ export default function useDataApi() {
   const [data, setData] = useState([]);
 
   const getData = async (endpoint) =>{
-    try {
-      setIsPending(true);
-      setError('');
+    setIsPending(true);
+    setError('');
 
+    try {
       const res = await axios.get(
         `http://localhost:4000${endpoint}`,
         { headers: {'Authorization': `Bearer ${userToken}`} }
@@ -32,6 +32,9 @@ export default function useDataApi() {
   }
 
   const postData = async (endpoint, body) => {
+    setIsPending(true);
+    setError('');
+    
     try {
       const res = await axios.post(
         `http://localhost:4000${endpoint}`,

@@ -12,19 +12,19 @@ const usersAuthRouter = require('./routes/userAuthRoute');
 const productsRouter = require('./routes/productRoute');
 const usersRouter = require('./routes/userRoute');
 const mealsRouter = require('./routes/mealRoute');
-const dailySummaryRouter = require('./routes/dailySummaryRoute');
+const summaryRouter = require('./routes/summaryRoute');
 const portionRouter = require('./routes/portionRoute');
 const goalRouter = require('./routes/goalRoute');
 
 // Middleware
 app.use(cors(corsOptions));
-app.use((req, res, next) => {console.log('Request made'); next()})
+app.use((req, res, next) => {console.log('Request made', req.path); next()})
 app.use(express.json());
 app.use(usersAuthRouter);
 app.use(productsRouter);
 app.use(usersRouter);
 app.use(mealsRouter);
-app.use(dailySummaryRouter);
+app.use(summaryRouter);
 app.use(portionRouter);
 app.use(goalRouter);
 

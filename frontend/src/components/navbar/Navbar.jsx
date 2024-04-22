@@ -31,26 +31,27 @@ export default function Navbar() {
 			</div>
 
 			<ul className='nav-list wrapper'>
-				<li>
-					<NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/dashboard'>
-						Dashboard
-					</NavLink>
-				</li>
-				<li>
-					<NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/account'>
-						Account
-					</NavLink>
-				</li>
-				<li>
-					<NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/register'>
-						Register
-					</NavLink>
-				</li>
-				<li>
-					<NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/login'>
-						Login
-					</NavLink>
-				</li>
+        <li>
+          <NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/dashboard'>
+            Dashboard
+          </NavLink>
+        </li>
+      
+        <li>
+          <NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/account'>
+            Account
+          </NavLink>
+        </li>
+        <li>
+          <NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/register'>
+            Register
+          </NavLink>
+        </li>
+        <li>
+          <NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/login'>
+            Login
+          </NavLink>
+        </li>
 			</ul>
 		</nav>
 	);

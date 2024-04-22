@@ -7,6 +7,7 @@ import CalculatorInfoContent from '../../../components/calculatorInfo/Calculator
 // utils
 import { useState } from 'react';
 import calculateNutritionNeeds from '../../../utilities/calculateNutritionNeeds';
+import isNumbersOnly from '../../../utilities/allowNumbersOnly';
 
 export default function Calculator() {
 	const [errors, setErrors] = useState({});
@@ -33,7 +34,7 @@ export default function Calculator() {
 		if (['age', 'weight', 'height'].includes(name)) {
 
 			// Check if user input is numbers only
-			if(/^(\s*|\d+)$/.test(value)) {
+			if(isNumbersOnly(value)) {
 				setUserData((prevData) => ({...prevData, [name]: value }));
 			}
 

@@ -1,36 +1,28 @@
 // styles
 import './CalculatorInfoContent.css';
 
-import { useState } from 'react';
-
 // utilities
+import { useState } from 'react';
 import useDataApi from '../../hooks/useDataApi';
 
 export default function CalculatorInfoContent({ userNutritionNeeds }) {
-	const { isPending, error, data, postData } = useDataApi();
+	const { isPending, error, postData } = useDataApi();
 	const { calories, proteins, carbohydrates, fats } = userNutritionNeeds;
 	const [isSaved, setIsSaved] = useState(false);
 
-	const handleClick = async () => {
+	// Add user's goal to database
+	const addGoal = async () => {
 		const res = await postData('/goals', {
 			calories,
 			proteins,
 			carbohydrates,
 			fats
 		})
-		if (res) {
-			setIsSaved(true)
-			setTimeout(() => {
-					setIsSaved(false);
-				}, 2500);
-		}
 
-		// --------- DEVELOPMENT DATA ----------
-		// localStorage.setItem('calculatorData', JSON.stringify(userNutritionData));
-		// setIsSaved(true);
-		// setTimeout(() => {
-		// 	setIsSaved(false);
-		// }, 2500);
+		if (res && !error) {
+			setIsSaved(true)
+			setTimeout(() => setIsSaved(false), 2500);
+		}
 	};
 
 	return (
@@ -96,9 +88,11 @@ export default function CalculatorInfoContent({ userNutritionNeeds }) {
 					</p>
 
 					<button
-						onClick={handleClick}
+						onClick={addGoal}
 						className='dashboard-calculator-info-btn'>
-						{isSaved ? 'Your data has been saved!' : 'Save to my profile'}
+						{!isSaved && !isPending && 'Save to my profile'}
+						{isSaved && 'Your data has been saved!'}
+						{isPending && 'Loading...'}
 					</button>
 				</>
 			)}

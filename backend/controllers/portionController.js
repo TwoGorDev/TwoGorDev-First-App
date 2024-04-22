@@ -7,12 +7,12 @@ const { validatePortion } = require('../validators/portionValidator');
 // Controllers
 const createPortion = async (req, res, next) => {
   try {
-    const newPortion = req.body;
+    const newPortions = req.body;
     const { id: userId } = req.user;
 
-    validatePortion(newPortion);
+    newPortions.forEach(portion => validatePortion(portion));
 
-    const meal = await mealRepo.findById(newPortion.mealId);
+    const meal = await mealRepo.findById(newPortions[0].mealId);
 
     if (!meal) {
       throw new CustomError(404, 'Meal not found');
@@ -22,13 +22,13 @@ const createPortion = async (req, res, next) => {
       throw new CustomError(401, "You're not authorized to edit this data");
     }
 
-    const portion = await portionRepo.insert(newPortion, userId);
+    const portions = await Promise.all(newPortions.map(async (portion) => await portionRepo.insert(portion, userId)));
 
-    if (!portion) {
+    if (portions.length === 0) {
       throw new CustomError(404, 'Creating new portion failed');
     }
-
-    res.status(200).json(portion);
+    
+    res.status(200).json({ portions });
 
   } catch(error) {
     next(error);

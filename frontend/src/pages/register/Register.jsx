@@ -1,15 +1,18 @@
-import Form from '../../components/form/Form';
-import { useState } from 'react';
-
 // styles
 import './Register.css';
 
+// components
+import Form from '../../components/form/Form';
+
 // utilities
+import { useState } from 'react';
 import useDataApi from '../../hooks/useDataApi';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
 	const [errors, setErrors] = useState({});
 	const { isPending, error, data, postData } = useDataApi();
+	const navigate = useNavigate();
 
 	const handleRegister = async (e, formData) => {
 		e.preventDefault();
@@ -60,6 +63,7 @@ export default function Register() {
 
 			if (data) {
 				localStorage.setItem('user-token', JSON.stringify(data.token));
+				navigate('/dashboard');
 			}
 		}
 	};
