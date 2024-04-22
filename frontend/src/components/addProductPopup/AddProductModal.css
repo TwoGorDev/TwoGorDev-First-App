@@ -52,6 +52,10 @@
 	margin-bottom: 1em;
 }
 
+.modal-products-container .search-bar {
+	width: 90%;
+}
+
 .modal-added-products {
 	/* position: relative; */
 

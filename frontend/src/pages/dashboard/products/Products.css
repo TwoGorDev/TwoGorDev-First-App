@@ -3,9 +3,11 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-    flex-wrap: wrap;
+  flex-wrap: wrap;
 	text-align: center;
 	font-size: 1.8rem;
 }
 
-
+.products > .search-bar {
+	min-width: 25%;
+}

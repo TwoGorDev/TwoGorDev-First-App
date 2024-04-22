@@ -1,28 +1,19 @@
-import { useState } from 'react';
-
 // styles
 import './ProductServingModal.css';
 
-// icons
+// components
 import { IoMdClose } from 'react-icons/io';
 
-export default function ProductServingModal({
-	setOpenServingModal,
-	product,
-	addProduct,
-	setTotalProductCalories,
-	setNewPortion
-}) {
+// utilities
+import { useState } from 'react';
+import isNumbersOnly from '../../utilities/allowNumbersOnly';
+
+export default function ProductServingModal({ setOpenServingModal, product, addProduct, setTotalProductCalories, setNewPortions }) {
 	const [showError, setShowError] = useState(false);
 	const [servingData, setServingData] = useState('');
 
+	// Calculate total serving calories 
 	const totalProductCaloriesAmount = Math.round((servingData / 100) * product.calories);	
-
-	function handleChange(e) {
-		if (/^[0-9\b]+$/.test(e.target.value) || e.target.value === '') {
-			setServingData(e.target.value);
-		}
-	}
 
 	const handleAddProduct = () => {
 		if (servingData !== '') {
@@ -33,8 +24,8 @@ export default function ProductServingModal({
 				totalProductCaloriesAmount
 			]);
 
-			setNewPortion(prevPortion => [
-				...prevPortion,
+			setNewPortions(prevPortions => [
+				...prevPortions,
 				{
 					serving: servingData,
 					productId: product.id
@@ -62,7 +53,7 @@ export default function ProductServingModal({
 						type='text'
 						className='serving-input'
 						value={servingData}
-						onChange={handleChange}
+						onChange={(e) => isNumbersOnly(e.target.value) && setServingData(e.target.value)}
 					/>
 					<span className='serving-input-info'>grams of {product.name}</span>
 				</div>
