@@ -17,7 +17,7 @@ const getDailySummary = async (req, res, next) => {
     const dailyProgress = await progressRepo.findByDate(date, userId);
     const dailyGoal = await goalRepo.findByDate(date, userId);
 
-    res.status(200).json({ dailyProgress, dailyGoal });
+    res.status(200).json({ dailyProgress, dailyGoal: dailyGoal[0] });
 
   } catch(error) {
     next(error);
