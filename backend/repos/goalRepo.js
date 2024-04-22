@@ -9,7 +9,7 @@ module.exports = {
       [creatorId, date]
     );
 
-    return rows[0];
+    return rows;
   },
 
   // Create new goal
