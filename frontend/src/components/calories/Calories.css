@@ -3,6 +3,7 @@
 	padding: 2em;
 	border-radius: 15px;
 	box-shadow: 1px 1px 6px rgb(183, 183, 183);
+	background-color: var(--dashboard-color);
 	color: var(--text-color-dark);
 	text-align: center;
 	flex-grow: 1;
