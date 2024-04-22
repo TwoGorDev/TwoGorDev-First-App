@@ -13,7 +13,7 @@
 	padding: 1.5em;
 	border-radius: 15px;
 	box-shadow: 1px 1px 6px rgb(183, 183, 183);
-	background-color: var(--dashboard-calculator-color);
+	background-color: var(--dashboard-color);
 }
 
 .dashboard-calculator-heading,

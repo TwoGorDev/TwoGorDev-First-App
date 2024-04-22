@@ -2,25 +2,75 @@
 import './DashboardLayout.css';
 
 // utilites
-import { NavLink, Outlet } from 'react-router-dom';
 import getFormattedDate from '../utilities/getFormattedDate';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function DashboardLayout() {
+	const location = useLocation();
+	const [dashboardNavMobileActive, setDashboardNavMobileActive] = useState(false);
 
+	let dashboardNavText = 'Dashboard';
+	if (location.pathname === '/dashboard/products') {
+		dashboardNavText = 'Products';
+	} else if (location.pathname === '/dashboard/calculator') {
+		dashboardNavText = 'Calculator';
+	}
 	return (
-		<>
-			<nav className='dashboard-nav'>
-				<NavLink className='dashboard-nav-link' to={`/dashboard/${getFormattedDate(new Date())}`} end>
-					Dashboard
-				</NavLink>
-				<NavLink className='dashboard-nav-link' to='products'>
-					Products
-				</NavLink>
-				<NavLink className='dashboard-nav-link' to='calculator'>
-					Calculator
-				</NavLink>
+		<div className='dashboard-nav-container'>
+			<nav
+				className={`dashboard-nav ${
+					dashboardNavMobileActive ? 'mobile-active' : ''
+				}`}>
+				<div className='nav-headings-container dashboard-nav-headings'>
+					<div className='dashboard-logo-container'>
+						<div className='dashboard-nav-text'>{dashboardNavText}</div>
+					</div>
+
+					<div
+						className='hamburger'
+						onClick={() =>
+							setDashboardNavMobileActive((prevState) => !prevState)
+						}>
+						<div className='hamburger-line'></div>
+						<div className='hamburger-line'></div>
+						<div className='hamburger-line'></div>
+					</div>
+				</div>
+				<div className='nav-links'>
+					<NavLink
+						onClick={() => setDashboardNavMobileActive(false)}
+						className={`dashboard-nav-link ${
+							location.pathname === '/dashboard' ? 'hide-on-mobile' : ''
+						}`}
+						to={`/dashboard/${getFormattedDate(new Date())}`
+						end
+           >
+						Dashboard
+					</NavLink>
+					<NavLink
+						onClick={() => setDashboardNavMobileActive(false)}
+						className={`dashboard-nav-link ${
+							location.pathname === '/dashboard/products'
+								? 'hide-on-mobile'
+								: ''
+						}`}
+						to='products'>
+						Products
+					</NavLink>
+					<NavLink
+						onClick={() => setDashboardNavMobileActive(false)}
+						className={`dashboard-nav-link ${
+							location.pathname === '/dashboard/calculator'
+								? 'hide-on-mobile'
+								: ''
+						}`}
+						to='calculator'>
+						Calculator
+					</NavLink>
+				</div>
 			</nav>
 			<Outlet />
-		</>
+		</div>
 	);
 }
