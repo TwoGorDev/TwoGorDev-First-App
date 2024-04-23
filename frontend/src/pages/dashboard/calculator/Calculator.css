@@ -2,7 +2,6 @@
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
-	width: fit-content;
 	column-gap: 1em;
 }
 
@@ -46,7 +45,7 @@
 }
 
 .select-label {
-	text-align: left !important;
+	text-align: left ;
 }
 
 .dashboard-calculator-input {
@@ -67,7 +66,7 @@
 	&:focus ~ label,
 	&:valid ~ label {
 		transform: translateY(-130%);
-		background-color: var(--dashboard-calculator-color);
+		background-color: var(--dashboard-color);
 	}
 
 	&:focus ~ label {
@@ -129,5 +128,20 @@ select {
 	&:hover {
 		background-color: var(--primary-color-dark);
 	}
+}
+
+@media (width <= 820px) {
+	.dashboard-calculator,
+.dashboard-calculator-info {
+	margin-inline: .5em;
+}
+.dashboard-calculator {
+    order: 2;
+	margin-block: 1em;
+  }
+
+ .dashboard-calculator-info {
+    order: 1;
+  }
 }
 

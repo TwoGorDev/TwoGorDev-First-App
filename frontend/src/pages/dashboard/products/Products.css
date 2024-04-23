@@ -3,11 +3,23 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-  flex-wrap: wrap;
+  	flex-wrap: wrap;
 	text-align: center;
 	font-size: 1.8rem;
 }
 
-.products > .search-bar {
-	min-width: 25%;
+.products-table-search {
+	padding: .8em;
+	border-radius: 12px;
+	box-shadow: 1px 1px 3px rgb(183, 183, 183);
+	border: 1px solid transparent;
+	font-size: 1.6rem;
+	width: min(70vw, 400px);
+	margin-block: .5em;
+
+	&:focus {
+		outline: none;
+		border: 1px solid var(--primary-color);
+		box-shadow: none;
+	}
 }

@@ -2,7 +2,6 @@
 import axios from 'axios';
 import { useContext, useState } from 'react';
 import { UserAuthContext } from '../contexts/UserAuthContext';
-import { useState } from 'react';
 
 export default function useDataApi() {
   const [error, setError] = useState('');

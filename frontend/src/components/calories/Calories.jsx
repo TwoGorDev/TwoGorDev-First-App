@@ -58,7 +58,7 @@ export default function Calories({ caloriesReq, macrosReq, meals }) {
 			<div className='dashboard-summary-macros'>
 				{Object.entries(macrosReq).map(([macro, value], id) => {
 					return (
-						<div key={id} className='macro-container carbohydrates'>
+						<div key={id} className='macro-container'>
 							<p className='summary-info'>{capitalizeFirstLetter(macro)}</p>
 
 							<SimpleProgressBar value={totalMacros[id]} max={value} />

@@ -46,7 +46,7 @@ export default function Products() {
 			{products.length > 0 ?
 				<>
 					<input
-						className='search-bar'
+						className='products-table-search'
 						type='text'
 						placeholder='Search products...'
 						value={query}

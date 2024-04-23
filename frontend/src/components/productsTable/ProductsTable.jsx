@@ -24,7 +24,7 @@ export default function ProductsTable({ addProduct, setTotalProductCalories, set
 	};
 
 	return (
-		<div>
+		<div className='table-container'>
 			<table
 				className='products-table'
 				style={isProductsPage ? { height: '60vh' } : {}}>
