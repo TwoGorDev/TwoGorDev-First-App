@@ -92,8 +92,8 @@ export default function ProductsTable({
 						</tr>
 					</thead>
 					<tbody>
-						{filteredProducts &&
-							filteredProducts.map((item) => (
+						{data &&
+							data.map((item) => (
 								<tr key={item.id} className='products-table-data product'>
 									<td className='spacer'></td>
 									<td>{item.name}</td>
