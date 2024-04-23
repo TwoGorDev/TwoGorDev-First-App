@@ -6,11 +6,14 @@ import Form from '../../components/form/Form';
 
 // utilities
 import useDataApi from '../../hooks/useDataApi';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserAuthContext } from '../../contexts/UserAuthContext';
+import getFormattedDate from '../../utilities/getFormattedDate';
 
 export default function Login() {
 	const [errors, setErrors] = useState({});
+	const { setUserToken } = useContext(UserAuthContext);
 	const { isPending, error, postData } = useDataApi();
 	const navigate = useNavigate();
 
@@ -36,7 +39,8 @@ export default function Login() {
 			
 			if (data) {
 				localStorage.setItem('user-token', JSON.stringify(data.token));
-				navigate('/dashboard');
+				setUserToken(data.token);
+				navigate(`/dashboard/${getFormattedDate(new Date())}`);
 			}
     }
 	};

@@ -12,8 +12,7 @@ import capitalizeFirstLetter from '../../utilities/capitalizeFirstLetter';
 
 export default function Calories({ caloriesReq, macrosReq, meals }) {
 	const { calculateDailyNutrition } = useCalculateNutritionValues();
-	const { consumedCalories, consumedProteins, consumedCarbs, consumedFats } =
-		calculateDailyNutrition(meals);
+	const { consumedCalories, consumedProteins, consumedCarbs, consumedFats } = calculateDailyNutrition(meals);
 	const totalMacros = [consumedCarbs, consumedFats, consumedProteins];
 
 	return (
@@ -31,14 +30,14 @@ export default function Calories({ caloriesReq, macrosReq, meals }) {
 				<div className='summary-calories-percentile'>
 					<CircularProgressBar
 						className='percentile-amount'
-						value={(consumedCalories / caloriesReq) * 100}
+						value={caloriesReq ? (consumedCalories / caloriesReq) * 100 : 0}
 						progress={consumedCalories}
 						maxProgress={caloriesReq}
 						circleRatio={0.75}
 						strokeWidth={7}
 						transformDeg='-135'>
 						<h3 className='percentile-amount'>
-							{`${consumedCalories ? Math.round((consumedCalories / caloriesReq) * 100) : '0'}%`}
+							{`${consumedCalories !== 0 ? Math.round((consumedCalories / caloriesReq) * 100) : '0'}%`}
 							<p className='summary-info calories-percentile'>
 								Daily
 								<br />

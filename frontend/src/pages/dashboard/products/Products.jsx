@@ -11,7 +11,8 @@ import useDebounce from '../../../hooks/useDebounce';
 import Loader from '../../../components/loader/Loader';
 
 export default function Products() {
-	const { data, getData } = useDataApi();
+	const { getData } = useDataApi();
+	const [products, setProducts] = useState([]);
 	const [query, setQuery] = useState('');
 	const firstRender = useRef(true);
 
@@ -20,6 +21,12 @@ export default function Products() {
 
 	// Fetch products from the server on component mount
 	useEffect(() => {
+		// Fetching function
+		const fetch = async (endpoint) => {
+			const products = await getData(endpoint);
+			setProducts(products);
+		}
+
 		// Prevent double data fetch
 		if (firstRender.current) {
 			firstRender.current = false;
@@ -28,15 +35,15 @@ export default function Products() {
 
 		// Fetch data from the server on every change in user's search bar input
 		if (debouncedQuery) {
-			getData(`/products/search/${debouncedQuery}`)
+			fetch(`/products/search/${debouncedQuery}`)
 		} else {
-			getData('/products');
+			fetch('/products');
 		}
 	}, [debouncedQuery])
 
 	return (
 		<div className='products'>
-			{data.length > 0 ?
+			{products.length > 0 ?
 				<>
 					<input
 						className='search-bar'
@@ -45,7 +52,7 @@ export default function Products() {
 						value={query}
 						onChange={(e) => setQuery(e.target.value)}
 					/>
-					<ProductsTable products={data}/>
+					<ProductsTable products={products}/>
 				</>
 			: 
 				<Loader />
