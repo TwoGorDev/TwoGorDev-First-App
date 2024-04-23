@@ -12,8 +12,8 @@
 }
 
 .product-modal-popup {
-	height: min(800px, 80vh);
-	width: min(1000px, 100%);
+	height: min(850px, 80vh);
+	width: min(1100px, 100%);
 	overflow-y: auto;
 	margin: 2em 1em 0;
 	position: relative;
@@ -53,8 +53,12 @@
 	display: flex;
 	justify-content: center;
 	flex-wrap: wrap;
-	gap: 1em;
+	gap: 1.5em;
 	margin-bottom: 1em;
+}
+
+.modal-products-container .search-bar {
+	width: 90%;
 }
 
 .modal-added-products {

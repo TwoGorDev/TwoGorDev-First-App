@@ -66,3 +66,24 @@ ul {
 	font-weight: bold;
 }
 
+.search-bar {
+	padding: .8em;
+	border-radius: 12px;
+	box-shadow: 1px 1px 3px rgb(183, 183, 183);
+	border: 1px solid transparent;
+	font-size: 1.6rem;
+	margin-block: .5em;
+
+	&:focus {
+		outline: none;
+		border: 1px solid var(--primary-color);
+		box-shadow: none;
+	}
+}
+
+.error {
+	color: red;
+	background-color: pink;
+	border: 1px solid red;
+	padding: 1em;
+}

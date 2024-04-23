@@ -7,10 +7,10 @@ const { requireUser } = require('../middleware/auth/requireUser');
 
 // Controllers
 const {
-  getSummary
-} = require('../controllers/dailySummaryController');
+  getDailySummary
+} = require('../controllers/summaryController');
 
 // Routes
-router.get('/daily-summary/:date', requireUser, getSummary);
+router.get('/daily-summary/:date', requireUser, getDailySummary);
 
 module.exports = router;

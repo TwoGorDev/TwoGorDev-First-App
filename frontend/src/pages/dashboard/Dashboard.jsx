@@ -6,79 +6,33 @@ import Calories from '../../components/calories/Calories';
 import Nutrition from '../../components/nutrition/Nutrition';
 import Advice from '../../components/advice/Advice';
 import DateSelector from '../../components/dateSelector/DateSelector';
+import Loader from '../../components/loader/Loader';
 
 // utilities
 import { useEffect, useState } from 'react';
 import useDataApi from '../../hooks/useDataApi';
-import getFormattedDate from '../../utilities/getFormattedDate';
-
-const FAKE_BREAKFAST = [
-	{serving: 50, calories: 100, proteins: 10, carbohydrates: 30, fats: 5},
-	{serving: 75, calories: 125, proteins: 10, carbohydrates: 30, fats: 5},
-	{serving: 100, calories: 150, proteins: 10, carbohydrates: 30, fats: 5},
-	{serving: 125, calories: 175, proteins: 10, carbohydrates: 30, fats: 5}
-]
-const FAKE_LUNCH = [
-	{serving: 25, calories: 75, proteins: 10, carbohydrates: 30, fats: 5},
-	{serving: 50, calories: 100, proteins: 10, carbohydrates: 30, fats: 5},
-	{serving: 75, calories: 125, proteins: 10, carbohydrates: 30, fats: 5},
-	{serving: 100, calories: 150, proteins: 10, carbohydrates: 30, fats: 5}
-]
-const FAKE_DINNER = [
-	{serving: 100, calories: 100, proteins: 10, carbohydrates: 30, fats: 5},
-	{serving: 125, calories: 125, proteins: 10, carbohydrates: 30, fats: 5},
-	{serving: 150, calories: 150, proteins: 10, carbohydrates: 30, fats: 5},
-	{serving: 175, calories: 175, proteins: 10, carbohydrates: 30, fats: 5}
-
-]
-const FAKE_SNACKS = [
-	{ serving: 25, calories: 50, proteins: 10, carbohydrates: 30, fats: 5 },
-	{ serving: 25, calories: 50, proteins: 10, carbohydrates: 30, fats: 5 },
-	{ serving: 25, calories: 75, proteins: 10, carbohydrates: 30, fats: 5 },
-	{ serving: 25, calories: 75, proteins: 10, carbohydrates: 30, fats: 5 },
-];
+import { useParams } from 'react-router-dom';
 
 export default function Dashboard() {
-	const [date, setDate] = useState(getFormattedDate(new Date()));
-	
-	// -------------- PRODUCTION DATA ---------------
+	const [summary, setSummary] = useState([]);
+	const { error, getData } = useDataApi();
+	const { date } = useParams();
 
-	const { data: summary, getData: getSummary } = useDataApi();
-	const { data: goals, getData: getGoals } = useDataApi();
-
-	// // Fetch user's daily summary from the server
 	useEffect(() => {
-		Promise.all([
-			getSummary(`/daily-summary/${date}`),
-			getGoals(`/goals/${date}`)
-		])
-	}, [date]);
+		const fetch = async () => {
+			const data = await getData(`/daily-summary/${date}`)
+			setSummary(data);
+		}
 
-	// // Filter meals from daily summary into their respected arrays
+		fetch();
+	}, [date])
+
+	// Create empty object to populate with data on server response
 	let breakfast = [];
 	let lunch = [];
 	let dinner = [];
 	let snacks = [];
 
-	if (summary.length > 0) {
-		summary.map(meal => {
-			switch (meal.meal_type) {
-				case 'Breakfast':
-					breakfast.push(meal);
-					break;
-				case 'Lunch':
-					lunch.push(meal);
-					break;
-				case 'Dinner':
-					dinner.push(meal);
-					break;
-				case 'Snacks':
-					snacks.push(meal);
-					break;
-			}
-		})
-	}
-	
 	let caloriesReq = 0;
 	let macrosReq = {
 		carbohydrates: 0,
@@ -86,40 +40,68 @@ export default function Dashboard() {
 		proteins: 0
 	}
 
-	if (goals) {
-		caloriesReq = goals.daily_calories || 0;
-		macrosReq.carbohydrates = goals.daily_carbohydrates || 0,
-		macrosReq.fats = goals.daily_fats || 0,
-		macrosReq.proteins = goals.daily_proteins || 0
-	};
+	// If server doesn't find corresponding data, it'll return an empty array
+	// If the response is not an array, it means that the server found some data so the next step is to populate local variables with response data
+	if (!Array.isArray(summary) && typeof summary !== 'undefined') {
 
-	// --------------------------------------------------------------
+		const { dailyGoal, dailyProgress } = summary;
 
-	// --------------------- DEVELOPMENT DATA ----------------------
-	// const nutritionData = JSON.parse(localStorage.getItem('calculatorData'));
-	// const caloriesReq = nutritionData?.calories ?? 0;
-	// const macrosReq = {
-	// 	carbohydrates: nutritionData?.carbohydrates ?? 0,
-	// 	fats: nutritionData?.fats ?? 0,
-	// 	proteins: nutritionData?.proteins ?? 0,
-	// };
+		// Populate progress data
+		if (dailyProgress.length > 0) {
+			dailyProgress.map(meal => {
+				switch (meal.meal_type) {
+					case 'Breakfast':
+						breakfast.push(meal);
+						break;
+					case 'Lunch':
+						lunch.push(meal);
+						break;
+					case 'Dinner':
+						dinner.push(meal);
+						break;
+					case 'Snacks':
+						snacks.push(meal);
+						break;
+				}
+			})
+		}
+
+		// Populate goal data
+		if (typeof dailyGoal === 'object') {
+			caloriesReq =  dailyGoal.daily_calories;
+			macrosReq.carbohydrates =  dailyGoal.daily_carbohydrates,
+			macrosReq.fats = dailyGoal.daily_fats,
+			macrosReq.proteins = dailyGoal.daily_proteins
+		}
+	}
 
 	return (
 		<div className='wrapper center dashboard-container'>
 			<div className="date-selector-container">
-				<DateSelector date={date} setDate={setDate}/>	
+				<DateSelector />	
 			</div>
 			<div className='dashboard-tables'>
-				<Calories
-					caloriesReq={caloriesReq}
-					macrosReq={macrosReq}
-					meals={[breakfast, lunch, dinner, snacks]}
-				/>
-
-				<Nutrition
-					caloriesReq={caloriesReq}
-					meals={[breakfast, lunch, dinner, snacks]}
-				/>
+				{!error ? 
+					<>
+						{summary && 
+							<>
+								{Object.keys(summary).length > 0 ?
+									<>
+										<Calories caloriesReq={caloriesReq} macrosReq={macrosReq} meals={[breakfast, lunch, dinner, snacks]} />
+										<Nutrition caloriesReq={caloriesReq} meals={[breakfast, lunch, dinner, snacks]} />
+									</>
+								:
+									<>
+										<Loader style={{ height: '40vh' }}/>
+										<Loader style={{ height: '40vh' }}/>
+									</>
+								}
+							</>
+						}
+					</>
+				: 
+					<p className='error'>{error}</p>
+				}
 			</div>
 			<Advice />
 		</div>

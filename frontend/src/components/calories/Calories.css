@@ -61,7 +61,6 @@
 	text-indent: 0;
 }
 
-
 .macro-progress-bar {
 	width: 7em;
 }
@@ -70,9 +69,5 @@
 	.dashboard-summary {
 		width: 90%;
 	}
-}
-
-@media (width <= 600px) {
-
 }
 

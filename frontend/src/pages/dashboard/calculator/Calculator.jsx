@@ -4,11 +4,14 @@ import './Calculator.css';
 // components
 import CalculatorInfoContent from '../../../components/calculatorInfo/CalculatorInfoContent';
 
-// utils
-import { useState } from 'react';
+// utilities
+import { useContext, useState } from 'react';
 import calculateNutritionNeeds from '../../../utilities/calculateNutritionNeeds';
+import isNumbersOnly from '../../../utilities/allowNumbersOnly';
+import { UserAuthContext } from '../../../contexts/UserAuthContext';
 
 export default function Calculator() {
+	const { userToken } = useContext(UserAuthContext);
 	const [errors, setErrors] = useState({});
 	const [userData, setUserData] = useState({
 		gender: 'male',
@@ -33,7 +36,7 @@ export default function Calculator() {
 		if (['age', 'weight', 'height'].includes(name)) {
 
 			// Check if user input is numbers only
-			if(/^(\s*|\d+)$/.test(value)) {
+			if(isNumbersOnly(value)) {
 				setUserData((prevData) => ({...prevData, [name]: value }));
 			}
 

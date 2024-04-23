@@ -1,20 +1,26 @@
-import { useState } from 'react';
-
 // styles
 import './MealCard.css';
 
 // components
 import CircularProgressBar from '../circularProgressBar/CircularProgressBar';
-import AddProductModal from '../addProductPopup/AddProductModal';
-
-// icons
+import AddProductModal from '../addProductModal/AddProductModal';
 import { FaCirclePlus } from 'react-icons/fa6';
+
+// utilities
+import { useState } from 'react';
+import capitalizeFirstLetter from '../../utilities/capitalizeFirstLetter';
+import { useNavigate } from 'react-router-dom';
 
 export default function MealCard({ children, mealTime, caloriesToConsume, progress, meal }) {
 	const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
+	const navigate = useNavigate();
 
+	// Define a variable to store meal ID and assign it an initial value of 0
 	let mealId = 0;
 	
+	// Check if client received meal ID from the server during daily-summary fetch
+	// if it did, assign that ID to the variable we defined
+	// if it didn't, leave the variable with it's initial value
 	if (meal.length > 0) {
 		mealId = meal[0].meal_id;
 	}
@@ -24,17 +30,17 @@ export default function MealCard({ children, mealTime, caloriesToConsume, progre
 			<div className='dashboard-meal-time'>
 				<CircularProgressBar
 					className='dashboard-meal-time-progress'
-					value={(progress / caloriesToConsume) * 100}
+					value={caloriesToConsume ? (progress / caloriesToConsume) * 100 : 0}
 					progress={progress}
 					maxProgress={caloriesToConsume}
 					strokeWidth={7}
-					>
+				>
 					{children}
 				</CircularProgressBar>
 
 				<div className='meal-time-info'>
 					<h3 className='meal-time-title'>
-						{mealTime[0].toUpperCase() + mealTime.slice(1)}
+						{capitalizeFirstLetter(mealTime)}
 					</h3>
 
 					<p className='meal-time-calories'>
@@ -43,7 +49,13 @@ export default function MealCard({ children, mealTime, caloriesToConsume, progre
 				</div>
 
 				<FaCirclePlus
-					onClick={() => setIsAddProductModalOpen((prevState) => !prevState)}
+					onClick={() => {
+						if (caloriesToConsume === 0) {
+							navigate('/dashboard/calculator')
+							return
+						}
+							setIsAddProductModalOpen((prevState) => !prevState)
+						}}
 					className='add-meal-button'
 				/>
 			</div>
