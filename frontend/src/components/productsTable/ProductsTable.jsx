@@ -65,7 +65,7 @@ export default function ProductsTable({
 
 	useEffect(() => {
 		getData('/products');
-	}, [])
+	}, []);
 
 	return (
 		<div>
@@ -76,51 +76,54 @@ export default function ProductsTable({
 				value={searchTerm}
 				onChange={(e) => setSearchTerm(e.target.value)}
 			/>
-			<table
-				className='products-table'
-				style={productsPage && { height: '60vh' }}>
-				<thead>
-					<tr className='products-table-data table-headings'>
-						<td className='spacer'></td>
-						<td>Name</td>
-						<td>Calories</td>
-						<td>Carbs</td>
-						<td>Proteins</td>
-						<td>Fats</td>
-						<td className='add-product spacer'></td>
-					</tr>
-				</thead>
-				<tbody>
-					{data && data.map((item) => (
-						<tr key={item.id} className='products-table-data product'>
+			<div className='table-container'>
+				<table
+					className='products-table'
+					style={productsPage && { height: '60vh' }}>
+					<thead>
+						<tr className='products-table-data table-headings'>
 							<td className='spacer'></td>
-							<td>{item.name}</td>
-							<td>{`${item.calories} kcal`}</td>
-							<td>{`${item.carbohydrates}g`}</td>
-							<td>{`${item.proteins}g`}</td>
-							<td>{`${item.fats}g`}</td>
-							<td>
-								{!productsPage && (
-									<FaCirclePlus
-										className='add-meal-button'
-										onClick={() => handleIconClick(item)}
-									/>
-								)}
-
-								{isProductServingModalOpen && (
-									<ProductServingModal
-										setOpenServingModal={setIsProductServingModalOpen}
-										product={selectedProduct}
-										addProduct={addProduct}
-										setTotalProductCalories={setTotalProductCalories}
-										setNewPortion={setNewPortion}
-									/>
-								)}
-							</td>
+							<td>Name</td>
+							<td>Calories</td>
+							<td>Carbs</td>
+							<td>Proteins</td>
+							<td>Fats</td>
+							<td className='add-product spacer'></td>
 						</tr>
-					))}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{filteredProducts &&
+							filteredProducts.map((item) => (
+								<tr key={item.id} className='products-table-data product'>
+									<td className='spacer'></td>
+									<td>{item.name}</td>
+									<td>{`${item.calories} kcal`}</td>
+									<td>{`${item.carbohydrates}g`}</td>
+									<td>{`${item.proteins}g`}</td>
+									<td>{`${item.fats}g`}</td>
+									<td>
+										{!productsPage && (
+											<FaCirclePlus
+												className='add-meal-button'
+												onClick={() => handleIconClick(item)}
+											/>
+										)}
+
+										{isProductServingModalOpen && (
+											<ProductServingModal
+												setOpenServingModal={setIsProductServingModalOpen}
+												product={selectedProduct}
+												addProduct={addProduct}
+												setTotalProductCalories={setTotalProductCalories}
+												setNewPortion={setNewPortion}
+											/>
+										)}
+									</td>
+								</tr>
+							))}
+					</tbody>
+				</table>
+			</div>
 		</div>
 	);
 }

@@ -12,7 +12,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-size: 3.6rem;
+	font-size: clamp(2rem, 1.449rem + 2.753vw, 3.6rem);
 	margin-bottom: 0.5em;
 	color: var(--primary-color);
 }
@@ -24,7 +24,7 @@
 
 .health-advice-content {
 	margin-bottom: 1em;
-	font-size: 2rem;
+	font-size: clamp(1.4rem, 1.194rem + 1.032vw, 2rem);
 }
 
 .get-random-advice-btn {
@@ -53,5 +53,12 @@
 	}
 	to {
 		transform: scale(1)
+	}
+}
+
+@media (width < 1200px) {
+	.dashboard-advice {
+		margin-inline: auto;
+		width: 90%;
 	}
 }

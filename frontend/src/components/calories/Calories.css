@@ -1,5 +1,4 @@
 .dashboard-summary {
-	max-width: 55%;
 	padding: 2em;
 	border-radius: 15px;
 	box-shadow: 1px 1px 6px rgb(183, 183, 183);
@@ -10,7 +9,7 @@
 }
 
 .dashboard-summary-title {
-	font-size: 3.4rem;
+	font-size: clamp(2.4rem, 2.056rem + 1.72vw, 3.4rem);
 	color: var(--primary-color);
 }
 
@@ -67,5 +66,13 @@
 	width: 7em;
 }
 
+@media (width < 1200px) {
+	.dashboard-summary {
+		width: 90%;
+	}
+}
 
+@media (width <= 600px) {
+
+}
 

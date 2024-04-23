@@ -13,3 +13,13 @@
 	display: flex;
 	justify-content: center;
 }
+
+@media (width < 1200px) {
+	.dashboard-container {
+		width: min(700px, 90%);
+	}
+
+	.dashboard-tables {
+		flex-direction: column;
+	}
+}

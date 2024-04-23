@@ -9,7 +9,6 @@ export default function DashboardLayout() {
 	const [dashboardNavMobileActive, setDashboardNavMobileActive] =
 		useState(false);
 
-
 	let dashboardNavText = 'Dashboard';
 	if (location.pathname === '/dashboard/products') {
 		dashboardNavText = 'Products';
