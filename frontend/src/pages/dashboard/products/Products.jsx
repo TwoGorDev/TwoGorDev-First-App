@@ -5,41 +5,26 @@ import './Products.css';
 import ProductsTable from '../../../components/productsTable/ProductsTable';
 
 // utilities
-import useDataApi from '../../../hooks/useDataApi';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import useDebounce from '../../../hooks/useDebounce';
 import Loader from '../../../components/loader/Loader';
+import { ProductsContext } from '../../../contexts/ProductsContext';
 
 export default function Products() {
-	const { getData } = useDataApi();
-	const [products, setProducts] = useState([]);
+	const { products, setEndpoint } = useContext(ProductsContext);
 	const [query, setQuery] = useState('');
-	const firstRender = useRef(true);
 
 	// Debouncing search query
 	const debouncedQuery = useDebounce(query, 500);
 
 	// Fetch products from the server on component mount
 	useEffect(() => {
-		// Fetching function
-		const fetch = async (endpoint) => {
-			const products = await getData(endpoint);
-			setProducts(products);
-		}
-
-		// Prevent double data fetch
-		if (firstRender.current) {
-			firstRender.current = false;
-			return
-		}
-
-		// Fetch data from the server on every change in user's search bar input
 		if (debouncedQuery) {
-			fetch(`/products/search/${debouncedQuery}`)
+			setEndpoint(`/products/search/${debouncedQuery}`);
 		} else {
-			fetch('/products');
+			setEndpoint('/products');
 		}
-	}, [debouncedQuery])
+	}, [debouncedQuery]);
 
 	return (
 		<div className='products'>

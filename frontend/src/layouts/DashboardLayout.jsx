@@ -45,7 +45,7 @@ export default function DashboardLayout() {
 						}`}
 						to={`/dashboard/${getFormattedDate(new Date())}`}
 						end
-           >
+					>
 						Dashboard
 					</NavLink>
 					<NavLink

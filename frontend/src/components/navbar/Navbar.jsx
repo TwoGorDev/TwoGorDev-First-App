@@ -8,7 +8,7 @@ import { useContext, useState } from 'react';
 import { UserAuthContext } from '../../contexts/UserAuthContext';
 
 export default function Navbar() {
-	const { userToken } = useContext(UserAuthContext);
+	const { userToken, setUserToken } = useContext(UserAuthContext);
 	const location = useLocation();
 	const [navMobileActive, setNavMobileActive] = useState(true);
 	const navigate = useNavigate()
@@ -16,7 +16,8 @@ export default function Navbar() {
 	// Logout function
 	const logout = () => {
 		localStorage.removeItem('user-token');
-		navigate(0)
+		setUserToken('');
+		navigate('/');
 	}
 
 	const navClass = ['/', '/register', '/login'].includes(location.pathname)

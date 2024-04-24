@@ -23,15 +23,16 @@ import getFormattedDate from './utilities/getFormattedDate';
 
 function App() {
 	const { userToken } = useContext(UserAuthContext);
+	const currentDate = getFormattedDate(new Date());
 
 	return (
 		<>
 			<BrowserRouter>
 					<Routes>
 						<Route path='/' element={<Layout />}>
-							<Route index element={<Home />} />
-							<Route path='login' element={userToken ? <Navigate to={`/dashboard/${getFormattedDate(new Date())}`}/> : <Login />} />
-							<Route path='register' element={userToken ? <Navigate to={`/dashboard/${getFormattedDate(new Date())}`}/> : <Register />} />
+							<Route index element={userToken ? <Navigate to={`/dashboard/${currentDate}`} /> : <Home />} />
+							<Route path='login' element={userToken ? <Navigate to={`/dashboard/${currentDate}`}/> : <Login />} />
+							<Route path='register' element={userToken ? <Navigate to={`/dashboard/${currentDate}`}/> : <Register />} />
 							<Route path='/account' element={!userToken ? <Login /> : <Account />} />
 
 							<Route path='dashboard' element={!userToken ? <Login /> : <DashboardLayout />}>
