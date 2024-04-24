@@ -43,9 +43,9 @@ export default function DashboardLayout() {
 						className={`dashboard-nav-link ${
 							location.pathname === '/dashboard' ? 'hide-on-mobile' : ''
 						}`}
-						to={`/dashboard/${getFormattedDate(new Date())}`
+						to={`/dashboard/${getFormattedDate(new Date())}`}
 						end
-           >
+					>
 						Dashboard
 					</NavLink>
 					<NavLink

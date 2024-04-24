@@ -10,22 +10,21 @@ import ProductsTable from '../productsTable/ProductsTable';
 import Loader from '../loader/Loader';
 
 // utilities
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import getFormattedDate from '../../utilities/getFormattedDate';
 import capitalizeFirstLetter from '../../utilities/capitalizeFirstLetter';
 import useDataApi from '../../hooks/useDataApi';
 import useDebounce from '../../hooks/useDebounce';
+import { ProductsContext } from '../../contexts/ProductsContext';
 
 export default function AddProductModal({ title, setIsAddProductModalOpen, mealId }) {
-	const { error, getData, postData } = useDataApi();
-	const [products, setProducts] = useState([]);
+	const { products, setEndpoint } = useContext(ProductsContext);
+	const { error, postData } = useDataApi();
 	const [addedProducts, setAddedProducts] = useState([]);
 	const [totalProductCalories, setTotalProductCalories] = useState([]);
 	const [newPortions, setNewPortions] = useState([])
 	const { date } = useParams();
 	const [query, setQuery] = useState('');
-	const firstRender = useRef(true);
 	const navigate = useNavigate();
 
 	// Debouncing search query
@@ -33,23 +32,11 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 
 	// Fetch products from the server on component mount
 	useEffect(() => {
-		// Fetching function
-		const fetch = async (endpoint) => {
-			const products = await getData(endpoint);
-			setProducts(products);
-		}
-
-		// Prevent double data fetch
-		if (firstRender.current) {
-			firstRender.current = false;
-			return
-		}
-
 		// Fetch data from the server on every change in user's search bar input
 		if (debouncedQuery) {
-			fetch(`/products/search/${debouncedQuery}`)
+			setEndpoint(`/products/search/${debouncedQuery}`)
 		} else {
-			fetch('/products');
+			setEndpoint('/products');
 		}
 	}, [debouncedQuery])
 
