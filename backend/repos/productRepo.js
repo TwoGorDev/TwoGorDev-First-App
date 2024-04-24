@@ -14,7 +14,7 @@ module.exports = {
   async findAllLike(query) {
     const { rows } = await pool.query(
       'SELECT * FROM products WHERE name LIKE $1',
-      [`${query}%`]
+      [`%${query}%`]
     );
 
     return rows;

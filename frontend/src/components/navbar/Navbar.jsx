@@ -8,19 +8,20 @@ import { useContext, useState } from 'react';
 import { UserAuthContext } from '../../contexts/UserAuthContext';
 
 export default function Navbar() {
-	const { userToken, setUserToken, username, setUsername } = useContext(UserAuthContext);
+	const { userToken, setUserToken, username, setUsername } =
+		useContext(UserAuthContext);
 	const location = useLocation();
 	const [navMobileActive, setNavMobileActive] = useState(false);
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	// Logout function
 	const logout = () => {
 		localStorage.removeItem('user-token');
-		localStorage.removeItem('username')
+		localStorage.removeItem('username');
 		setUserToken('');
 		setUsername('');
 		navigate('/');
-	}
+	};
 
 	const navClass = ['/', '/register', '/login'].includes(location.pathname)
 		? 'home-nav'
@@ -48,40 +49,52 @@ export default function Navbar() {
 			</div>
 
 			<ul className='nav-list wrapper'>
-				{userToken ?
-				<>
-					<li>
-						<NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to={`/dashboard/${getFormattedDate(new Date())}`}>
-							Dashboard
-						</NavLink>
-					</li>
-				
-					<li>
-						<NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/account'>
-							Account
-						</NavLink>
-					</li>
+				{userToken ? (
+					<>
+						<li>
+							<NavLink
+								onClick={() => setNavMobileActive(false)}
+								className='nav-link'
+								to={`/dashboard/${getFormattedDate(new Date())}`}>
+								Dashboard
+							</NavLink>
+						</li>
 
-					<li>
-						<Link onClick={() => logout()} className='nav-link' to='.'>
-							{username}
-						</Link>
-					</li>
-				</>
-				: 
-				<>
-					<li>
-						<NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/register'>
-							Register
-						</NavLink>
-					</li>
-					<li>
-						<NavLink onClick={() => setNavMobileActive(false)} className='nav-link' to='/login'>
-							Login
-						</NavLink>
-					</li>
-				</>
-				}
+						<li>
+							<NavLink
+								onClick={() => setNavMobileActive(false)}
+								className='nav-link'
+								to='/account'>
+								Account
+							</NavLink>
+						</li>
+
+						<li>
+							<Link onClick={() => logout()} className='nav-link' to='.'>
+								{username}
+							</Link>
+						</li>
+					</>
+				) : (
+					<>
+						<li>
+							<NavLink
+								onClick={() => setNavMobileActive(false)}
+								className='nav-link'
+								to='/register'>
+								Register
+							</NavLink>
+						</li>
+						<li>
+							<NavLink
+								onClick={() => setNavMobileActive(false)}
+								className='nav-link'
+								to='/login'>
+								Login
+							</NavLink>
+						</li>
+					</>
+				)}
 			</ul>
 		</nav>
 	);

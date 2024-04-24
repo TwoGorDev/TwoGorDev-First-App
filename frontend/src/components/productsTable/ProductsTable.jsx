@@ -9,10 +9,16 @@ import { FaCirclePlus } from 'react-icons/fa6';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-export default function ProductsTable({ addProduct, setTotalProductCalories, setNewPortions, products }) {
-	const [isProductServingModalOpen, setIsProductServingModalOpen] = useState(false);
+export default function ProductsTable({
+	addProduct,
+	setTotalProductCalories,
+	setNewPortions,
+	products,
+}) {
+	const [isProductServingModalOpen, setIsProductServingModalOpen] =
+		useState(false);
 	const [selectedProduct, setSelectedProduct] = useState(null);
-	
+
 	// Check if this component is used on 'products' page
 	const { pathname } = useLocation();
 	const isProductsPage = pathname === '/dashboard/products';
@@ -24,6 +30,7 @@ export default function ProductsTable({ addProduct, setTotalProductCalories, set
 	};
 
 	return (
+		
 		<div className='table-container'>
 			{products.length > 0 ? 
 				<table
@@ -32,7 +39,7 @@ export default function ProductsTable({ addProduct, setTotalProductCalories, set
 					<thead>
 						<tr className='products-table-data table-headings'>
 							<td className='spacer'></td>
-							<td>Name</td>
+							<td>Product</td>
 							<td>Calories</td>
 							<td>Carbs</td>
 							<td>Proteins</td>
@@ -45,7 +52,7 @@ export default function ProductsTable({ addProduct, setTotalProductCalories, set
 							<tr key={item.id} className='products-table-data product'>
 								<td className='spacer'></td>
 								<td>{item.name}</td>
-								<td>{`${item.calories} kcal`}</td>
+								<td>{`${item.calories}`}</td>
 								<td>{`${item.carbohydrates}g`}</td>
 								<td>{`${item.proteins}g`}</td>
 								<td>{`${item.fats}g`}</td>
@@ -58,15 +65,7 @@ export default function ProductsTable({ addProduct, setTotalProductCalories, set
 										/>
 									)}
 
-									{isProductServingModalOpen && (
-										<ProductServingModal
-											setOpenServingModal={setIsProductServingModalOpen}
-											product={selectedProduct}
-											addProduct={addProduct}
-											setTotalProductCalories={setTotalProductCalories}
-											setNewPortions={setNewPortions}
-										/>
-									)}
+									
 								</td>
 							</tr>
 						))}
@@ -74,8 +73,17 @@ export default function ProductsTable({ addProduct, setTotalProductCalories, set
 				</table>
 			: 
 				// Wyświetlić wiadomość w stylu 'No products were found based on this criteria'
-				<div>nie znaleziono produktow</div>
+				<h2 className='product-not-found'>Couldn't find the product you're looking for...</h2>
 			}
+			{isProductServingModalOpen && (
+					<ProductServingModal
+						setOpenServingModal={setIsProductServingModalOpen}
+						product={selectedProduct}
+						addProduct={addProduct}
+						setTotalProductCalories={setTotalProductCalories}
+						setNewPortions={setNewPortions}
+					/>
+				)}
 		</div>
 	);
 }
