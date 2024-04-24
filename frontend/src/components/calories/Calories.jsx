@@ -53,7 +53,7 @@ export default function Calories({ caloriesReq, macrosReq, meals }) {
 				</div>
 
 				<div className='summary-calories-remaining'>
-					<h3 className='calories-amount'>{caloriesReq}</h3>
+					<h3 className='calories-amount'>{caloriesReq - consumedCalories}</h3>
 
 					<p className='summary-info calories-ingested'>Remaining</p>
 				</div>

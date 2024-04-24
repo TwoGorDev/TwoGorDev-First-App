@@ -19,22 +19,6 @@
 	justify-content: center;
 }
 
-.dashboard-goal-lacking {
-	margin-block: 1em;
-	padding: 4em 2em;
-	border-radius: 15px;
-	box-shadow: 1px 1px 6px rgb(183, 183, 183);
-	text-align: center;
-	font-size: 2rem;
-	min-width: 100%;
-}
-
-.dashboard-goal-lacking a {
-	color: var(--primary-color);
-	font-weight: 700;
-	text-decoration: underline;
-}
-
 @media (width < 1200px) {
 	.dashboard-container {
 		width: min(750px, 90%);
