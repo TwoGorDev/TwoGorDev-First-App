@@ -25,54 +25,57 @@ export default function ProductsTable({ addProduct, setTotalProductCalories, set
 
 	return (
 		<div className='table-container'>
-			
-			<table
-				className='products-table'
-				style={isProductsPage ? { height: '60vh' } : {}}>
-				<thead>
-					<tr className='products-table-data table-headings'>
-						<td className='spacer'></td>
-						<td>Product</td>
-						<td>Calories</td>
-						<td>Carbs</td>
-						<td>Proteins</td>
-						<td>Fats</td>
-						<td className='add-product spacer'></td>
-					</tr>
-				</thead>
-				<tbody>
-					{products && products.map((item) => (
-						<tr key={item.id} className='products-table-data product'>
+			{products.length > 0 ? 
+				<table
+					className='products-table'
+					style={isProductsPage ? { height: '60vh' } : {}}>
+					<thead>
+						<tr className='products-table-data table-headings'>
 							<td className='spacer'></td>
-							<td>{item.name}</td>
-							<td>{`${item.calories} `}</td>
-							<td>{`${item.carbohydrates}g`}</td>
-							<td>{`${item.proteins}g`}</td>
-							<td>{`${item.fats}g`}</td>
-							{/* Do not display the add button on 'products' page*/}
-							<td>
-								{!isProductsPage && (
-									<FaCirclePlus
-										className='add-meal-button'
-										onClick={() => handleIconClick(item)}
-									/>
-								)}
-
-								
-							</td>
+							<td>Name</td>
+							<td>Calories</td>
+							<td>Carbs</td>
+							<td>Proteins</td>
+							<td>Fats</td>
+							<td className='add-product spacer'></td>
 						</tr>
-					))}
-				</tbody>
-			</table>
-			{isProductServingModalOpen && (
-									<ProductServingModal
-										setOpenServingModal={setIsProductServingModalOpen}
-										product={selectedProduct}
-										addProduct={addProduct}
-										setTotalProductCalories={setTotalProductCalories}
-										setNewPortions={setNewPortions}
-									/>
-								)}
+					</thead>
+					<tbody>
+						{products && products.map((item) => (
+							<tr key={item.id} className='products-table-data product'>
+								<td className='spacer'></td>
+								<td>{item.name}</td>
+								<td>{`${item.calories} kcal`}</td>
+								<td>{`${item.carbohydrates}g`}</td>
+								<td>{`${item.proteins}g`}</td>
+								<td>{`${item.fats}g`}</td>
+								{/* Do not display the add button on 'products' page*/}
+								<td>
+									{!isProductsPage && (
+										<FaCirclePlus
+											className='add-meal-button'
+											onClick={() => handleIconClick(item)}
+										/>
+									)}
+
+									{isProductServingModalOpen && (
+										<ProductServingModal
+											setOpenServingModal={setIsProductServingModalOpen}
+											product={selectedProduct}
+											addProduct={addProduct}
+											setTotalProductCalories={setTotalProductCalories}
+											setNewPortions={setNewPortions}
+										/>
+									)}
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			: 
+				// Wyświetlić wiadomość w stylu 'No products were found based on this criteria'
+				<div>nie znaleziono produktow</div>
+			}
 		</div>
 	);
 }
