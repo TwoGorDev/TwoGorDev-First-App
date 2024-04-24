@@ -76,7 +76,7 @@ export default function Dashboard() {
 	}
 
 	return (
-		<div className='wrapper center'>
+		<div className='wrapper center dashboard-container'>
 			<div className="date-selector-container">
 				<DateSelector />	
 			</div>

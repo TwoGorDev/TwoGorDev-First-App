@@ -13,6 +13,8 @@
 }
 
 .serving-modal-popup {
+	height: fit-content;
+	width: fit-content;
 	padding: 2.5em 3.5em;
 }
 
@@ -24,6 +26,7 @@
 
 .serving-modal-input-box {
 	display: flex;
+	justify-content: center;
 	align-items: center;
 }
 

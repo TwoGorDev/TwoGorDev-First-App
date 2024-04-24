@@ -28,7 +28,10 @@ export default function Navbar() {
 		<nav className={`${navClass} ${navMobileActive ? 'mobile-active' : ''}`}>
 			<div className='nav-headings-container'>
 				<div className='logo'>
-					<Link className='logo-link' to='/'>
+					<Link
+						onClick={() => setNavMobileActive(false)}
+						className='logo-link'
+						to='/'>
 						HealThyBody
 					</Link>
 				</div>

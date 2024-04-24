@@ -110,7 +110,7 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 						<div className='modal-products-container'>
 							<div>
 								<input
-									className='search-bar'
+									className='products-table-search'
 									type='text'
 									placeholder='Search products...'
 									value={query}
