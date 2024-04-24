@@ -12,8 +12,8 @@ import { UserAuthContext } from '../../contexts/UserAuthContext';
 
 export default function Register() {
 	const [errors, setErrors] = useState({});
-	const { isPending, error, postData } = useDataApi();
-	const { setUserToken } = useContext(UserAuthContext);
+	const { isPending, error: serverError, postData } = useDataApi();
+	const { setUserToken, setUsername } = useContext(UserAuthContext);
 	const navigate = useNavigate();
 
 	const handleRegister = async (e, formData) => {
@@ -65,7 +65,9 @@ export default function Register() {
 
 			if (data) {
 				localStorage.setItem('user-token', JSON.stringify(data.token));
+				localStorage.setItem('username', JSON.stringify(data.username));
 				setUserToken(data.token);
+				setUsername(data.username);
 				navigate('/dashboard/calculator');
 			}
 		}
@@ -79,6 +81,7 @@ export default function Register() {
 				authType='signup'
 				handleSubmit={handleRegister}
 				errors={errors}
+				serverError={serverError}
 			/>
 		</div>
 	);

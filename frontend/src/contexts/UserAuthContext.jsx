@@ -5,14 +5,17 @@ export const UserAuthContext = createContext();
 
 export const UserAuthContextProvider = ({ children }) => {
   const [userToken, setUserToken] = useState('');
+  const [username, setUsername] = useState('');
 
   useEffect(() => {
     const localToken = JSON.parse(localStorage.getItem('user-token')) || '';
-    setUserToken(localToken)
+    const localUsername = JSON.parse(localStorage.getItem('username')) || '';
+    setUserToken(localToken);
+    setUsername(localUsername);
   }, []);
 
   return (
-    <UserAuthContext.Provider value={{ userToken, setUserToken }}>
+    <UserAuthContext.Provider value={{ userToken, setUserToken, username, setUsername }}>
       {children}
     </UserAuthContext.Provider>
   )

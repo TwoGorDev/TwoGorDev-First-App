@@ -24,6 +24,7 @@ export default function MealCard({ children, mealTime, caloriesToConsume, progre
 	if (meal.length > 0) {
 		mealId = meal[0].meal_id;
 	}
+	console.log(mealTime, ': ', meal)
 
 	return (
 		<>
@@ -65,6 +66,7 @@ export default function MealCard({ children, mealTime, caloriesToConsume, progre
 					title={mealTime}
 					setIsAddProductModalOpen={setIsAddProductModalOpen}
 					mealId={mealId}
+					mealPortions={[]}
 				/>
 			)}
 		</>
