@@ -10,7 +10,7 @@ import { UserAuthContext } from '../../contexts/UserAuthContext';
 export default function Navbar() {
 	const { userToken, setUserToken } = useContext(UserAuthContext);
 	const location = useLocation();
-	const [navMobileActive, setNavMobileActive] = useState(true);
+	const [navMobileActive, setNavMobileActive] = useState(false);
 	const navigate = useNavigate()
 
 	// Logout function
