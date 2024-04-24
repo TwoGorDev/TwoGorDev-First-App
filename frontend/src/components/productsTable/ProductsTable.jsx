@@ -25,13 +25,14 @@ export default function ProductsTable({ addProduct, setTotalProductCalories, set
 
 	return (
 		<div className='table-container'>
+			
 			<table
 				className='products-table'
 				style={isProductsPage ? { height: '60vh' } : {}}>
 				<thead>
 					<tr className='products-table-data table-headings'>
 						<td className='spacer'></td>
-						<td>Name</td>
+						<td>Product</td>
 						<td>Calories</td>
 						<td>Carbs</td>
 						<td>Proteins</td>
@@ -44,7 +45,7 @@ export default function ProductsTable({ addProduct, setTotalProductCalories, set
 						<tr key={item.id} className='products-table-data product'>
 							<td className='spacer'></td>
 							<td>{item.name}</td>
-							<td>{`${item.calories} kcal`}</td>
+							<td>{`${item.calories} `}</td>
 							<td>{`${item.carbohydrates}g`}</td>
 							<td>{`${item.proteins}g`}</td>
 							<td>{`${item.fats}g`}</td>
@@ -57,7 +58,13 @@ export default function ProductsTable({ addProduct, setTotalProductCalories, set
 									/>
 								)}
 
-								{isProductServingModalOpen && (
+								
+							</td>
+						</tr>
+					))}
+				</tbody>
+			</table>
+			{isProductServingModalOpen && (
 									<ProductServingModal
 										setOpenServingModal={setIsProductServingModalOpen}
 										product={selectedProduct}
@@ -66,11 +73,6 @@ export default function ProductsTable({ addProduct, setTotalProductCalories, set
 										setNewPortions={setNewPortions}
 									/>
 								)}
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
 		</div>
 	);
 }

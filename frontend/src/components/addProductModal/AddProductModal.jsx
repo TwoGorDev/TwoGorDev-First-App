@@ -152,7 +152,7 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 						className='add-products-to-meal-btn'
 						onClick={addDataToDatabase}
 						>
-							Add to {capitalizeFirstLetter(title)}
+							Add products to {capitalizeFirstLetter(title)}
 						</button>
 					</>
 				:
