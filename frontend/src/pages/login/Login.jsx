@@ -13,8 +13,8 @@ import getFormattedDate from '../../utilities/getFormattedDate';
 
 export default function Login() {
 	const [errors, setErrors] = useState({});
-	const { setUserToken } = useContext(UserAuthContext);
-	const { isPending, error, postData } = useDataApi();
+	const { setUserToken, setUsername } = useContext(UserAuthContext);
+	const { isPending, error: serverError, postData } = useDataApi();
 	const navigate = useNavigate();
 
 	const handleLogin = async (e, formData) => {
@@ -39,7 +39,9 @@ export default function Login() {
 			
 			if (data) {
 				localStorage.setItem('user-token', JSON.stringify(data.token));
+				localStorage.setItem('username', JSON.stringify(data.username));
 				setUserToken(data.token);
+				setUsername(data.username);
 				navigate(`/dashboard/${getFormattedDate(new Date())}`);
 			}
     }
@@ -48,7 +50,7 @@ export default function Login() {
 
 	return (
 		<div className='login-container'>
-			<Form title='Login' buttonText='Log in' handleSubmit={handleLogin} errors={errors}/>
+			<Form title='Login' buttonText='Log in' handleSubmit={handleLogin} errors={errors} serverError={serverError}/>
 		</div>
 	);
 }

@@ -18,7 +18,7 @@ import useDebounce from '../../hooks/useDebounce';
 import { ProductsContext } from '../../contexts/ProductsContext';
 
 export default function AddProductModal({ title, setIsAddProductModalOpen, mealId }) {
-	const { products, setEndpoint } = useContext(ProductsContext);
+	const { products, isPending, setEndpoint } = useContext(ProductsContext);
 	const { error, postData } = useDataApi();
 	const [addedProducts, setAddedProducts] = useState([]);
 	const [totalProductCalories, setTotalProductCalories] = useState([]);
@@ -97,67 +97,65 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 	return (
 		<div className='add-product-overlay'>
 			<div className='product-modal-popup'>
-				{products.length > 0 ? 
-					<>
-						<IoMdClose
-							className='modal-close-icon serving-modal-close-icon'
-							onClick={() => setIsAddProductModalOpen(false)}
+				<IoMdClose
+					className='modal-close-icon serving-modal-close-icon'
+					onClick={() => setIsAddProductModalOpen(false)}
+				/>
+				<h2 className='modal-title'>{capitalizeFirstLetter(title)}</h2>
+				<p className='modal-choose-product-text'>
+					Choose your product:
+				</p>
+				<div className='modal-products-container'>
+					<div>
+						<input
+							className='products-table-search'
+							type='text'
+							placeholder='Search products...'
+							value={query}
+							onChange={(e) => setQuery(e.target.value)}
 						/>
-						<h2 className='modal-title'>{capitalizeFirstLetter(title)}</h2>
-						<p className='modal-choose-product-text'>
-							Choose your product:
+						{isPending ? 
+							<Loader />
+						: 
+							<ProductsTable
+								addProduct={addProduct}
+								setTotalProductCalories={setTotalProductCalories}
+								setNewPortions={setNewPortions}
+								products={products}
+							/>
+						}
+					</div>
+					<div className='modal-added-products'>
+						<h3 className='modal-added-products-title'>Added products: </h3>
+						<ul className='added-products-list'>
+							{addedProducts.length > 0 &&
+								addedProducts.map((product, index) => (
+									<li key={index} className='added-products-item'>
+										<span className='added-product-item-name'>
+											{product.name}
+										</span>
+										<span className='added-product-item-kcal'>
+											{totalProductCalories[index]}kcal
+										</span>
+										<FaCircleMinus
+											className='remove-product-icon'
+											onClick={() => removeProduct(index)}
+										/>
+									</li>
+								))}
+						</ul>
+						<p className='added-products-total-calories'>
+							Calories in total: <br />{' '}
+							<span>{totalAmountOfCalories} kcal</span>
 						</p>
-						<div className='modal-products-container'>
-							<div>
-								<input
-									className='products-table-search'
-									type='text'
-									placeholder='Search products...'
-									value={query}
-									onChange={(e) => setQuery(e.target.value)}
-								/>
-								<ProductsTable
-									addProduct={addProduct}
-									setTotalProductCalories={setTotalProductCalories}
-									setNewPortions={setNewPortions}
-									products={products}
-								/>
-							</div>
-							<div className='modal-added-products'>
-								<h3 className='modal-added-products-title'>Added products: </h3>
-								<ul className='added-products-list'>
-									{addedProducts.length > 0 &&
-										addedProducts.map((product, index) => (
-											<li key={index} className='added-products-item'>
-												<span className='added-product-item-name'>
-													{product.name}
-												</span>
-												<span className='added-product-item-kcal'>
-													{totalProductCalories[index]}kcal
-												</span>
-												<FaCircleMinus
-													className='remove-product-icon'
-													onClick={() => removeProduct(index)}
-												/>
-											</li>
-										))}
-								</ul>
-								<p className='added-products-total-calories'>
-									Calories in total: <br />{' '}
-									<span>{totalAmountOfCalories} kcal</span>
-								</p>
-							</div>
-						</div>
-						<button 
-						className='add-products-to-meal-btn'
-						onClick={addDataToDatabase}
-						>
-							Add products to {capitalizeFirstLetter(title)}
-						</button>
-					</>
-				:
-					<Loader />
-				}
+					</div>
+				</div>
+				<button 
+					className='add-products-to-meal-btn'
+					onClick={addDataToDatabase}
+				>
+					Add to {capitalizeFirstLetter(title)}
+				</button>
 			</div>
 		</div>
 	);

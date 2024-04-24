@@ -13,6 +13,7 @@ export default function Form({
 	authType,
 	handleSubmit,
 	errors,
+	serverError
 }) {
 	
 	const [formData, setFormData] = useState({
@@ -136,6 +137,7 @@ export default function Form({
 						</Link>
 					</p>
 				)}
+				{serverError && <p className='form-error'>{serverError}</p>}
 				<button className='submit-form-btn'>{buttonText}</button>
 				{title === 'Register' && (
 					<p className='register-form-info'>

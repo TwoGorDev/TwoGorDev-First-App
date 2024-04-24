@@ -30,28 +30,29 @@ export default function ProductsTable({
 	};
 
 	return (
+		
 		<div className='table-container'>
-			<table
-				className='products-table'
-				style={isProductsPage ? { height: '60vh' } : {}}>
-				<thead>
-					<tr className='products-table-data table-headings'>
-						<td className='spacer'></td>
-						<td>Product</td>
-						<td>Calories</td>
-						<td>Carbs</td>
-						<td>Proteins</td>
-						<td>Fats</td>
-						<td className='add-product spacer'></td>
-					</tr>
-				</thead>
-				<tbody>
-					{products &&
-						products.map((item) => (
+			{products.length > 0 ? 
+				<table
+					className='products-table'
+					style={isProductsPage ? { height: '60vh' } : {}}>
+					<thead>
+						<tr className='products-table-data table-headings'>
+							<td className='spacer'></td>
+							<td>Product</td>
+							<td>Calories</td>
+							<td>Carbs</td>
+							<td>Proteins</td>
+							<td>Fats</td>
+							<td className='add-product spacer'></td>
+						</tr>
+					</thead>
+					<tbody>
+						{products && products.map((item) => (
 							<tr key={item.id} className='products-table-data product'>
 								<td className='spacer'></td>
 								<td>{item.name}</td>
-								<td>{`${item.calories} `}</td>
+								<td>{`${item.calories}`}</td>
 								<td>{`${item.carbohydrates}g`}</td>
 								<td>{`${item.proteins}g`}</td>
 								<td>{`${item.fats}g`}</td>
@@ -63,20 +64,26 @@ export default function ProductsTable({
 											onClick={() => handleIconClick(item)}
 										/>
 									)}
+
+									
 								</td>
 							</tr>
 						))}
-				</tbody>
-			</table>
+					</tbody>
+				</table>
+			: 
+				// Wyświetlić wiadomość w stylu 'No products were found based on this criteria'
+				<h2 className='product-not-found'>Couldn't find the product you're looking for...</h2>
+			}
 			{isProductServingModalOpen && (
-				<ProductServingModal
-					setOpenServingModal={setIsProductServingModalOpen}
-					product={selectedProduct}
-					addProduct={addProduct}
-					setTotalProductCalories={setTotalProductCalories}
-					setNewPortions={setNewPortions}
-				/>
-			)}
+					<ProductServingModal
+						setOpenServingModal={setIsProductServingModalOpen}
+						product={selectedProduct}
+						addProduct={addProduct}
+						setTotalProductCalories={setTotalProductCalories}
+						setNewPortions={setNewPortions}
+					/>
+				)}
 		</div>
 	);
 }

@@ -12,7 +12,7 @@
 	padding-inline: 1em;
 	border-collapse: separate;
 	border-spacing: 0 0.7em;
-	backdrop-filter: blur(200px);
+	backdrop-filter: blur(30px);
 	/* background-image: url('../../assets/images/products-table-bg-large.png'); */
 	background-position: center;
 	border-radius: 15px;
@@ -75,5 +75,12 @@ thead {
     }
 }
 
+.product-not-found {
+	padding: 1em;
+	border-radius: 15px;
+	border: 1px solid var(--primary-color);
+	background: var(--text-color-light);
+	color: var(--primary-color);
+}
 
 

@@ -32,7 +32,7 @@ const loginUser = async (req, res, next) => {
     // Send back jwt upon successful login
     const token = jwt.sign({ id: existingUser.id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 
-    res.status(200).json({ token });
+    res.status(200).json({ username: existingUser.username, token });
 
   } catch(error) {
     next(error);
@@ -76,13 +76,11 @@ const signupUser = async (req, res, next) => {
     }
     
     const createdUser = await userRepo.insert(newUser);
-    console.log(createdUser)
 
     // Send back jwt upon successful signup
     const token = jwt.sign({ id: createdUser.id }, process.env.JWT_SECRET, { expiresIn: "30d" });
-    console.log(token)
 
-    res.status(200).json({ token: token });
+    res.status(200).json({ username: createdUser.username, token });
 
   } catch(error) {
     next(error);
