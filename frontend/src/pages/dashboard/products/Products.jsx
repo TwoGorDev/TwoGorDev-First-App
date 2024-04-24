@@ -11,7 +11,7 @@ import Loader from '../../../components/loader/Loader';
 import { ProductsContext } from '../../../contexts/ProductsContext';
 
 export default function Products() {
-	const { products, setEndpoint } = useContext(ProductsContext);
+	const { products, isPending, setEndpoint } = useContext(ProductsContext);
 	const [query, setQuery] = useState('');
 
 	// Debouncing search query
@@ -28,19 +28,17 @@ export default function Products() {
 
 	return (
 		<div className='products'>
-			{products.length > 0 ?
-				<>
-					<input
-						className='products-table-search'
-						type='text'
-						placeholder='Search products...'
-						value={query}
-						onChange={(e) => setQuery(e.target.value)}
-					/>
-					<ProductsTable products={products}/>
-				</>
-			: 
+			<input
+				className='products-table-search'
+				type='text'
+				placeholder='Search products...'
+				value={query}
+				onChange={(e) => setQuery(e.target.value)}
+			/>
+			{isPending ? 
 				<Loader />
+			: 
+				<ProductsTable products={products}/>
 			}
 		</div>
 	);
