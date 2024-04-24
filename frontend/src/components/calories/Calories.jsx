@@ -12,7 +12,8 @@ import capitalizeFirstLetter from '../../utilities/capitalizeFirstLetter';
 
 export default function Calories({ caloriesReq, macrosReq, meals }) {
 	const { calculateDailyNutrition } = useCalculateNutritionValues();
-	const { consumedCalories, consumedProteins, consumedCarbs, consumedFats } = calculateDailyNutrition(meals);
+	const { consumedCalories, consumedProteins, consumedCarbs, consumedFats } =
+		calculateDailyNutrition(meals);
 	const totalMacros = [consumedCarbs, consumedFats, consumedProteins];
 
 	return (
@@ -37,7 +38,11 @@ export default function Calories({ caloriesReq, macrosReq, meals }) {
 						strokeWidth={7}
 						transformDeg='-135'>
 						<h3 className='percentile-amount'>
-							{`${consumedCalories !== 0 ? Math.round((consumedCalories / caloriesReq) * 100) : '0'}%`}
+							{`${
+								consumedCalories !== 0
+									? Math.round((consumedCalories / caloriesReq) * 100)
+									: '0'
+							}%`}
 							<p className='summary-info calories-percentile'>
 								Daily
 								<br />
@@ -48,7 +53,7 @@ export default function Calories({ caloriesReq, macrosReq, meals }) {
 				</div>
 
 				<div className='summary-calories-remaining'>
-					<h3 className='calories-amount'>{caloriesReq}</h3>
+					<h3 className='calories-amount'>{caloriesReq - consumedCalories}</h3>
 
 					<p className='summary-info calories-ingested'>Remaining</p>
 				</div>
