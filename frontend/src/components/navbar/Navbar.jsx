@@ -10,13 +10,13 @@ import { UserAuthContext } from '../../contexts/UserAuthContext';
 export default function Navbar() {
 	const { userToken } = useContext(UserAuthContext);
 	const location = useLocation();
-	const [navMobileActive, setNavMobileActive] = useState(true);
+	const [navMobileActive, setNavMobileActive] = useState(false);
 	const navigate = useNavigate()
 
 	// Logout function
 	const logout = () => {
 		localStorage.removeItem('user-token');
-		navigate(0)
+		navigate('/')
 	}
 
 	const navClass = ['/', '/register', '/login'].includes(location.pathname)
