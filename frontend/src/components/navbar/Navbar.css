@@ -174,7 +174,7 @@
 
 	.home-nav.mobile-active .hamburger-line:nth-child(1),
 	.nav.mobile-active .hamburger-line:nth-child(1) {
-		transform: translateY(8px) rotate(45deg);
+		transform: translateY(10px) rotate(45deg);
 	}
 
 	.home-nav.mobile-active .hamburger-line:nth-child(2),
@@ -184,7 +184,7 @@
 
 	.home-nav.mobile-active .hamburger-line:nth-child(3),
 	.nav.mobile-active .hamburger-line:nth-child(3) {
-		transform: translateY(-12px) rotate(-45deg);
+		transform: translateY(-13px) rotate(-45deg);
 	}
 }
 
@@ -194,6 +194,11 @@
 		&::before {
 			bottom: 12px;
 		}
+	}
+
+	.home-nav.mobile-active .hamburger-line:nth-child(3),
+	.nav.mobile-active .hamburger-line:nth-child(3) {
+		transform: translateY(-12px) rotate(-45deg);
 	}
 }
 

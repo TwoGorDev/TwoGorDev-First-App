@@ -13,7 +13,7 @@
 
 .product-modal-popup {
 	height: min(850px, 80vh);
-	width: min(1100px, 100%);
+	width: min(1200px, 100%);
 	overflow-y: auto;
 	margin: 2em 1em 0;
 	position: relative;
@@ -76,7 +76,7 @@
 
 .added-products-list {
 	width: fit-content;
-	min-width: 19em;
+	min-width: 25em;
 	height: 43vh;
 	overflow-y: scroll;
 	scrollbar-width: thin;
@@ -135,29 +135,13 @@
 	}
 }
 
-@media (width < 380px) {
+@media (width < 480px) {
 
 	.added-products-list {
-		width: fit-content;
-		min-width: 15em;
-		height: 43vh;
-		overflow-y: scroll;
-		scrollbar-width: thin;
-		scrollbar-color: var(--primary-color) var(--secondary-color);
-		border: 5px solid transparent;
-		border-radius: 15px;
-		box-shadow: 1px 1px 6px rgb(183, 183, 183);
+		min-width: 15em;	
 	}
 
 	.added-products-item {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: 2em;
-		margin: 1em 1.5em;
-		padding: 0.8em;
-		border-radius: 12px;
-		box-shadow: 1px 1px 6px rgb(183, 183, 183);
 		font-size: 1.6rem;
 	}
 }
