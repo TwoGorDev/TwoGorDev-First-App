@@ -1,15 +1,15 @@
-// styles
+// Styles
 import './AddProductModal.css';
 
-// icons
+// Icons
 import { IoMdClose } from 'react-icons/io';
 import { FaCircleMinus } from 'react-icons/fa6';
 
-// components
+// Components
 import ProductsTable from '../productsTable/ProductsTable';
 import Loader from '../loader/Loader';
 
-// utilities
+// Utilities
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import capitalizeFirstLetter from '../../utilities/capitalizeFirstLetter';
@@ -17,24 +17,26 @@ import useDataApi from '../../hooks/useDataApi';
 import useDebounce from '../../hooks/useDebounce';
 import { ProductsContext } from '../../contexts/ProductsContext';
 
-export default function AddProductModal({ title, setIsAddProductModalOpen, mealId }) {
+export default function AddProductModal({ title, setIsAddProductModalOpen, mealId, mealPortions }) {
+	// Outside state
 	const { products, isPending, setEndpoint } = useContext(ProductsContext);
-	const { error, isPending: isPostRequestPending, postData } = useDataApi();
+	const { error, isPending: isPostRequestPending, postData, patchData } = useDataApi();
 	const { date } = useParams();
 	const navigate = useNavigate();
 
+	// Local state
 	const [errors, setErrors] = useState('');
 	const [query, setQuery] = useState('');
-	const [addedProducts, setAddedProducts] = useState([]);
-	const [totalProductCalories, setTotalProductCalories] = useState([]);
-	const [newPortions, setNewPortions] = useState([])
+	const [currentPortions, setCurrentPortions] = useState(mealPortions.filter(item => item.portion_id))
+	const [addedPortions, setAddedPortions] = useState([]);
+	const [deletedPortions, setDeletedPortions] = useState([]);
 
 	// Debouncing search query
 	const debouncedQuery = useDebounce(query, 500);
 
 	// Fetch products from the server on component mount
 	useEffect(() => {
-		// Fetch data from the server on every change in user's search bar input
+		// fetch data from the server everytime user types into search bar (after debouncing)
 		if (debouncedQuery) {
 			setEndpoint(`/products/search/${debouncedQuery}`)
 		} else {
@@ -42,64 +44,71 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 		}
 	}, [debouncedQuery])
 
-	const totalAmountOfCalories = totalProductCalories.reduce(
-		(acc, curr) => acc + curr,
-		0
+	// Get total amount of calories in all the portions
+	const portionsTotalCalories = Math.round(
+		// calculate calories for each portion and return them in an array
+		currentPortions.map((portion) => portion.calories * portion.serving / 100)
+		// sum all values in that array into a single value
+		.reduce((acc, curr) => acc + curr, 0)
 	);
   
-	const addProduct = (product) => {
-		setAddedProducts((prevProducts) => [...prevProducts, product]);
+	const addPortion = (portion) => {
+		setAddedPortions((prevPortions) => [...prevPortions, portion]);
+		setCurrentPortions((prevPortions) => [...prevPortions, portion]);
 	};
 
-	const removeProduct = (index) => {
-		setAddedProducts((prevProducts) => {
-			const newProducts = [...prevProducts];
-			newProducts.splice(index, 1);
-			return newProducts;
-		});
-		setTotalProductCalories((prevCalories) => {
-			const newCalories = [...prevCalories];
-			newCalories.splice(index, 1);
-			return newCalories;
-		});
+	console.log(currentPortions)
+
+	const removePortion = (portion) => {
+		setAddedPortions((prevPortions) => prevPortions.filter(item => item.portion_id !== portion.portion_id || item.temporary_id !== portion.temporary_id));
+		setCurrentPortions((prevPortions) => prevPortions.filter(item => item.portion_id !== portion.portion_id || item.temporary_id !== portion.temporary_id));
+		setDeletedPortions((prevPortions) => [...prevPortions, portion]);
 	};
 
-	const addDataToDatabase = async () => {
-		setErrors('');
+	// Update the database with user inputs
+	const updateDatabase = async () => {
 
-		if (newPortions.length === 0) {
-			setErrors('You need to add portions to your meal');
-			return
+		if (addedPortions.length === 0 && deletedPortions.length === 0) {
+			setIsAddProductModalOpen(false);
+			return;
 		}
 
-		// Define an empty variable to store new meal ID
-		let newMealId;
-
-		// Check if client received meal ID from the server during daily-summary fetch
-		// if not - it means that meal is not created in the database yet
-		// in that case, create new meal and save it's ID in the empty variable we defined
+		// check if client received mealId from the server during daily-summary fetch in <Dashboard /> component
+		// if it didn't, the mealId will be set to 0, it means that meal is not created in the database yet, in that case - create new meal and replace 0 with it's id
+		// if mealId is different than 0, it means that the meal is already created and it has been already fetched - hence don't mutate mealId at all
 		if (mealId === 0) {
 			const newMeal = {
 				type: capitalizeFirstLetter(title),
 				date: date
-			}
+			};
 
 			const res = await postData('/meals', newMeal);
-			newMealId = res.id;
+			mealId = res.id;
+		}
+
+		const databasePresentPortions = deletedPortions.filter(portion => portion.portion_id);
+
+		if (databasePresentPortions.length !== 0) {
+			const existingPortionsIdsArray = databasePresentPortions.map(portion => portion.portion_id);
+			
+			await patchData('/delete-portions', existingPortionsIdsArray);
 		}
 		
-		// Map through new portions and add meal ID to each of them
-		const newPortionsWithMealIds = newPortions.map(portion => {
-			return {
-				mealId: !mealId ? newMealId : mealId,
-				...portion
-			}
-		})
-		
-		// Create new portions in the database
-		await postData('/portions', newPortionsWithMealIds)
-		
-		// If there's no errors, refresh the page to refetch daily-summary with newly created data
+		if (addedPortions.length !== 0) {
+			// map through addedPortions and add meal ID to each of them
+			const newPortionsWithMealId = addedPortions.map(portion => {
+				return {
+					meal_id: mealId,
+					product_id: portion.product_id,
+					serving: portion.serving
+				}
+			});
+
+			// create new portions in the database
+			await postData('/portions', newPortionsWithMealId);
+		}
+
+		// if there's no errors, refresh the page to refetch daily-summary with newly created data
 		!error && navigate(0);
 	}
 
@@ -127,9 +136,7 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 							<Loader />
 						: 
 							<ProductsTable
-								addProduct={addProduct}
-								setTotalProductCalories={setTotalProductCalories}
-								setNewPortions={setNewPortions}
+								addPortion={addPortion}
 								products={products}
 							/>
 						}
@@ -137,31 +144,31 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 					<div className='modal-added-products'>
 						<h3 className='modal-added-products-title'>Added products: </h3>
 						<ul className='added-products-list'>
-							{addedProducts.length > 0 &&
-								addedProducts.map((product, index) => (
+							{currentPortions.length > 0 &&
+								currentPortions.map((portion, index) => (
 									<li key={index} className='added-products-item'>
 										<span className='added-product-item-name'>
-											{product.name}
+											{portion.product}
 										</span>
 										<span className='added-product-item-kcal'>
-											{totalProductCalories[index]}kcal
+											{Math.round(portion.serving * portion.calories / 100)}kcal
 										</span>
 										<FaCircleMinus
 											className='remove-product-icon'
-											onClick={() => removeProduct(index)}
+											onClick={() => removePortion(portion)}
 										/>
 									</li>
 								))}
 						</ul>
 						<p className='added-products-total-calories'>
 							Calories in total: <br />{' '}
-							<span>{totalAmountOfCalories} kcal</span>
+							<span>{portionsTotalCalories} kcal</span>
 						</p>
 					</div>
 				</div>
 				<button 
 					className='add-products-to-meal-btn'
-					onClick={addDataToDatabase}
+					onClick={updateDatabase}
 				>
 					{isPostRequestPending ? 'Loading...' : `Add to ${capitalizeFirstLetter(title)}`}
 				</button>

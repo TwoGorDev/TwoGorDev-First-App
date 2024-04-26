@@ -16,14 +16,14 @@ export default function useDataApi() {
       const res = await axios.get(
         encodeURI(`http://localhost:4000${endpoint}`),
         { headers: {'Authorization': `Bearer ${userToken}`} }
-      )
+      );
 
       return res.data;
 
     } catch(error) {
       console.log(error)
-      error.response && setError(error.response.data.error)
-      !error.response && setError(error.message)
+      error.response && setError(error.response.data.error);
+      !error.response && setError(error.message);
     } finally {
       setIsPending(false);
     }
@@ -38,18 +38,40 @@ export default function useDataApi() {
         encodeURI(`http://localhost:4000${endpoint}`),
         body,
         { headers: {'Authorization': `Bearer ${userToken}`} }
-      )
+      );
       
-      return res.data
+      return res.data;
       
     } catch(error) {
       console.log(error)
-      error.response && setError(error.response.data.error)
-      !error.response && setError(error.message)
+      error.response && setError(error.response.data.error);
+      !error.response && setError(error.message);
     } finally {
       setIsPending(false);
     }
   }
 
-  return { isPending, error, getData, postData }
+  const patchData = async (endpoint, body) => {
+    setIsPending(true);
+    setError('');
+
+    try {
+      const res = await axios.patch(
+        encodeURI(`http://localhost:4000${endpoint}`),
+        body,
+        { headers: {'Authorization': `Bearer ${userToken}`} }
+      );
+
+      return res.data;
+
+    } catch(error) {
+      console.log(error)
+      error.response && setError(error.response.data.error);
+      !error.response && setError(error.message);
+    } finally {
+      setIsPending(false);
+    }
+  }
+
+  return { isPending, error, getData, postData, patchData }
 }

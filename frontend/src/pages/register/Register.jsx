@@ -82,6 +82,7 @@ export default function Register() {
 				handleSubmit={handleRegister}
 				errors={errors}
 				serverError={serverError}
+				isPending={isPending}
 			/>
 		</div>
 	);

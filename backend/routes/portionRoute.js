@@ -1,24 +1,26 @@
 // Imports
 const express = require('express');
 const router = express.Router();
-const portionRepo = require('../repos/portionRepo');
 
 // Auth middleware
 const { requireUser } = require('../middleware/auth/requireUser');
-const { requireOwner } = require('../middleware/auth/requireOwner');
 
 // Controllers
 const {
+  createPortions,
   deletePortion,
-  createPortion
+  deleteMultiplePortions
 } = require('../controllers/portionController');
 
 // Routes
 
-// Create new portion
-router.post('/portions', requireUser, createPortion);
+// Create new portions
+router.post('/portions', requireUser, createPortions);
 
-// Delete existing portion
-router.delete('/portions/:id', requireUser, requireOwner(portionRepo), deletePortion);
+// Delete a single existing portion
+router.delete('/portions/:id', requireUser, deletePortion);
+
+// Delete multiple existing portions
+router.patch('/delete-portions', requireUser, deleteMultiplePortions);
 
 module.exports = router;

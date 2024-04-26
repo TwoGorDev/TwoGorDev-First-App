@@ -50,7 +50,7 @@ export default function Login() {
 
 	return (
 		<div className='login-container'>
-			<Form title='Login' buttonText='Log in' handleSubmit={handleLogin} errors={errors} serverError={serverError}/>
+			<Form title='Login' buttonText='Log in' handleSubmit={handleLogin} errors={errors} serverError={serverError} isPending={isPending}/>
 		</div>
 	);
 }
