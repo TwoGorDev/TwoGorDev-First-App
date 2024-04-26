@@ -10,8 +10,10 @@ import { UserAuthContext } from '../../contexts/UserAuthContext';
 export default function Navbar() {
 	const { userToken, setUserToken, username, setUsername } =
 		useContext(UserAuthContext);
-	const location = useLocation();
 	const [navMobileActive, setNavMobileActive] = useState(false);
+	const [dropdownActive, setDropdownActive] = useState(true);
+
+	const location = useLocation();
 	const navigate = useNavigate();
 
 	// Logout function
@@ -60,13 +62,49 @@ export default function Navbar() {
 							</NavLink>
 						</li>
 
-						<li>
+						<li
+							className='dropdown-show-list-link'
+							onMouseEnter={() => setDropdownActive(true)}
+							onMouseLeave={() => setDropdownActive(false)}>
 							<NavLink
-								onClick={() => setNavMobileActive(false)}
+								onClick={() => {
+									setNavMobileActive(false);
+									setDropdownActive(false);
+								}}
 								className='nav-link'
-								to='/account'>
+								to='/account/profile'>
 								Account
 							</NavLink>
+
+							<ul
+								className={`dropdown-list ${
+									dropdownActive ? 'dropdown-active' : ''
+								}`}>
+								<li>
+									<NavLink
+										onClick={() => setDropdownActive(false)}
+										className='dropdown-link nav-link'
+										to='/account/profile'>
+										Profile
+									</NavLink>
+								</li>
+								<li>
+									<NavLink
+										onClick={() => setDropdownActive(false)}
+										className='dropdown-link nav-link'
+										to='/account/contactus'>
+										Contact Us
+									</NavLink>
+								</li>
+								<li>
+									<NavLink
+										onClick={() => setDropdownActive(false)}
+										className='dropdown-link nav-link'
+										to='/account/settings'>
+										Settings
+									</NavLink>
+								</li>
+							</ul>
 						</li>
 
 						<li>

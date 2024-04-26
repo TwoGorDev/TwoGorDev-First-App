@@ -6,13 +6,16 @@ import Home from './pages/home/Home';
 import Login from './pages/login/Login';
 import Register from './pages/register/Register';
 import Dashboard from './pages/dashboard/Dashboard';
-import Account from './pages/account/Account';
 import Products from './pages/dashboard/products/Products';
 import Calculator from './pages/dashboard/calculator/Calculator';
+import Profile from './pages/account/profile/Profile';
+import Settings from './pages/account/settings/Settings';
+import ContactUs from './pages/account/contactUs/ContactUs';
 
 // layouts
 import Layout from './layouts/Layout';
 import DashboardLayout from './layouts/DashboardLayout';
+import AccountLayout from './layouts/AccountLayout';
 
 // utilities
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -30,15 +33,23 @@ function App() {
 			<BrowserRouter>
 					<Routes>
 						<Route path='/' element={<Layout />}>
-							<Route index element={userToken ? <Navigate to={`/dashboard/${currentDate}`} /> : <Home />} />
-							<Route path='login' element={userToken ? <Navigate to={`/dashboard/${currentDate}`}/> : <Login />} />
-							<Route path='register' element={userToken ? <Navigate to={`/dashboard/${currentDate}`}/> : <Register />} />
-							<Route path='/account' element={!userToken ? <Login /> : <Account />} />
 
+							<Route index element={userToken ? <Navigate to={`/dashboard/${currentDate}`} /> : <Home />} />
+
+							<Route path='login' element={userToken ? <Navigate to={`/dashboard/${currentDate}`}/> : <Login />} />
+							
+							<Route path='register' element={userToken ? <Navigate to={`/dashboard/${currentDate}`}/> : <Register />} />
+							
 							<Route path='dashboard' element={!userToken ? <Login /> : <DashboardLayout />}>
 								<Route path=':date' element={<Dashboard />}/>
 								<Route path="products" element={<Products />} />
 								<Route path="calculator" element={<Calculator />} />
+							</Route>
+
+							<Route path='account' element={!userToken ? <Login /> : <AccountLayout />}>
+								<Route path='profile' element={<Profile />} />
+								<Route path='settings' element={<Settings />} />
+								<Route path='contactus' element={<ContactUs />} />
 							</Route>
 
 						</Route>
