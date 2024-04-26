@@ -25,7 +25,6 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 	const navigate = useNavigate();
 
 	// Local state
-	const [errors, setErrors] = useState('');
 	const [query, setQuery] = useState('');
 	const [currentPortions, setCurrentPortions] = useState(mealPortions.filter(item => item.portion_id))
 	const [addedPortions, setAddedPortions] = useState([]);
@@ -172,8 +171,6 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 				>
 					{isPostRequestPending ? 'Loading...' : `Add to ${capitalizeFirstLetter(title)}`}
 				</button>
-				{/* Wyświetlanie błędu poniżej jest do zmiany */}
-				{errors && <p className='error'>{errors}</p>}
 			</div>
 		</div>
 	);
