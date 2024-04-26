@@ -30,9 +30,8 @@ export default function ProductsTable({
 	};
 
 	return (
-		
 		<div className='table-container'>
-			{products.length > 0 ? 
+			{products.length > 0 ? (
 				<table
 					className='products-table'
 					style={isProductsPage ? { height: '60vh' } : {}}>
@@ -48,42 +47,43 @@ export default function ProductsTable({
 						</tr>
 					</thead>
 					<tbody>
-						{products && products.map((item) => (
-							<tr key={item.id} className='products-table-data product'>
-								<td className='spacer'></td>
-								<td>{item.name}</td>
-								<td>{`${item.calories}`}</td>
-								<td>{`${item.carbohydrates}g`}</td>
-								<td>{`${item.proteins}g`}</td>
-								<td>{`${item.fats}g`}</td>
-								{/* Do not display the add button on 'products' page*/}
-								<td>
-									{!isProductsPage && (
-										<FaCirclePlus
-											className='add-meal-button'
-											onClick={() => handleIconClick(item)}
-										/>
-									)}
-
-									
-								</td>
-							</tr>
-						))}
+						{products &&
+							products.map((item) => (
+								<tr key={item.id} className='products-table-data product'>
+									<td className='spacer'></td>
+									<td>{item.name}</td>
+									<td>{`${item.calories}`}</td>
+									<td>{`${item.carbohydrates}g`}</td>
+									<td>{`${item.proteins}g`}</td>
+									<td>{`${item.fats}g`}</td>
+									{/* Do not display the add button on 'products' page*/}
+									<td>
+										{!isProductsPage && (
+											<FaCirclePlus
+												className='add-meal-button'
+												onClick={() => handleIconClick(item)}
+											/>
+										)}
+									</td>
+								</tr>
+							))}
 					</tbody>
 				</table>
-			: 
+			) : (
 				// Wyświetlić wiadomość w stylu 'No products were found based on this criteria'
-				<h2 className='product-not-found'>Couldn't find the product you're looking for...</h2>
-			}
+				<h2 className='product-not-found'>
+					Couldn't find the product you're looking for...
+				</h2>
+			)}
 			{isProductServingModalOpen && (
-					<ProductServingModal
-						setOpenServingModal={setIsProductServingModalOpen}
-						product={selectedProduct}
-						addProduct={addProduct}
-						setTotalProductCalories={setTotalProductCalories}
-						setNewPortions={setNewPortions}
-					/>
-				)}
+				<ProductServingModal
+					setOpenServingModal={setIsProductServingModalOpen}
+					product={selectedProduct}
+					addProduct={addProduct}
+					setTotalProductCalories={setTotalProductCalories}
+					setNewPortions={setNewPortions}
+				/>
+			)}
 		</div>
 	);
 }
