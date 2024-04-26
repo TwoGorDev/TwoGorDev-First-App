@@ -19,13 +19,15 @@ import { ProductsContext } from '../../contexts/ProductsContext';
 
 export default function AddProductModal({ title, setIsAddProductModalOpen, mealId }) {
 	const { products, isPending, setEndpoint } = useContext(ProductsContext);
-	const { error, postData } = useDataApi();
+	const { error, isPending: isPostRequestPending, postData } = useDataApi();
+	const { date } = useParams();
+	const navigate = useNavigate();
+
+	const [errors, setErrors] = useState('');
+	const [query, setQuery] = useState('');
 	const [addedProducts, setAddedProducts] = useState([]);
 	const [totalProductCalories, setTotalProductCalories] = useState([]);
 	const [newPortions, setNewPortions] = useState([])
-	const { date } = useParams();
-	const [query, setQuery] = useState('');
-	const navigate = useNavigate();
 
 	// Debouncing search query
 	const debouncedQuery = useDebounce(query, 500);
@@ -63,6 +65,13 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 	};
 
 	const addDataToDatabase = async () => {
+		setErrors('');
+
+		if (newPortions.length === 0) {
+			setErrors('You need to add portions to your meal');
+			return
+		}
+
 		// Define an empty variable to store new meal ID
 		let newMealId;
 
@@ -154,8 +163,10 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 					className='add-products-to-meal-btn'
 					onClick={addDataToDatabase}
 				>
-					Add to {capitalizeFirstLetter(title)}
+					{isPostRequestPending ? 'Loading...' : `Add to ${capitalizeFirstLetter(title)}`}
 				</button>
+				{/* Wyświetlanie błędu poniżej jest do zmiany */}
+				{errors && <p className='error'>{errors}</p>}
 			</div>
 		</div>
 	);

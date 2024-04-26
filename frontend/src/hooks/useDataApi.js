@@ -14,7 +14,7 @@ export default function useDataApi() {
 
     try {
       const res = await axios.get(
-        `http://localhost:4000${endpoint}`,
+        encodeURI(`http://localhost:4000${endpoint}`),
         { headers: {'Authorization': `Bearer ${userToken}`} }
       )
 
@@ -32,10 +32,10 @@ export default function useDataApi() {
   const postData = async (endpoint, body) => {
     setIsPending(true);
     setError('');
-    
+
     try {
       const res = await axios.post(
-        `http://localhost:4000${endpoint}`,
+        encodeURI(`http://localhost:4000${endpoint}`),
         body,
         { headers: {'Authorization': `Bearer ${userToken}`} }
       )
