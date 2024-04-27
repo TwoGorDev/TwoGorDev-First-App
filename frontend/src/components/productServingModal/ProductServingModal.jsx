@@ -8,34 +8,30 @@ import { IoMdClose } from 'react-icons/io';
 import { useState } from 'react';
 import isNumbersOnly from '../../utilities/allowNumbersOnly';
 
-export default function ProductServingModal({ setOpenServingModal, product, addProduct, setTotalProductCalories, setNewPortions }) {
+export default function ProductServingModal({ setOpenServingModal, product, addPortion }) {
 	const [showError, setShowError] = useState(false);
 	const [servingData, setServingData] = useState('');
 
-	// Calculate total serving calories 
-	const totalProductCaloriesAmount = Math.round((servingData / 100) * product.calories);	
-
+	// Add portion to 'addedPortions' array in <AddProductModal />
 	const handleAddProduct = () => {
 		if (servingData !== '') {
-			addProduct(product);
-
-			setTotalProductCalories((prevTotal) => [
-				...prevTotal,
-				totalProductCaloriesAmount
-			]);
-
-			setNewPortions(prevPortions => [
-				...prevPortions,
-				{
-					serving: servingData,
-					productId: product.id
-				}
-			])
+			addPortion({
+				product: product.name,
+				product_id: product.id,
+				calories: product.calories,
+				proteins: product.proteins,
+				fats: product.fats,
+				serving: servingData,
+				temporary_id: Math.random()
+			});
 			setOpenServingModal(false);
 		} else {
 			setShowError(true);
 		}
 	};
+
+	// Calculate total serving calories 
+	const totalProductCaloriesAmount = Math.round((servingData / 100) * product.calories);	
 
 	return (
 		<div className='product-serving-overlay'>
