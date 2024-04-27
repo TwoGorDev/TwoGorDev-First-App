@@ -7,7 +7,7 @@ export const ProductsContext = createContext();
 
 export const ProductsContextProvider = ({ children }) => {
   const { userToken } = useContext(UserAuthContext);
-  const { isPending, getData } = useDataApi();
+  const { isPending, error, getData } = useDataApi();
   const [products, setProducts] = useState([]);
   const [endpoint, setEndpoint] = useState('/products');
 
@@ -21,7 +21,7 @@ export const ProductsContextProvider = ({ children }) => {
   }, [endpoint, userToken])
 
   return (
-    <ProductsContext.Provider value={{ products, isPending, setEndpoint }}>
+    <ProductsContext.Provider value={{ products, isPending, error, setEndpoint }}>
       {children}
     </ProductsContext.Provider>
   )

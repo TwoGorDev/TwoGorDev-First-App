@@ -9,14 +9,8 @@ import { FaCirclePlus } from 'react-icons/fa6';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-export default function ProductsTable({
-	addProduct,
-	setTotalProductCalories,
-	setNewPortions,
-	products,
-}) {
-	const [isProductServingModalOpen, setIsProductServingModalOpen] =
-		useState(false);
+export default function ProductsTable({ addPortion, products }) {
+	const [isProductServingModalOpen, setIsProductServingModalOpen] = useState(false);
 	const [selectedProduct, setSelectedProduct] = useState(null);
 
 	// Check if this component is used on 'products' page
@@ -70,7 +64,6 @@ export default function ProductsTable({
 					</tbody>
 				</table>
 			) : (
-				// Wyświetlić wiadomość w stylu 'No products were found based on this criteria'
 				<h2 className='product-not-found'>
 					Couldn't find the product you're looking for...
 				</h2>
@@ -79,9 +72,7 @@ export default function ProductsTable({
 				<ProductServingModal
 					setOpenServingModal={setIsProductServingModalOpen}
 					product={selectedProduct}
-					addProduct={addProduct}
-					setTotalProductCalories={setTotalProductCalories}
-					setNewPortions={setNewPortions}
+					addPortion={addPortion}
 				/>
 			)}
 		</div>

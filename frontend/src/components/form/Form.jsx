@@ -13,7 +13,8 @@ export default function Form({
 	authType,
 	handleSubmit,
 	errors,
-	serverError
+	serverError,
+	isPending
 }) {
 	
 	const [formData, setFormData] = useState({
@@ -138,7 +139,7 @@ export default function Form({
 					</p>
 				)}
 				{serverError && <p className='form-error'>{serverError}</p>}
-				<button className='submit-form-btn'>{buttonText}</button>
+				<button className='submit-form-btn' disabled={isPending}>{buttonText}</button>
 				{title === 'Register' && (
 					<p className='register-form-info'>
 						By clicking "Sign up" you agree to our Terms and Conditions

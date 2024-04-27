@@ -5,7 +5,7 @@ module.exports = {
   // Fetch all products
   async findAll() {
     const { rows } = await pool.query(
-      'SELECT * FROM products;'
+      'SELECT id, name, calories, proteins, carbohydrates, fats, created_at, updated_at FROM products;'
     );
 
     return rows;
