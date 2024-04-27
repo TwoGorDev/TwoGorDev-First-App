@@ -1,0 +1,106 @@
+.acc-profile-title {
+	font-size: 2.6rem;
+	margin-bottom: 0.8em;
+	color: var(--primary-color);
+}
+
+.acc-profile-box {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1.5em;
+	padding: 2em;
+	background-color: #d0d2d375;
+	border-radius: 15px;
+}
+
+.acc-profile-box-avatar {
+	/* width: 250px; */
+	height: 250px;
+	aspect-ratio: 1/1;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+.acc-profile-box-info {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+	/* flex-grow: 1; */
+	padding: 1em;
+}
+
+.acc-profile-box-about-username {
+	font-size: 2.3rem;
+	color: var(--primary-color);
+}
+
+.acc-profile-box-about-heading {
+	font-size: 1.8rem;
+	color: var(--primary-color);
+	letter-spacing: 0.02em;
+}
+
+.edit-profile-info-btn {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	padding: 0.3em;
+	font-size: 1.5rem;
+	font-weight: bold;
+	color: var(--primary-color);
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	letter-spacing: 0.05em;
+	&:hover {
+		color: var(--primary-color-dark);
+	}
+}
+
+.acc-profile-edit-container {
+	flex-grow: 1;
+}
+
+.add-new-photo-title {
+	color: var(--primary-color);
+	margin-bottom: 0.3em;
+}
+
+.upload-profile-pic-input {
+	margin-block: 0.8em 1.2em;
+    cursor: pointer;
+}
+
+.edit-about-area {
+	height: 110px;
+	width: 100%;
+	resize: none;
+	font-size: 1.4rem;
+	border: none;
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.384);
+	text-indent: 0.3em;
+
+	&:focus {
+		outline: none;
+		border-bottom: 1px solid var(--primary-color);
+		box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.384);
+	}
+}
+
+.acc-profile-save-changes-btn {
+	display: block;
+	margin: 1em auto 0;
+	padding: 0.7em 2.5em;
+	font-size: 1.5rem;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+	cursor: pointer;
+    transition: all .2s;
+
+    &:hover {
+        background-color: var(--primary-color-dark);
+    }
+}
