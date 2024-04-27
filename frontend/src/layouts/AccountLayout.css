@@ -1,0 +1,61 @@
+.account-layout-container {
+	max-width: 1000px;
+	display: grid;
+	grid-template-columns: 1fr 2px 4fr;
+	column-gap: 1em;
+	margin-top: 10em;
+}
+
+.account-layout-nav-item {
+	padding-inline: 0.8em;
+	border-radius: 12px;
+	font-size: 1.7rem;
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--secondary-color);
+	}
+
+	/* &:hover .account-layout-nav-link,
+	&:hover svg {
+		color: var(--text-color-light);
+	} */
+}
+
+.account-layout-nav-link {
+	position: relative;
+	display: flex;
+	align-items: center;
+	padding: 1em;
+	letter-spacing: 0.01em;
+	color: var(--text-color-dark);
+
+	&::before {
+		position: absolute;
+		content: '';
+        top: 25%;
+        left: 0;
+        width: 0px;
+        height: 50%;
+        border-radius: 2em;
+        background-color: var(--primary-color);
+	}
+
+	& > svg {
+		color: var(--primary-color);
+		font-size: 2.2rem;
+		margin-right: 0.3em;
+	}
+}
+
+.separating-line {
+	background-color: var(--primary-color);
+}
+
+.account-layout-nav-link.active::before {
+    width: 4px;
+  }
+
+
+
+

@@ -11,9 +11,9 @@ export default function Navbar() {
 	const { userToken, setUserToken, username, setUsername } =
 		useContext(UserAuthContext);
 	const [navMobileActive, setNavMobileActive] = useState(false);
-	const [dropdownActive, setDropdownActive] = useState(true);
+	const [dropdownActive, setDropdownActive] = useState(false);
 
-	const location = useLocation();
+	const { pathname } = useLocation();
 	const navigate = useNavigate();
 
 	// Logout function
@@ -25,7 +25,7 @@ export default function Navbar() {
 		navigate('/');
 	};
 
-	const navClass = ['/', '/register', '/login'].includes(location.pathname)
+	const navClass = ['/', '/register', '/login'].includes(pathname)
 		? 'home-nav'
 		: 'nav';
 
@@ -66,13 +66,14 @@ export default function Navbar() {
 							className='dropdown-show-list-link'
 							onMouseEnter={() => setDropdownActive(true)}
 							onMouseLeave={() => setDropdownActive(false)}>
-							<NavLink
+							<NavLink					
 								onClick={() => {
 									setNavMobileActive(false);
 									setDropdownActive(false);
 								}}
-								className='nav-link'
-								to='/account/profile'>
+								className={`nav-link ${pathname.startsWith('/account') ? 'active' : ''}`}
+								to='/account/profile'
+								>
 								Account
 							</NavLink>
 
@@ -83,24 +84,24 @@ export default function Navbar() {
 								<li>
 									<NavLink
 										onClick={() => setDropdownActive(false)}
-										className='dropdown-link nav-link'
-										to='/account/profile'>
+										className='dropdown-link'
+										to='account/profile'>
 										Profile
 									</NavLink>
 								</li>
 								<li>
 									<NavLink
 										onClick={() => setDropdownActive(false)}
-										className='dropdown-link nav-link'
-										to='/account/contactus'>
+										className='dropdown-link'
+										to='account/contactus'>
 										Contact Us
 									</NavLink>
 								</li>
 								<li>
 									<NavLink
 										onClick={() => setDropdownActive(false)}
-										className='dropdown-link nav-link'
-										to='/account/settings'>
+										className='dropdown-link'
+										to='account/settings'>
 										Settings
 									</NavLink>
 								</li>
