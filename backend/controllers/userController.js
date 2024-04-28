@@ -2,6 +2,7 @@
 const userRepo = require('../repos/userRepo');
 const CustomError = require('../utilities/customError');
 const validateUser = require('../validators/userValidator');
+const imageRepo = require('../repos/imageRepo');
 
 // Get all users
 const getUsers = async (req, res, next) => {
@@ -41,22 +42,23 @@ const getUserById = async (req, res, next) => {
 // Update existing user
 const updateUser = async (req, res, next) => {
   try {
-    const { id } = req.params;
     const updatedUser = req.body;
+    const { id: userId } = req.user;
 
-    if (!id) {
-      throw new CustomError(500, 'User id required');
+    if (updatedUser.avatarString) {
+      await imageRepo.deleteOldImage(userId);
+      const url = await imageRepo.uploadNewImage(updatedUser.avatarString, userId);
+      updatedUser.avatar_url = url;
     }
 
-    validateUser(updatedUser);
-
-    const user = await userRepo.update(id, updatedUser);
+    const user = await userRepo.update(updatedUser, userId);
 
     if (!user) {
-      throw new CustomError(500, 'User signup failed');
+      throw new CustomError(500, 'User update failed');
     }
 
     delete user.password;
+
     res.status(200).json(user);
 
   } catch(error) {

@@ -55,13 +55,23 @@ module.exports = {
   },
 
   // Update an existing user
-  async update(id, user) {
-    const { username, email, password } = user;
+  async update(user, id) {
+    const { username, email, password, bio, avatar_url } = user;
 
     const { rows } = await pool.query(
-      'UPDATE users SET username = $1, email = $2, password = $3, updated_at = NOW() WHERE id = $4 RETURNING *;',
-      [username, email, password, id]
+      'UPDATE users SET username = updateIfChanged($1, username), email = updateIfChanged($2, email), password = updateIfChanged($3, password), bio = updateIfChanged($4, bio), avatar_url = updateIfChanged($5, avatar_url), updated_at = NOW() WHERE id = $6 RETURNING *;',
+      [username, email, password, bio, avatar_url, id]
     )
+
+    return rows[0];
+  },
+
+  // Update an existing user avatar
+  async updateUserAvatar(url, id) {
+    const { rows } = await pool.query(
+      'UPDATE users SET avatar_url = $1, updated_at = NOW() WHERE id = $2 RETURNING *;',
+      [url, id]
+    );
 
     return rows[0];
   },

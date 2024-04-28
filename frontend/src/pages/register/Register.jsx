@@ -13,7 +13,7 @@ import { UserAuthContext } from '../../contexts/UserAuthContext';
 export default function Register() {
 	const [errors, setErrors] = useState({});
 	const { isPending, error: serverError, postData } = useDataApi();
-	const { setUserToken, setUsername } = useContext(UserAuthContext);
+	const { setUser } = useContext(UserAuthContext);
 	const navigate = useNavigate();
 
 	const handleRegister = async (e, formData) => {
@@ -64,10 +64,8 @@ export default function Register() {
 			})
 
 			if (data) {
-				localStorage.setItem('user-token', JSON.stringify(data.token));
-				localStorage.setItem('username', JSON.stringify(data.username));
-				setUserToken(data.token);
-				setUsername(data.username);
+				localStorage.setItem('user', JSON.stringify(data));
+				setUser(data);
 				navigate('/dashboard/calculator');
 			}
 		}

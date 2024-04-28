@@ -41,12 +41,12 @@ export default function Dashboard() {
 	}
 
 	// If server doesn't find corresponding data, it'll return an empty array
-	// If the response is not an array, it means that the server found some data so the next step is to populate local variables with response data
+	// if the response is not an array it means that the server found some data - so the next step is to populate local variables with it
 	if (!Array.isArray(summary) && typeof summary !== 'undefined') {
 
 		const { dailyGoal, dailyProgress } = summary;
 
-		// Populate progress data
+		// populate progress data
 		if (dailyProgress.length > 0) {
 			dailyProgress.map(meal => {
 				switch (meal.meal_type) {
@@ -66,7 +66,7 @@ export default function Dashboard() {
 			})
 		}
 
-		// Populate goal data
+		// populate goal data
 		if (typeof dailyGoal === 'object') {
 			caloriesReq =  dailyGoal.daily_calories;
 			macrosReq.carbohydrates =  dailyGoal.daily_carbohydrates,

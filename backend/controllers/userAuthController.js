@@ -32,7 +32,10 @@ const loginUser = async (req, res, next) => {
     // Send back jwt upon successful login
     const token = jwt.sign({ id: existingUser.id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 
-    res.status(200).json({ username: existingUser.username, token });
+    delete existingUser.password
+    delete existingUser.id
+
+    res.status(200).json({ ...existingUser, token });
 
   } catch(error) {
     next(error);
@@ -80,7 +83,10 @@ const signupUser = async (req, res, next) => {
     // Send back jwt upon successful signup
     const token = jwt.sign({ id: createdUser.id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 
-    res.status(200).json({ username: createdUser.username, token });
+    delete createdUser.password
+    delete createdUser.id
+
+    res.status(200).json({ ...createdUser, token });
 
   } catch(error) {
     next(error);

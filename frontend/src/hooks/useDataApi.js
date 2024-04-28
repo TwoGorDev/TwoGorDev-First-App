@@ -6,7 +6,7 @@ import { UserAuthContext } from '../contexts/UserAuthContext';
 export default function useDataApi() {
   const [error, setError] = useState('');
   const [isPending, setIsPending] = useState(false);
-  const { userToken } = useContext(UserAuthContext);
+  const { user } = useContext(UserAuthContext);
 
   const getData = async (endpoint) =>{
     setIsPending(true);
@@ -14,8 +14,8 @@ export default function useDataApi() {
 
     try {
       const res = await axios.get(
-        encodeURI(`http://localhost:4000${endpoint}`),
-        { headers: {'Authorization': `Bearer ${userToken}`} }
+        encodeURI(import.meta.env.VITE_SERVER_URI + endpoint),
+        { headers: {'Authorization': `Bearer ${user.token}`} }
       );
 
       return res.data;
@@ -35,9 +35,9 @@ export default function useDataApi() {
 
     try {
       const res = await axios.post(
-        encodeURI(`http://localhost:4000${endpoint}`),
+        encodeURI(import.meta.env.VITE_SERVER_URI + endpoint),
         body,
-        { headers: {'Authorization': `Bearer ${userToken}`} }
+        { headers: {'Authorization': `Bearer ${user.token}`} }
       );
       
       return res.data;
@@ -57,9 +57,9 @@ export default function useDataApi() {
 
     try {
       const res = await axios.patch(
-        encodeURI(`http://localhost:4000${endpoint}`),
+        encodeURI(import.meta.env.VITE_SERVER_URI + endpoint),
         body,
-        { headers: {'Authorization': `Bearer ${userToken}`} }
+        { headers: {'Authorization': `Bearer ${user.token}`} }
       );
 
       return res.data;

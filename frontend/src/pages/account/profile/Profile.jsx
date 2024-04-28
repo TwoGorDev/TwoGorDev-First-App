@@ -1,4 +1,3 @@
-// import { useRef } from 'react';
 import { useContext, useState } from 'react';
 
 // styles
@@ -10,50 +9,75 @@ import anonymousUserIcon from '../../../assets/images/profile-anonymous-user-ico
 // contexts
 import { UserAuthContext } from '../../../contexts/UserAuthContext';
 
+// hooks
+import useDataApi from '../../../hooks/useDataApi';
+
 export default function Profile() {
-	const { username } = useContext(UserAuthContext);
+	// Outside state
+	const { user, setUser } = useContext(UserAuthContext);
+	const { error, isPending, patchData }= useDataApi();
+	
+	// Local state
 	const [showEditPreview, setShowEditPreview] = useState(false);
-	const [aboutText, setAboutText] = useState('');
-	// const avatarImgRef = useRef(null);
+	const [aboutText, setAboutText] = useState(user.bio);
+	const [newAvatarBase64, setNewAvatarBase64] = useState('');
 
 	const handleFileChange = (e) => {
 		const file = e.target.files[0];
 		const reader = new FileReader();
-
-		reader.onload = (e) => {
-			const imageUrl = e.target.result;
-			const avatarImg = document.querySelector('.acc-profile-box-avatar');
-			avatarImg.src = imageUrl;
-		};
-
 		reader.readAsDataURL(file);
+
+		reader.onload = () => {
+			const avatarImg = document.querySelector('.acc-profile-box-avatar');
+			avatarImg.src = reader.result;
+			setNewAvatarBase64(reader.result);
+		};
 	};
+
+	const updateUserData = async () => {
+		// if neither user bio, nor user avatar have been changed - end the process
+		if (aboutText === user.bio && newAvatarBase64 === '') {
+			setShowEditPreview(false);
+			return;
+		}
+		
+		// update user information in the database
+		const response = await patchData('/users', { avatarString: newAvatarBase64, bio: aboutText });
+
+		if (response) {
+			setUser({ ...response, token: user.token});
+			localStorage.setItem('user', JSON.stringify({ ...response, token: user.token }));
+			setNewAvatarBase64('');
+			setShowEditPreview(false)
+		}
+	}
 
 	return (
 		<div className='acc-profile-container'>
-			<h2 className='acc-profile-title'>{username}'s profile</h2>
+			<h2 className='acc-profile-title'>{user.username}'s profile</h2>
 			<div className='acc-profile-box'>
 				<img
 					className='acc-profile-box-avatar'
-					// ref={avatarImgRef}
-					src={anonymousUserIcon}
+					src={user.avatar_url || anonymousUserIcon}
 					alt='User profile image'
 				/>
 
 				{!showEditPreview ? (
 					<>
 						<div className='acc-profile-box-info'>
-							<h3 className='acc-profile-box-username'>{username}</h3>
+							<h3 className='acc-profile-box-about-username'>{user.username}</h3>
 							<p className='acc-profile-box-register-date'>
-								Member since May 7, 2018
+								Member since {user.created_at.slice(0, 10).replace(/-/g, ' ')}
 							</p>
 
 							<div className='acc-profile-box-about'>
 								<h4 className='acc-profile-box-about-heading'>About Me:</h4>
 								<p className='acc-profile-box-about-text'>
-									{aboutText === ''
-										? 'You have not filled this out yet.'
-										: aboutText}
+									{user.bio ?
+										user.bio
+									:	
+										'You have not filled this out yet.'
+									}
 								</p>
 							</div>						
 						</div>
@@ -83,11 +107,10 @@ export default function Profile() {
 								}
 							  }}
 							value={aboutText}></textarea>
-						<button
-							className='acc-profile-save-changes-btn'
-							onClick={() => setShowEditPreview(false)}>
-							Save Changes
+						<button className='acc-profile-save-changes-btn' onClick={updateUserData}>
+							{isPending ? 'Loading... ' : 'Save Changes'}
 						</button>
+						{error && <p className="error">{error}</p>}
 					</div>
 				)}
 			</div>
