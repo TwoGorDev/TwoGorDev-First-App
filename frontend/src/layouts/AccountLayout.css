@@ -3,7 +3,7 @@
 	display: grid;
 	grid-template-columns: 1fr 2px 4fr;
 	column-gap: 1em;
-	margin-top: 10em;
+	margin-top: 8em;
 }
 
 .account-layout-nav-item {
@@ -15,11 +15,6 @@
 	&:hover {
 		background-color: var(--secondary-color);
 	}
-
-	/* &:hover .account-layout-nav-link,
-	&:hover svg {
-		color: var(--text-color-light);
-	} */
 }
 
 .account-layout-nav-link {

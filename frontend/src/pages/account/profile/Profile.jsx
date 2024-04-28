@@ -22,6 +22,9 @@ export default function Profile() {
 	const [aboutText, setAboutText] = useState(user.bio);
 	const [newAvatarBase64, setNewAvatarBase64] = useState('');
 
+	const creationDate = new Date(user.created_at.slice(0, 10))
+	const formattedCreationDate = creationDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+
 	const handleFileChange = (e) => {
 		const file = e.target.files[0];
 		const reader = new FileReader();
@@ -52,6 +55,8 @@ export default function Profile() {
 		}
 	}
 
+
+
 	return (
 		<div className='acc-profile-container'>
 			<h2 className='acc-profile-title'>{user.username}'s profile</h2>
@@ -65,9 +70,9 @@ export default function Profile() {
 				{!showEditPreview ? (
 					<>
 						<div className='acc-profile-box-info'>
-							<h3 className='acc-profile-box-about-username'>{user.username}</h3>
+							<h3 className='acc-profile-box-username'>{user.username}</h3>
 							<p className='acc-profile-box-register-date'>
-								Member since {user.created_at.slice(0, 10).replace(/-/g, ' ')}
+								Member since {formattedCreationDate}
 							</p>
 
 							<div className='acc-profile-box-about'>

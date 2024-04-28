@@ -33,8 +33,8 @@
 .acc-contact-input {
 	width: 100%;
 	padding: 0.6em;
-	margin-block: 0.2em 1em;
-	background-color: var(--secondary-color);
+	margin-block: 0.2em 0.8em;
+	background-color: rgba(225, 225, 225, 0.5);
 	border: 1px solid transparent;
 	border-radius: 6px;
 	font-size: 1.5rem;
@@ -47,13 +47,14 @@
 
 .acc-contact-form textarea {
 	resize: vertical;
+	min-height: 70px;
 	max-height: 150px;
 }
 
 .acc-contact-btn {
 	width: 50%;
-	margin-inline: auto;
-	padding: .6em 2.1em;
+	margin: 0.5em auto 0;
+	padding: 0.6em 2.1em;
 	font-size: 1.6rem;
 	border: none;
 	border-radius: 8px;
@@ -103,7 +104,6 @@
 .acc-social-media-icons {
 	font-size: clamp(1.1rem, 0.722rem + 1.892vw, 2.2rem);
 	color: var(--text-color-light);
-	cursor: pointer;
 }
 
 .acc-social-media-icon {
@@ -122,4 +122,10 @@
 		background-color: var(--text-color-light);
 		color: var(--primary-color);
 	}
+}
+
+.contact-form-error {
+	text-align: center;
+	font-size: 1.5rem;
+	color: var(--primary-color);
 }
