@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+// import { useRef } from 'react';
 import { useContext, useState } from 'react';
 
 // styles
@@ -14,6 +14,7 @@ export default function Profile() {
 	const { username } = useContext(UserAuthContext);
 	const [showEditPreview, setShowEditPreview] = useState(false);
 	const [aboutText, setAboutText] = useState('');
+	// const avatarImgRef = useRef(null);
 
 	const handleFileChange = (e) => {
 		const file = e.target.files[0];
@@ -34,20 +35,15 @@ export default function Profile() {
 			<div className='acc-profile-box'>
 				<img
 					className='acc-profile-box-avatar'
+					// ref={avatarImgRef}
 					src={anonymousUserIcon}
 					alt='User profile image'
 				/>
 
-				<button
-					className='edit-profile-info-btn'
-					onClick={() => setShowEditPreview((prev) => !prev)}>
-					{showEditPreview ? 'CLOSE' : 'EDIT'}
-				</button>
-
 				{!showEditPreview ? (
 					<>
 						<div className='acc-profile-box-info'>
-							<h3 className='acc-profile-box-about-username'>{username}</h3>
+							<h3 className='acc-profile-box-username'>{username}</h3>
 							<p className='acc-profile-box-register-date'>
 								Member since May 7, 2018
 							</p>
@@ -59,8 +55,13 @@ export default function Profile() {
 										? 'You have not filled this out yet.'
 										: aboutText}
 								</p>
-							</div>
+							</div>						
 						</div>
+						<button
+							className='edit-profile-info-btn'
+							onClick={() => setShowEditPreview(true)}>
+							EDIT
+						</button>
 					</>
 				) : (
 					<div className='acc-profile-edit-container'>
@@ -75,10 +76,16 @@ export default function Profile() {
 
 						<textarea
 							className='edit-about-area'
-							placeholder='Tell us about yourself (up to 400 characters)'
-							onChange={(e) => setAboutText(e.target.value)}
+							placeholder='Tell us about yourself (up to 350 characters)'
+							onChange={(e) => {
+								if (e.target.value.length <= 350) {
+								  setAboutText(e.target.value);
+								}
+							  }}
 							value={aboutText}></textarea>
-						<button className='acc-profile-save-changes-btn'>
+						<button
+							className='acc-profile-save-changes-btn'
+							onClick={() => setShowEditPreview(false)}>
 							Save Changes
 						</button>
 					</div>

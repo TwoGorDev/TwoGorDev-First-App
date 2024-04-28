@@ -107,7 +107,7 @@
 .dropdown-list.dropdown-active {
 	opacity: 1;
 	visibility: visible;
-	max-height: 200px;
+	max-height: 240px;
 }
 
 .dropdown-link {
