@@ -4,18 +4,18 @@ import { createContext, useEffect, useState } from "react";
 export const UserAuthContext = createContext();
 
 export const UserAuthContextProvider = ({ children }) => {
-  const [userToken, setUserToken] = useState('');
-  const [username, setUsername] = useState('');
+  const [user, setUser] = useState({});
 
   useEffect(() => {
-    const localToken = JSON.parse(localStorage.getItem('user-token')) || '';
-    const localUsername = JSON.parse(localStorage.getItem('username')) || '';
-    setUserToken(localToken);
-    setUsername(localUsername);
+    const localUser = JSON.parse(localStorage.getItem('user')) || {};
+
+    if (Object.keys(localUser).length > 0) {
+      setUser(localUser);
+    }
   }, []);
 
   return (
-    <UserAuthContext.Provider value={{ userToken, setUserToken, username, setUsername }}>
+    <UserAuthContext.Provider value={{ user, setUser }}>
       {children}
     </UserAuthContext.Provider>
   )

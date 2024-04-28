@@ -8,8 +8,7 @@ import { useContext, useState } from 'react';
 import { UserAuthContext } from '../../contexts/UserAuthContext';
 
 export default function Navbar() {
-	const { userToken, setUserToken, username, setUsername } =
-		useContext(UserAuthContext);
+	const { user, setUser} = useContext(UserAuthContext);
 	const [navMobileActive, setNavMobileActive] = useState(false);
 	const [dropdownActive, setDropdownActive] = useState(false);
 
@@ -18,10 +17,8 @@ export default function Navbar() {
 
 	// Logout function
 	const logout = () => {
-		localStorage.removeItem('user-token');
-		localStorage.removeItem('username');
-		setUserToken('');
-		setUsername('');
+		localStorage.removeItem('user');
+		setUser({});
 		navigate('/');
 	};
 
@@ -51,7 +48,7 @@ export default function Navbar() {
 			</div>
 
 			<ul className='nav-list wrapper'>
-				{userToken ? (
+				{Object.keys(user).length > 0 ? (
 					<>
 						<li>
 							<NavLink
@@ -110,7 +107,7 @@ export default function Navbar() {
 
 						<li>
 							<Link onClick={() => logout()} className='nav-link' to='.'>
-								{username}
+								{user.username}
 							</Link>
 						</li>
 					</>
