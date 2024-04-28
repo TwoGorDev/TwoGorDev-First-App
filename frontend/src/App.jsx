@@ -25,8 +25,9 @@ import { UserAuthContext } from './contexts/UserAuthContext';
 import getFormattedDate from './utilities/getFormattedDate';
 
 function App() {
-	const { userToken } = useContext(UserAuthContext);
+	const { user } = useContext(UserAuthContext);
 	const currentDate = getFormattedDate(new Date());
+	const isLoggedIn = Object.keys(user).length > 0;
 
 	return (
 		<>
@@ -34,19 +35,19 @@ function App() {
 					<Routes>
 						<Route path='/' element={<Layout />}>
 
-							<Route index element={userToken ? <Navigate to={`/dashboard/${currentDate}`} /> : <Home />} />
+							<Route index element={isLoggedIn ? <Navigate to={`/dashboard/${currentDate}`} /> : <Home />} />
 
-							<Route path='login' element={userToken ? <Navigate to={`/dashboard/${currentDate}`}/> : <Login />} />
+							<Route path='login' element={isLoggedIn ? <Navigate to={`/dashboard/${currentDate}`}/> : <Login />} />
 							
-							<Route path='register' element={userToken ? <Navigate to={`/dashboard/${currentDate}`}/> : <Register />} />
+							<Route path='register' element={isLoggedIn ? <Navigate to={`/dashboard/${currentDate}`}/> : <Register />} />
 							
-							<Route path='dashboard' element={!userToken ? <Login /> : <DashboardLayout />}>
+							<Route path='dashboard' element={!isLoggedIn ? <Login /> : <DashboardLayout />}>
 								<Route path=':date' element={<Dashboard />}/>
 								<Route path="products" element={<Products />} />
 								<Route path="calculator" element={<Calculator />} />
 							</Route>
 
-							<Route path='account' element={!userToken ? <Login /> : <AccountLayout />}>
+							<Route path='account' element={!isLoggedIn ? <Login /> : <AccountLayout />}>
 								<Route path='profile' element={<Profile />} />
 								<Route path='settings' element={<Settings />} />
 								<Route path='contactus' element={<ContactUs />} />

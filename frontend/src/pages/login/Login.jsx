@@ -13,7 +13,7 @@ import getFormattedDate from '../../utilities/getFormattedDate';
 
 export default function Login() {
 	const [errors, setErrors] = useState({});
-	const { setUserToken, setUsername } = useContext(UserAuthContext);
+	const { setUser } = useContext(UserAuthContext);
 	const { isPending, error: serverError, postData } = useDataApi();
 	const navigate = useNavigate();
 
@@ -38,10 +38,8 @@ export default function Login() {
 			})
 			
 			if (data) {
-				localStorage.setItem('user-token', JSON.stringify(data.token));
-				localStorage.setItem('username', JSON.stringify(data.username));
-				setUserToken(data.token);
-				setUsername(data.username);
+				localStorage.setItem('user', JSON.stringify(data));
+				setUser(data);
 				navigate(`/dashboard/${getFormattedDate(new Date())}`);
 			}
     }

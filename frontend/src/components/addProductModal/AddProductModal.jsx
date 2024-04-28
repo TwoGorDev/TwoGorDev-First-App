@@ -51,30 +51,31 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 		.reduce((acc, curr) => acc + curr, 0)
 	);
   
+	// Add new portions to local meal
 	const addPortion = (portion) => {
 		setAddedPortions((prevPortions) => [...prevPortions, portion]);
 		setCurrentPortions((prevPortions) => [...prevPortions, portion]);
 	};
 
-	console.log(currentPortions)
-
+	// Remove portions from local meal
 	const removePortion = (portion) => {
 		setAddedPortions((prevPortions) => prevPortions.filter(item => item.portion_id !== portion.portion_id || item.temporary_id !== portion.temporary_id));
 		setCurrentPortions((prevPortions) => prevPortions.filter(item => item.portion_id !== portion.portion_id || item.temporary_id !== portion.temporary_id));
 		setDeletedPortions((prevPortions) => [...prevPortions, portion]);
 	};
 
-	// Update the database with user inputs
+	// Update the database with local meal information
 	const updateDatabase = async () => {
 
+		// end the process if user didn't change any data
 		if (addedPortions.length === 0 && deletedPortions.length === 0) {
 			setIsAddProductModalOpen(false);
 			return;
 		}
 
-		// check if client received mealId from the server during daily-summary fetch in <Dashboard /> component
+		// check if client received mealId from the server during inital 'daily-summary' fetch in <Dashboard /> component
 		// if it didn't, the mealId will be set to 0, it means that meal is not created in the database yet, in that case - create new meal and replace 0 with it's id
-		// if mealId is different than 0, it means that the meal is already created and it has been already fetched - hence don't mutate mealId at all
+		// if mealId is different than 0, it means that the meal is already created and it has been fetched - hence don't mutate mealId at all
 		if (mealId === 0) {
 			const newMeal = {
 				type: capitalizeFirstLetter(title),
@@ -85,14 +86,18 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 			mealId = res.id;
 		}
 
+		// check if among deletedPortions state there are portions that exist in the database
+		// portions that exist in the database have 'portion_id' property whereas portions created locally have 'temporary_id' property
 		const databasePresentPortions = deletedPortions.filter(portion => portion.portion_id);
 
 		if (databasePresentPortions.length !== 0) {
+			// delete those existing portions from the database
 			const existingPortionsIdsArray = databasePresentPortions.map(portion => portion.portion_id);
 			
 			await patchData('/delete-portions', existingPortionsIdsArray);
 		}
 		
+		// check if new portions have been added
 		if (addedPortions.length !== 0) {
 			// map through addedPortions and add meal ID to each of them
 			const newPortionsWithMealId = addedPortions.map(portion => {
@@ -107,7 +112,7 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 			await postData('/portions', newPortionsWithMealId);
 		}
 
-		// if there's no errors, refresh the page to refetch daily-summary with newly created data
+		// if there's no errors, refresh the page to refetch 'daily-summary' with newly created data
 		!error && navigate(0);
 	}
 
