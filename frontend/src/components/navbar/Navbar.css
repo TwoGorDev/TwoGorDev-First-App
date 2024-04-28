@@ -41,7 +41,7 @@
 }
 
 .logo {
-	padding: 1em;
+	padding: .6em;
 	transition: all 0.3s;
 
 	&:hover {
@@ -59,7 +59,7 @@
 .nav-link {
 	position: relative;
 	display: inline-block;
-	padding: 1.5em 1em;
+	padding: 1.3em 1em;
 	font-size: clamp(1rem, 4.3vw, 2.2rem);
 	color: var(--text-color-light);
 
@@ -107,7 +107,7 @@
 .dropdown-list.dropdown-active {
 	opacity: 1;
 	visibility: visible;
-	max-height: 200px;
+	max-height: 240px;
 }
 
 .dropdown-link {

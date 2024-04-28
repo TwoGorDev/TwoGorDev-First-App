@@ -1,3 +1,5 @@
+import { useContext, useState } from 'react';
+
 // styles
 import './Profile.css';
 
@@ -7,8 +9,7 @@ import anonymousUserIcon from '../../../assets/images/profile-anonymous-user-ico
 // contexts
 import { UserAuthContext } from '../../../contexts/UserAuthContext';
 
-// utilities
-import { useContext, useState } from 'react';
+// hooks
 import useDataApi from '../../../hooks/useDataApi';
 
 export default function Profile() {
@@ -20,7 +21,9 @@ export default function Profile() {
 	const [showEditPreview, setShowEditPreview] = useState(false);
 	const [aboutText, setAboutText] = useState(user.bio);
 	const [newAvatarBase64, setNewAvatarBase64] = useState('');
-	const avatarImg = document.querySelector('.acc-profile-box-avatar');
+
+	const creationDate = new Date(user.created_at.slice(0, 10))
+	const formattedCreationDate = creationDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 
 	const handleFileChange = (e) => {
 		const file = e.target.files[0];
@@ -28,6 +31,7 @@ export default function Profile() {
 		reader.readAsDataURL(file);
 
 		reader.onload = () => {
+			const avatarImg = document.querySelector('.acc-profile-box-avatar');
 			avatarImg.src = reader.result;
 			setNewAvatarBase64(reader.result);
 		};
@@ -51,6 +55,8 @@ export default function Profile() {
 		}
 	}
 
+
+
 	return (
 		<div className='acc-profile-container'>
 			<h2 className='acc-profile-title'>{user.username}'s profile</h2>
@@ -61,18 +67,12 @@ export default function Profile() {
 					alt='User profile image'
 				/>
 
-				<button
-					className='edit-profile-info-btn'
-					onClick={() => setShowEditPreview((prev) => !prev)}>
-					{showEditPreview ? 'CLOSE' : 'EDIT'}
-				</button>
-
 				{!showEditPreview ? (
 					<>
 						<div className='acc-profile-box-info'>
-							<h3 className='acc-profile-box-about-username'>{user.username}</h3>
+							<h3 className='acc-profile-box-username'>{user.username}</h3>
 							<p className='acc-profile-box-register-date'>
-								Member since {user.created_at.slice(0, 10).replace(/-/g, ' ')}
+								Member since {formattedCreationDate}
 							</p>
 
 							<div className='acc-profile-box-about'>
@@ -84,8 +84,13 @@ export default function Profile() {
 										'You have not filled this out yet.'
 									}
 								</p>
-							</div>
+							</div>						
 						</div>
+						<button
+							className='edit-profile-info-btn'
+							onClick={() => setShowEditPreview(true)}>
+							EDIT
+						</button>
 					</>
 				) : (
 					<div className='acc-profile-edit-container'>
@@ -100,8 +105,12 @@ export default function Profile() {
 
 						<textarea
 							className='edit-about-area'
-							placeholder='Tell us about yourself (up to 400 characters)'
-							onChange={(e) => setAboutText(e.target.value)}
+							placeholder='Tell us about yourself (up to 350 characters)'
+							onChange={(e) => {
+								if (e.target.value.length <= 350) {
+								  setAboutText(e.target.value);
+								}
+							  }}
 							value={aboutText}></textarea>
 						<button className='acc-profile-save-changes-btn' onClick={updateUserData}>
 							{isPending ? 'Loading... ' : 'Save Changes'}

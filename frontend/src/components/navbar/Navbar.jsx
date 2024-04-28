@@ -53,7 +53,9 @@ export default function Navbar() {
 						<li>
 							<NavLink
 								onClick={() => setNavMobileActive(false)}
-								className='nav-link'
+								className={`nav-link ${
+									pathname.startsWith('/dashboard') ? 'active' : ''
+								}`}
 								to={`/dashboard/${getFormattedDate(new Date())}`}>
 								Dashboard
 							</NavLink>
@@ -63,14 +65,15 @@ export default function Navbar() {
 							className='dropdown-show-list-link'
 							onMouseEnter={() => setDropdownActive(true)}
 							onMouseLeave={() => setDropdownActive(false)}>
-							<NavLink					
+							<NavLink
 								onClick={() => {
 									setNavMobileActive(false);
 									setDropdownActive(false);
 								}}
-								className={`nav-link ${pathname.startsWith('/account') ? 'active' : ''}`}
-								to='/account/profile'
-								>
+								className={`nav-link ${
+									pathname.startsWith('/account') ? 'active' : ''
+								}`}
+								to='/account/profile'>
 								Account
 							</NavLink>
 
@@ -102,14 +105,25 @@ export default function Navbar() {
 										Settings
 									</NavLink>
 								</li>
+								<li>
+									<NavLink
+										onClick={() => {
+											setDropdownActive(false);
+											logout();
+										}}
+										className='dropdown-link'
+										to='/'>
+										Logout
+									</NavLink>
+								</li>
 							</ul>
 						</li>
-
+						{/* 
 						<li>
 							<Link onClick={() => logout()} className='nav-link' to='.'>
 								{user.username}
 							</Link>
-						</li>
+						</li> */}
 					</>
 				) : (
 					<>

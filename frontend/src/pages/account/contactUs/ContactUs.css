@@ -1,0 +1,131 @@
+.acc-contact-container {
+	text-align: center;
+}
+
+.acc-contact-title {
+	font-size: 3rem;
+	margin-bottom: 0.2em;
+	color: var(--primary-color);
+}
+
+.acc-contact-subtitle {
+	font-weight: normal;
+}
+
+.acc-contact-boxes {
+	margin-top: 1em;
+	display: grid;
+	grid-template-columns: 6fr 4fr;
+	border-radius: 8px;
+	box-shadow: 1px 1px 4px gray;
+}
+
+.acc-contact-form {
+	display: flex;
+	flex-direction: column;
+	padding: 1.5em;
+
+	& label {
+		text-align: left;
+	}
+}
+
+.acc-contact-input {
+	width: 100%;
+	padding: 0.6em;
+	margin-block: 0.2em 0.8em;
+	background-color: rgba(225, 225, 225, 0.5);
+	border: 1px solid transparent;
+	border-radius: 6px;
+	font-size: 1.5rem;
+
+	&:focus {
+		outline: none;
+		border: 1px solid var(--primary-color);
+	}
+}
+
+.acc-contact-form textarea {
+	resize: vertical;
+	min-height: 70px;
+	max-height: 150px;
+}
+
+.acc-contact-btn {
+	width: 50%;
+	margin: 0.5em auto 0;
+	padding: 0.6em 2.1em;
+	font-size: 1.6rem;
+	border: none;
+	border-radius: 8px;
+	background-color: var(--primary-color);
+	color: var(--text-color-light);
+	cursor: pointer;
+	transition: all 0.3s;
+
+	&:hover {
+		background-color: var(--primary-color-dark);
+	}
+}
+
+.acc-contact-social-media-box,
+.social-media-box-shadow {
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+}
+
+.acc-contact-social-media-box {
+	position: relative;
+	background-image: url('../../../assets/images/contact-social-media-bg.jpg');
+	background-size: cover;
+	background-position: 80%;
+	z-index: 1;
+}
+
+.social-media-box-shadow {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.8);
+	z-index: -1;
+}
+
+.acc-social-media-title {
+	margin-block: 0.3em;
+	padding: 0.3em;
+	color: var(--text-color-light);
+	font-size: 2.8rem;
+	font-weight: 600;
+	text-align: center;
+}
+
+.acc-social-media-icons {
+	font-size: clamp(1.1rem, 0.722rem + 1.892vw, 2.2rem);
+	color: var(--text-color-light);
+}
+
+.acc-social-media-icon {
+	width: min(200px, 90%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5em;
+	margin: 0.3em auto;
+	padding: 0.3em 1em;
+	text-align: center;
+	border: 1px solid var(--text-color-light);
+	transition: all 0.2s;
+
+	&:hover {
+		background-color: var(--text-color-light);
+		color: var(--primary-color);
+	}
+}
+
+.contact-form-error {
+	text-align: center;
+	font-size: 1.5rem;
+	color: var(--primary-color);
+}

@@ -1,21 +1,21 @@
-.acc-profile-title {
-	font-size: 2.6rem;
-	margin-bottom: 0.8em;
-	color: var(--primary-color);
-}
-
 .acc-profile-box {
 	position: relative;
 	display: flex;
-	flex-wrap: wrap;
+	align-items: center;
+	/* flex-wrap: wrap; */
 	gap: 1.5em;
 	padding: 2em;
 	background-color: #d0d2d375;
 	border-radius: 15px;
 }
 
+.acc-profile-title {
+	font-size: 2.6rem;
+	margin-bottom: 0.8em;
+	color: var(--primary-color);
+}
+
 .acc-profile-box-avatar {
-	/* width: 250px; */
 	height: 250px;
 	aspect-ratio: 1/1;
 	object-fit: cover;
@@ -23,6 +23,7 @@
 }
 
 .acc-profile-box-info {
+	align-self: start;
 	display: flex;
 	flex-direction: column;
 	gap: 1em;
@@ -30,7 +31,7 @@
 	padding: 1em;
 }
 
-.acc-profile-box-about-username {
+.acc-profile-box-username {
 	font-size: 2.3rem;
 	color: var(--primary-color);
 }
@@ -39,6 +40,11 @@
 	font-size: 1.8rem;
 	color: var(--primary-color);
 	letter-spacing: 0.02em;
+}
+
+.acc-profile-box-about-text {
+	hyphens: auto;
+	line-height: 1.4;
 }
 
 .edit-profile-info-btn {
@@ -79,7 +85,6 @@
 	font-size: 1.4rem;
 	border: none;
 	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.384);
-	text-indent: 0.3em;
 
 	&:focus {
 		outline: none;
@@ -91,7 +96,7 @@
 .acc-profile-save-changes-btn {
 	display: block;
 	margin: 1em auto 0;
-	padding: 0.7em 2.5em;
+	padding: 0.8em 2.5em;
 	font-size: 1.5rem;
     border: none;
     border-radius: 8px;

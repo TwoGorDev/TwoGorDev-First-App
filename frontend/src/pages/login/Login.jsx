@@ -1,15 +1,20 @@
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 // styles
 import './Login.css';
 
 // components
 import Form from '../../components/form/Form';
 
-// utilities
+// hooks
 import useDataApi from '../../hooks/useDataApi';
-import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { UserAuthContext } from '../../contexts/UserAuthContext';
+
+// utilities
 import getFormattedDate from '../../utilities/getFormattedDate';
+
+// contexts
+import { UserAuthContext } from '../../contexts/UserAuthContext';
 
 export default function Login() {
 	const [errors, setErrors] = useState({});
@@ -44,7 +49,6 @@ export default function Login() {
 			}
     }
 	};
-
 
 	return (
 		<div className='login-container'>
