@@ -112,7 +112,7 @@ export default function Navbar() {
 											logout();
 										}}
 										className='dropdown-link'
-										to='account/settings'>
+										to='/'>
 										Logout
 									</NavLink>
 								</li>
