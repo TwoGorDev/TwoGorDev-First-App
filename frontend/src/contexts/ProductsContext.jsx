@@ -10,7 +10,6 @@ export const ProductsContextProvider = ({ children }) => {
   const { isPending, error, getData } = useDataApi();
   const [products, setProducts] = useState([]);
   const [endpoint, setEndpoint] = useState('/products');
-  const isLoggedIn = Object.keys(user).length > 0;
 
   useEffect(() => {
     const fetch = async () => {
@@ -18,8 +17,8 @@ export const ProductsContextProvider = ({ children }) => {
       setProducts(products);
     }
 
-    isLoggedIn && fetch();
-  }, [endpoint, isLoggedIn])
+    fetch();
+  }, [endpoint])
 
   return (
     <ProductsContext.Provider value={{ products, isPending, error, setEndpoint }}>
