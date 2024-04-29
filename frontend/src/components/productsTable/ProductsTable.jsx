@@ -1,16 +1,25 @@
 // styles
 import './ProductsTable.css';
 
+// icons
+import { FaCirclePlus } from 'react-icons/fa6';
+
 // components
 import ProductServingModal from '../productServingModal/ProductServingModal';
-import { FaCirclePlus } from 'react-icons/fa6';
+import AddNewProductModal from '../addNewProductModal/AddNewProductModal';
 
 // utilities
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-export default function ProductsTable({ addPortion, products }) {
-	const [isProductServingModalOpen, setIsProductServingModalOpen] = useState(false);
+export default function ProductsTable({
+	addPortion,
+	products,
+	isModalOpen,
+	setIsModalOpen,
+}) {
+	const [isProductServingModalOpen, setIsProductServingModalOpen] =
+		useState(false);
 	const [selectedProduct, setSelectedProduct] = useState(null);
 
 	// Check if this component is used on 'products' page
@@ -64,9 +73,21 @@ export default function ProductsTable({ addPortion, products }) {
 					</tbody>
 				</table>
 			) : (
-				<h2 className='product-not-found'>
-					Couldn't find the product you're looking for...
-				</h2>
+				// If no products are found, display a message
+				<div className='product-not-found'>
+					<h2 className='product-not-found-info'>
+						Can't find the desired product?
+					</h2>
+					<p className='add-product-to-table'>Add your own product!</p>
+					<button
+						className='add-product-to-table-btn'
+						onClick={() => setIsAddNewProductModalOpen(true)}>
+						Add new product
+					</button>
+					{isModalOpen && (
+						<AddNewProductModal setIsModalOpen={setIsModalOpen} />
+					)}
+				</div>
 			)}
 			{isProductServingModalOpen && (
 				<ProductServingModal

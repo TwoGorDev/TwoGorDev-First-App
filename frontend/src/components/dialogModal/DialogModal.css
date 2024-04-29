@@ -1,0 +1,72 @@
+.overlay {
+    position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.3);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 2000;
+}
+
+.dialog-modal-container {
+    position: relative;
+    margin: 1em;
+    padding: 1.7em 1.2em;
+	background: #f2f2f2;
+	border-radius: 15px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	text-align: center;
+}
+
+.dialog-modal-title {
+    color: var(--primary-color);
+}
+
+.dialog-modal-info {
+    margin-block: 1em;
+    font-size: 1.7rem;
+}
+
+.dialog-modal-btns {
+    padding: 0.5em;
+}
+
+.dialog-modal-confirm, .dialog-modal-close {
+    padding: 0.7em 2em;
+    margin-inline: .5em;
+    font-size: 1.5rem;
+    color: var(--text-color-light);
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.dialog-modal-close {
+    background-color: #6c757d;
+
+    &:hover {
+        background-color: #4e545a;
+    }
+}
+
+.dialog-modal-confirm {
+    background-color: var(--primary-color);
+
+    &:hover {
+		background-color: var(--primary-color-dark);
+	}
+}
+
+.deletion-confirm-btn {
+    background-color: rgba(200, 9, 9, 0.8);
+
+    &:hover {
+        background-color: rgba(175, 9, 9, 0.8)
+    }
+}
+
+
