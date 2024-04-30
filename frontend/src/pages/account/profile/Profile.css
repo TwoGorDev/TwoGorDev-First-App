@@ -1,17 +1,20 @@
+.acc-profile-container {
+	max-width: 800px;
+}
+
 .acc-profile-box {
 	position: relative;
 	display: flex;
 	align-items: center;
-	/* flex-wrap: wrap; */
 	gap: 1.5em;
+	margin-block: .8em 1.2em;
 	padding: 2em;
-	background-color: #d0d2d375;
 	border-radius: 15px;
+	box-shadow: 1px 1px 3px gray;
 }
 
 .acc-profile-title {
 	font-size: 2.6rem;
-	margin-bottom: 0.8em;
 	color: var(--primary-color);
 }
 
