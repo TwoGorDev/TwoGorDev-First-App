@@ -1,0 +1,89 @@
+.add-new-product-container {
+	position: relative;
+	margin: 1em;
+	padding: 1.5em 2.5em;
+	background-color: var(--text-color-light);
+	border-radius: 15px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	text-align: center;
+}
+
+.add-new-product-heading {
+	color: var(--primary-color);
+	margin-bottom: 0.5em;
+}
+
+.add-new-product-info {
+	font-size: 1.7rem;
+	margin-bottom: 1em;
+
+	& span {
+		font-weight: bold;
+		text-decoration: underline;
+	}
+}
+
+.add-new-product-form {
+	& label {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 0.6em;
+        font-size: 1.7rem;
+	}
+
+	& input {
+		text-align: center;
+		margin-top: 0.4em;
+		padding: 0.6em;
+		font-size: 1.6rem;
+		border: 1px solid transparent;
+		box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.466);
+		border-radius: 8px;	
+		color: var(--text-color-dark);
+
+		&:focus {
+			outline: none;
+			border: 1px solid var(--primary-color);
+		}
+	}
+}
+
+.new-product-info-label {
+	margin-inline: auto;
+	width: max(40%, 210px);
+}
+
+.add-new-product-form-macro-heading {
+	margin-bottom: 0.5em;
+	color: var(--primary-color);
+}
+
+.add-new-product-form-macro {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 1em;
+	margin-bottom: 0.3em;
+}
+
+.add-new-product-error {
+	font-size: 1.6rem;
+	color: var(--primary-color);
+	margin-bottom: 0.7em;
+}
+
+.add-new-product-btn {
+	padding: .7em 2em;
+	border: none;
+	border-radius: 12px;
+	background-color: var(--primary-color);
+	font-size: 1.6rem;
+	color: var(--text-color-light);
+	cursor: pointer;
+	transition: all 0.2s;
+
+	&:hover {
+		background-color: var(--primary-color-dark);
+	}
+}

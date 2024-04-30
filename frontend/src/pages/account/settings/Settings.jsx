@@ -1,13 +1,14 @@
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { UserAuthContext } from '../../../contexts/UserAuthContext'
+import { UserAuthContext } from '../../../contexts/UserAuthContext';
 
 // styles
 import './Settings.css';
 
 //components
 import TogglePassword from '../../../components/togglePassword/togglePassword';
+import DialogModal from '../../../components/dialogModal/DialogModal';
 
 export default function Settings() {
 	const { setUser } = useContext(UserAuthContext);
@@ -21,6 +22,7 @@ export default function Settings() {
 		newPassword: false,
 		confirmNewPassword: false,
 	});
+	const [isDeleteAccModalOpen, setIsDeleteAccModalOpen] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -58,6 +60,10 @@ export default function Settings() {
 		localStorage.removeItem('user');
 		setUser({});
 		navigate('/');
+	};
+
+	const deleteAccount = () => {
+		// account deletion logic
 	};
 
 	return (
@@ -146,9 +152,31 @@ export default function Settings() {
 			</form>
 
 			<h3 className='acc-settings-subtitle'>Logout</h3>
-			<button className='acc-change-data-btn settings-logout-btn' onClick={logout}>
+			<button
+				className='acc-change-data-btn settings-logout-btn'
+				onClick={logout}>
 				Logout
 			</button>
+
+			<div className='danger-zone'>
+				<h3 className='acc-settings-subtitle acc-delete-title'>
+					Delete account
+				</h3>
+				<button
+					onClick={() => setIsDeleteAccModalOpen(true)}
+					className='acc-change-data-btn settings-logout-btn acc-delete-btn'>
+					Delete account
+				</button>
+				<DialogModal
+					modalTitle='Account Deletion'
+					isModalOpen={isDeleteAccModalOpen}
+					setIsModalOpen={setIsDeleteAccModalOpen}
+					modalConfirmText='Delete my account'
+					modalConfirmAction={deleteAccount}>
+					This process is irreversible. Are you sure you want to delete your
+					account?
+				</DialogModal>
+			</div>
 		</div>
 	);
 }

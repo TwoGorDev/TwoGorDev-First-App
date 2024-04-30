@@ -3,66 +3,68 @@
 	font-size: 3rem;
 	text-align: center;
 	color: var(--primary-color);
+	transition: all 0.3s;
 }
 
 .acc-settings-subtitle {
-    margin-top: 1.5em;
-    color: var(--primary-color);
+	margin-top: 1.5em;
+	color: var(--primary-color);
+	transition: all 0.3s;
 
-    &:first-of-type {
-        margin-top: 0;
-    }
+	&:first-of-type {
+		margin-top: 0;
+	}
 }
 
 .choose-theme-btn {
-    margin: 1em .5em 0;
-    padding: 1.3em;
-    border: 1px solid rgb(24, 24, 24);
-    border-radius: 50%;
-    box-shadow: 0 0 4px rgba(80, 80, 80, 0.863);
-    cursor: pointer;
-    
-    &.default {
-        background-color: #0e6aa8fa;
-    }
+	margin: 1em 0.5em 0;
+	padding: 1.3em;
+	border: 1px solid rgb(24, 24, 24);
+	border-radius: 50%;
+	box-shadow: 0 0 4px rgba(80, 80, 80, 0.863);
+	cursor: pointer;
 
-    &.tomato {
-        background-color: #c5772efa;
-    }
+	&.default {
+		background-color: #0e6aa8fa;
+	}
 
-    &.lavender {
-        background-color: #a599dd;
-    }
+	&.tomato {
+		background-color: #c5772efa;
+	}
+
+	&.lavender {
+		background-color: #a599dd;
+	}
 }
 
 .acc-settings-form {
 	display: flex;
-    align-items: center;
+	align-items: center;
 	flex-direction: column;
 
 	& label {
-        position: relative;
-        width: 40%;
+		position: relative;
+		width: 40%;
 		display: flex;
 		flex-direction: column;
-        margin-block: .3em
+		margin-block: 0.3em;
 	}
 
 	& input {
-        margin-top: 0.4em;
+		margin-top: 0.4em;
 		padding: 0.7em;
-        border: 1px solid gray;
-        border-radius: 8px;
+		border: 1px solid gray;
+		border-radius: 8px;
 
-        &:focus {
-            outline: none;
-            border-bottom: 2px solid var(--primary-color);
-        }
+		&:focus {
+			outline: none;
+			border-bottom: 2px solid var(--primary-color);
+		}
 	}
 }
 
 .acc-change-data-btn {
-    width: min(13em, 80%);
+	width: min(13em, 80%);
 	margin: 0.5em auto 0;
 	padding: 0.7em 2em;
 	font-size: 1.4rem;
@@ -79,6 +81,27 @@
 }
 
 .settings-logout-btn {
-    display: block;
-    margin-inline: auto;
+	display: block;
+	margin-inline: auto;
+}
+
+.danger-zone {
+	margin-block: 3em;
+	padding-block: 1.2em;
+	border: 1px solid tomato;
+	border-radius: 15px;
+	background-color: rgba(200, 9, 9, 0.2);
+}
+
+.acc-delete-title {
+	margin: 0 0 0.5em 1em;
+	color: rgba(200, 9, 9);
+}
+
+.acc-delete-btn {
+	background-color: rgba(200, 9, 9, 0.8);
+
+	&:hover {
+		background-color: rgba(175, 9, 9, 0.8);
+	}
 }

@@ -76,11 +76,34 @@ thead {
 }
 
 .product-not-found {
-	padding: 1em;
+	padding: 1.7em 2em;
 	border-radius: 15px;
 	border: 1px solid var(--primary-color);
 	background: var(--text-color-light);
+}
+
+.product-not-found-info {
 	color: var(--primary-color);
+	font-size: 2.6rem;
+}
+
+.add-product-to-table {
+	margin-block: 0.5em .8em;
+}
+
+.add-product-to-table-btn {
+	padding: .6em 2em;
+	font-size: 1.6rem;
+	border: none;
+	border-radius: 8px;
+	background-color: var(--primary-color);
+	color: var(--text-color-light);
+	cursor: pointer;
+	transition: all .3s;
+
+	&:hover {
+		background-color: var(--primary-color-dark);
+	}
 }
 
 

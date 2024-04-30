@@ -15,15 +15,19 @@ import useDataApi from '../../../hooks/useDataApi';
 export default function Profile() {
 	// Outside state
 	const { user, setUser } = useContext(UserAuthContext);
-	const { error, isPending, patchData }= useDataApi();
-	
+	const { error, isPending, patchData } = useDataApi();
+
 	// Local state
 	const [showEditPreview, setShowEditPreview] = useState(false);
 	const [aboutText, setAboutText] = useState(user.bio);
 	const [newAvatarBase64, setNewAvatarBase64] = useState('');
 
-	const creationDate = new Date(user.created_at.slice(0, 10))
-	const formattedCreationDate = creationDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+	const creationDate = new Date(user.created_at.slice(0, 10));
+	const formattedCreationDate = creationDate.toLocaleDateString('en-US', {
+		year: 'numeric',
+		month: 'long',
+		day: 'numeric',
+	});
 
 	const handleFileChange = (e) => {
 		const file = e.target.files[0];
@@ -43,19 +47,23 @@ export default function Profile() {
 			setShowEditPreview(false);
 			return;
 		}
-		
+
 		// update user information in the database
-		const response = await patchData('/users', { avatarString: newAvatarBase64, bio: aboutText });
+		const response = await patchData('/users', {
+			avatarString: newAvatarBase64,
+			bio: aboutText,
+		});
 
 		if (response) {
-			setUser({ ...response, token: user.token});
-			localStorage.setItem('user', JSON.stringify({ ...response, token: user.token }));
+			setUser({ ...response, token: user.token });
+			localStorage.setItem(
+				'user',
+				JSON.stringify({ ...response, token: user.token })
+			);
 			setNewAvatarBase64('');
-			setShowEditPreview(false)
+			setShowEditPreview(false);
 		}
-	}
-
-
+	};
 
 	return (
 		<div className='acc-profile-container'>
@@ -78,13 +86,9 @@ export default function Profile() {
 							<div className='acc-profile-box-about'>
 								<h4 className='acc-profile-box-about-heading'>About Me:</h4>
 								<p className='acc-profile-box-about-text'>
-									{user.bio ?
-										user.bio
-									:	
-										'You have not filled this out yet.'
-									}
+									{user.bio ? user.bio : 'You have not filled this out yet.'}
 								</p>
-							</div>						
+							</div>
 						</div>
 						<button
 							className='edit-profile-info-btn'
@@ -108,14 +112,16 @@ export default function Profile() {
 							placeholder='Tell us about yourself (up to 350 characters)'
 							onChange={(e) => {
 								if (e.target.value.length <= 350) {
-								  setAboutText(e.target.value);
+									setAboutText(e.target.value);
 								}
-							  }}
+							}}
 							value={aboutText}></textarea>
-						<button className='acc-profile-save-changes-btn' onClick={updateUserData}>
+						<button
+							className='acc-profile-save-changes-btn'
+							onClick={updateUserData}>
 							{isPending ? 'Loading... ' : 'Save Changes'}
 						</button>
-						{error && <p className="error">{error}</p>}
+						{error && <p className='error'>{error}</p>}
 					</div>
 				)}
 			</div>
