@@ -1,5 +1,7 @@
 .account-layout-container {
-	max-width: 1000px;
+	/* max-width: 1000px; */
+	/* display: flex; */
+	/* justify-content: center; */
 	display: grid;
 	grid-template-columns: 1fr 2px 4fr;
 	column-gap: 1em;
