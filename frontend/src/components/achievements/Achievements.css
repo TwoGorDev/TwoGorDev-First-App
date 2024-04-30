@@ -1,0 +1,27 @@
+.achievements-title {
+    color: var(--primary-color);
+    margin-bottom: 0.5em;
+    font-size: 2.6rem;
+}
+
+.achievement-boxes {
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+}
+
+.achievement-box {
+    position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 7.5em;
+	aspect-ratio: 1/1;
+	border-radius: 50%;
+    background-color: rgb(190, 190, 190);
+}
+
+.achievement {
+	width: 4em;
+	aspect-ratio: 1/1;
+}

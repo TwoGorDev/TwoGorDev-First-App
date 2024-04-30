@@ -135,10 +135,17 @@ export default function Settings() {
 
 			<h3 className='acc-settings-subtitle'>Choose Theme</h3>
 			<div className='acc-settings-theme-container'>
-				{themeColors.map(theme => (
+				{themeColors.map((theme, index) => (
 					<button
-					onClick={() => handleTheme(theme.primaryColor, theme.primaryColorDark, theme.secondaryColor)}
-					className={`choose-theme-btn ${theme.themeClass}`}></button>
+						key={index}
+						onClick={() =>
+							handleTheme(
+								theme.primaryColor,
+								theme.primaryColorDark,
+								theme.secondaryColor
+							)
+						}
+						className={`choose-theme-btn ${theme.themeClass}`}></button>
 				))}
 			</div>
 
