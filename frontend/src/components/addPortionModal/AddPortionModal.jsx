@@ -27,6 +27,7 @@ export default function AddPortionModal({ title, setIsAddPortionModalOpen, mealI
 	
 
 	// Local state
+	const [ createNewProductModal, setCreateNewProductModal ] = useState(false)
 	const [query, setQuery] = useState('');
 	const [currentPortions, setCurrentPortions] = useState(mealPortions.filter(item => item.portion_id));
 	const [addedPortions, setAddedPortions] = useState([]);
@@ -147,6 +148,8 @@ export default function AddPortionModal({ title, setIsAddPortionModalOpen, mealI
 							<ProductsTable
 								addPortion={addPortion}
 								products={products}
+								isModalOpen={createNewProductModal}
+								setIsModalOpen={setCreateNewProductModal}
 							/>
 						}
 					</div>

@@ -17,6 +17,8 @@ export default function ProductsTable({
 	products,
 	isModalOpen,
 	setIsModalOpen,
+	isCreateProductModalOpen,
+	setIsCreateProductModalOpen
 }) {
 	const [isProductServingModalOpen, setIsProductServingModalOpen] =
 		useState(false);
@@ -81,8 +83,8 @@ export default function ProductsTable({
 					<p className='add-product-to-table'>Add your own product!</p>
 					<button
 						className='add-product-to-table-btn'
-						onClick={() => setIsAddNewProductModalOpen(true)}>
-						Add new product
+						onClick={() => setIsModalOpen(true)}>
+						Create new product
 					</button>
 					{isModalOpen && (
 						<AddNewProductModal setIsModalOpen={setIsModalOpen} />
