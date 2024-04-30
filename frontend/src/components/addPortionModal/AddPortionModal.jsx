@@ -21,10 +21,8 @@ import { SummaryContext } from '../../contexts/SummaryContext';
 export default function AddPortionModal({ title, setIsAddPortionModalOpen, mealId, mealPortions }) {
 	// Outside state
 	const { products, isPending, setEndpoint } = useContext(ProductsContext);
-	const { date } = useContext(SummaryContext);
-	const navigate = useNavigate();
+	const { date, setSummary } = useContext(SummaryContext);
 	const { error, isPending: isPostRequestPending, postData, patchData } = useDataApi();
-	
 
 	// Local state
 	const [ createNewProductModal, setCreateNewProductModal ] = useState(false)
@@ -115,10 +113,10 @@ export default function AddPortionModal({ title, setIsAddPortionModalOpen, mealI
 			await postData('/portions', newPortionsWithMealId);
 		}
 
-		// if there's no errors, refresh the page to refetch 'daily-summary' with newly created data
+		// if there's no errors, refetch 'daily-summary' with newly created data
 		if (!error) {
 			setIsAddPortionModalOpen(false);
-			navigate(0)
+			setSummary([]);
 		}
 	}
 

@@ -18,7 +18,7 @@ const goalRouter = require('./routes/goalRoute');
 
 // Middleware
 app.use(cors(corsOptions));
-app.use((req, res, next) => {console.log('Request made to: ', req.path); next()})
+app.use((req, res, next) => {console.log(req.method, 'request made to: ', req.path); next()})
 app.use(express.json({ limit: 52428800 }));
 app.use(usersAuthRouter);
 app.use(productsRouter);

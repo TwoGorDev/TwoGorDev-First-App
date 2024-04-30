@@ -13,7 +13,7 @@ import { UserAuthContext } from '../../contexts/UserAuthContext';
 export default function Register() {
 	const [errors, setErrors] = useState({});
 	const { isPending, error: serverError, postData } = useDataApi();
-	const { setUser } = useContext(UserAuthContext);
+	const { setUser, setIsLoggedIn } = useContext(UserAuthContext);
 	const navigate = useNavigate();
 
 	const handleRegister = async (e, formData) => {
@@ -66,6 +66,7 @@ export default function Register() {
 			if (data) {
 				localStorage.setItem('user', JSON.stringify(data));
 				setUser(data);
+				setIsLoggedIn(true);
 				navigate('/dashboard/calculator');
 			}
 		}

@@ -73,5 +73,26 @@ export default function useDataApi() {
     }
   }
 
-  return { isPending, error, getData, postData, patchData }
+  const deleteData = async (endpoint) => {
+    setIsPending(true);
+    setError('');
+
+    try {
+      const res = await axios.delete(
+        encodeURI(import.meta.env.VITE_SERVER_URI + endpoint),
+        { headers: {'Authorization': `Bearer ${user.token}`} }
+      )
+
+      return res.data;
+
+    } catch(error) {
+      console.log(error)
+      error.response && setError(error.response.data.error);
+      !error.response && setError(error.message);
+    } finally {
+      setIsPending(false);
+    }
+  }
+
+  return { isPending, error, getData, postData, patchData, deleteData }
 }

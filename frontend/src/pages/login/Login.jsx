@@ -1,24 +1,21 @@
-import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 // styles
 import './Login.css';
 
 // components
 import Form from '../../components/form/Form';
 
-// hooks
-import useDataApi from '../../hooks/useDataApi';
-
 // utilities
 import getFormattedDate from '../../utilities/getFormattedDate';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import useDataApi from '../../hooks/useDataApi';
 
 // contexts
 import { UserAuthContext } from '../../contexts/UserAuthContext';
 
 export default function Login() {
 	const [errors, setErrors] = useState({});
-	const { setUser } = useContext(UserAuthContext);
+	const { setUser, setIsLoggedIn } = useContext(UserAuthContext);
 	const { isPending, error: serverError, postData } = useDataApi();
 	const navigate = useNavigate();
 	const today = getFormattedDate(new Date());
@@ -46,6 +43,7 @@ export default function Login() {
 			if (data) {
 				localStorage.setItem('user', JSON.stringify(data));
 				setUser(data);
+				setIsLoggedIn(true);
 				navigate(`/dashboard?date=${today}`);
 			}
     }

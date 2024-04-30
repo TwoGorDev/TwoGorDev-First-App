@@ -80,7 +80,7 @@ export default function ProductsTable({
 					<h2 className='product-not-found-info'>
 						Can't find the desired product?
 					</h2>
-					<p className='add-product-to-table'>Add your own product!</p>
+					<p className='add-product-to-table'>Add your own!</p>
 					<button
 						className='add-product-to-table-btn'
 						onClick={() => setIsModalOpen(true)}>

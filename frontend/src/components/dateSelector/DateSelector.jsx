@@ -1,6 +1,3 @@
-// imports
-import { forwardRef, useContext } from 'react';
-
 // styles
 import './dateSelector.css'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -9,11 +6,12 @@ import 'react-datepicker/dist/react-datepicker.css'
 import DatePicker from 'react-datepicker';
 
 // utilites
+import { forwardRef, useContext } from 'react';
 import getFormattedDate from '../../utilities/getFormattedDate';
 import { SummaryContext } from '../../contexts/SummaryContext';
 
 export default function DateSelector({ date, setSearchParams }) {
-  const { setDate } = useContext(SummaryContext);
+  const { date: urlDate, setDate, setSummary } = useContext(SummaryContext);
 
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <button className="date-selector" onClick={onClick} ref={ref}>
@@ -21,9 +19,16 @@ export default function DateSelector({ date, setSearchParams }) {
     </button>
   ))
 
-  const handleDateChange = (date) => {
-    setSearchParams({ date: getFormattedDate(date) });
-    setDate(getFormattedDate(date));
+  const handleDateChange = (val) => {
+    let date = getFormattedDate(val)
+
+    if (date === urlDate) {
+      return
+    }
+
+    setSummary([]);
+    setSearchParams({ date });
+    setDate(date);
   }
 
   return (

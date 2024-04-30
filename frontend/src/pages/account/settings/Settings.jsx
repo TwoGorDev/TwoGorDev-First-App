@@ -1,6 +1,7 @@
+// utilities
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import useDataApi from '../../../hooks/useDataApi';
 import { UserAuthContext } from '../../../contexts/UserAuthContext';
 
 // styles
@@ -11,7 +12,8 @@ import TogglePassword from '../../../components/togglePassword/togglePassword';
 import DialogModal from '../../../components/dialogModal/DialogModal';
 
 export default function Settings() {
-	const { setUser } = useContext(UserAuthContext);
+	const { isPending, error, deleteData } = useDataApi();
+	const { setUser, setIsLoggedIn } = useContext(UserAuthContext);
 	const [formData, setFormData] = useState({
 		newUsername: '',
 		password: '',
@@ -53,11 +55,16 @@ export default function Settings() {
 	const logout = () => {
 		localStorage.removeItem('user');
 		setUser({});
+		setIsLoggedIn(false);
 		navigate('/');
 	};
 
-	const deleteAccount = () => {
-		// account deletion logic
+	const deleteAccount = async () => {
+		const res = await deleteData('/users');
+
+		if (res) {
+			logout();
+		}
 	};
 
 	return (
@@ -166,7 +173,10 @@ export default function Settings() {
 					isModalOpen={isDeleteAccModalOpen}
 					setIsModalOpen={setIsDeleteAccModalOpen}
 					modalConfirmText='Delete my account'
-					modalConfirmAction={deleteAccount}>
+					modalConfirmAction={deleteAccount}
+					isPending={isPending}
+					error={error}
+				>
 					This process is irreversible. Are you sure you want to delete your
 					account?
 				</DialogModal>

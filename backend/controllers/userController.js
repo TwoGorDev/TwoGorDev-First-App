@@ -1,20 +1,7 @@
 // Imports
 const userRepo = require('../repos/userRepo');
 const CustomError = require('../utilities/customError');
-const validateUser = require('../validators/userValidator');
 const imageRepo = require('../repos/imageRepo');
-
-// Get all users
-const getUsers = async (req, res, next) => {
-  try {
-    const users = await userRepo.findAll();
-
-    res.status(200).json(users);
-
-  } catch(error) {
-    next(error);
-  }
-};
 
 // Get a single user
 const getUserById = async (req, res, next) => {
@@ -46,7 +33,6 @@ const updateUser = async (req, res, next) => {
     const { id: userId } = req.user;
 
     if (updatedUser.avatarString) {
-      await imageRepo.deleteOldImage(userId);
       const url = await imageRepo.uploadNewImage(updatedUser.avatarString, userId);
       updatedUser.avatar_url = url;
     }
@@ -69,13 +55,11 @@ const updateUser = async (req, res, next) => {
 // Delete existing user
 const deleteUser = async (req, res, next) => {
   try {
-    const { id } = req.params;
-
-    if (!id) {
-      throw new CustomError(500, 'User id required');
-    }
-
-    const user = await userRepo.delete(id);
+    const { id: userId } = req.user;
+    
+    await imageRepo.deleteOldImage(userId);
+    const user = await userRepo.delete(userId);
+    
 
     if (!user) {
       throw new CustomError(404, 'User not found');
@@ -90,7 +74,6 @@ const deleteUser = async (req, res, next) => {
 };
 
 module.exports = {
-  getUsers,
   getUserById,
   updateUser,
   deleteUser

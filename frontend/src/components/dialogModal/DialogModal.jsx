@@ -10,7 +10,9 @@ export default function DialogModal({
 	setIsModalOpen,
 	modalTitle,
 	modalConfirmText,
-    modalConfirmAction
+  modalConfirmAction,
+	isPending,
+	error
 }) {
 	const modalConfirmBtnClass =
 		modalTitle === 'Account Deletion' ? 'deletion-confirm-btn' : '';
@@ -41,11 +43,12 @@ export default function DialogModal({
 							</button>
 							<button
 								className={`dialog-modal-confirm ${modalConfirmBtnClass}`}
-                                onClick={() => modalConfirmAction()}
-                                >
-								{(modalConfirmText && modalConfirmText) || 'Confirm'}
+								onClick={() => modalConfirmAction()}
+							>
+								{isPending ? 'Loading...' : (modalConfirmText && modalConfirmText) || 'Confirm'}
 							</button>
 						</div>
+						{error && <p className="error">{error}</p>}
 					</div>
 				</div>
 			)}

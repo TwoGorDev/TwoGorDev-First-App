@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 // styles
 import './AddNewProductModal.css';
 
@@ -7,9 +5,14 @@ import './AddNewProductModal.css';
 import { IoMdClose } from 'react-icons/io';
 
 // utilities
+import { useContext, useState } from 'react';
 import isNumbersOnly from '../../utilities/allowNumbersOnly';
+import useDataApi from '../../hooks/useDataApi';
+import { ProductsContext } from '../../contexts/ProductsContext';
 
 export default function AddNewProductModal({ setIsModalOpen }) {
+	const { setProducts } = useContext(ProductsContext);
+	const { isPending, error: serverError, postData } = useDataApi();
 	const [newProductData, setNewProductData] = useState({
 		name: '',
 		calories: '',
@@ -30,16 +33,22 @@ export default function AddNewProductModal({ setIsModalOpen }) {
 		}
 	}
 
-	const createNewProduct = (e) => {
+	const createNewProduct = async (e) => {
 		e.preventDefault();
+		setError(false)
 
 		if (Object.values(newProductData).some((el) => el === '')) {
 			setError(true);
 			return;
 		}
-		// else {
-		// logic for what happens if there is no error
-		// }
+
+		const res = await postData('/products', newProductData);
+
+		if (res) {
+			delete res.user_id;
+			setIsModalOpen(false);
+			setProducts(prevProducts => prevProducts.concat([res]));
+		}
 	};
 
 	return (
@@ -115,11 +124,18 @@ export default function AddNewProductModal({ setIsModalOpen }) {
 							All fields must be completed
 						</p>
 					)}
+					{serverError && (
+						<p className='add-new-product-error'>
+							{serverError}
+						</p>
+					)}
 
 					<button
 						onClick={(e) => createNewProduct(e)}
-						className='add-new-product-btn'>
-						Create new product
+						className='add-new-product-btn'
+						disabled={isPending}
+					>
+						{isPending ? 'Loading...' : 'Create new product'}
 					</button>
 				</form>
 			</div>

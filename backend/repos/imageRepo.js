@@ -23,7 +23,7 @@ module.exports = {
   },
 
   async deleteOldImage(userId) {
-    const res = await cloudinary.api.delete_resources_by_prefix(`HealThyBody/users/${userId}`);
+    const res = await cloudinary.uploader.destroy(`HealThyBody/users/${userId}`, { resource_type: 'image', type: 'authenticated' });
 
     return res;
   }

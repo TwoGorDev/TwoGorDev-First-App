@@ -8,7 +8,7 @@ import { UserAuthContext } from '../../contexts/UserAuthContext';
 import { SummaryContext } from '../../contexts/SummaryContext';
 
 export default function Navbar() {
-	const { user, setUser } = useContext(UserAuthContext);
+	const { setUser, isLoggedIn, setIsLoggedIn } = useContext(UserAuthContext);
 	const { date } = useContext(SummaryContext);
 	const [navMobileActive, setNavMobileActive] = useState(false);
 	const [dropdownActive, setDropdownActive] = useState(false);
@@ -20,6 +20,7 @@ export default function Navbar() {
 	const logout = () => {
 		localStorage.removeItem('user');
 		setUser({});
+		setIsLoggedIn(false);
 		navigate('/');
 	};
 
@@ -49,7 +50,7 @@ export default function Navbar() {
 			</div>
 
 			<ul className='nav-list wrapper'>
-				{Object.keys(user).length > 0 ? (
+				{isLoggedIn ? (
 					<>
 						<li>
 							<NavLink

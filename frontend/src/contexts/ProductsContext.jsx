@@ -6,7 +6,7 @@ import { UserAuthContext } from "./UserAuthContext";
 export const ProductsContext = createContext();
 
 export const ProductsContextProvider = ({ children }) => {
-  const { user } = useContext(UserAuthContext);
+  const { isLoggedIn } = useContext(UserAuthContext);
   const { isPending, error, getData } = useDataApi();
   const [products, setProducts] = useState([]);
   const [endpoint, setEndpoint] = useState('/products');
@@ -17,11 +17,13 @@ export const ProductsContextProvider = ({ children }) => {
       setProducts(products);
     }
 
-    fetch();
-  }, [endpoint])
+    if (isLoggedIn) {
+      fetch()
+    }
+  }, [endpoint, isLoggedIn])
 
   return (
-    <ProductsContext.Provider value={{ products, isPending, error, setEndpoint }}>
+    <ProductsContext.Provider value={{ products, setProducts, isPending, error, setEndpoint }}>
       {children}
     </ProductsContext.Provider>
   )

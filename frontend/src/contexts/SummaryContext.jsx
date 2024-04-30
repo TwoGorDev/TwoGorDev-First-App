@@ -9,7 +9,7 @@ export const SummaryContext = createContext();
 export const SummaryContextProvider = ({ children }) => {
   // Outside states
   const { isPending, error, getData } = useDataApi();
-  const { user } = useContext(UserAuthContext);
+  const { isLoggedIn } = useContext(UserAuthContext);
   const url = window.location.href;
 
   // Local states
@@ -17,7 +17,6 @@ export const SummaryContextProvider = ({ children }) => {
   const today = getFormattedDate(new Date());
   const [date, setDate] = useState(urlDate || today);
   const [summary, setSummary] = useState([]);
-  const isLoggedIn = Object.keys(user).length > 0;
   
   useEffect(() => {
 		const fetch = async () => {
@@ -25,11 +24,13 @@ export const SummaryContextProvider = ({ children }) => {
 			setSummary(data);
 		}
 
-		isLoggedIn && fetch();
-	}, [date, urlDate, isLoggedIn]);
+    if (summary.length === 0 && isLoggedIn) {
+      fetch()
+    }
+	}, [summary, date, urlDate, isLoggedIn]);
 
   return (
-    <SummaryContext.Provider value={{ isPending, error, summary, date, setDate }}>
+    <SummaryContext.Provider value={{ isPending, error, summary, setSummary, date, setDate }}>
       {children}
     </SummaryContext.Provider>
   )

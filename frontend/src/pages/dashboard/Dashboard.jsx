@@ -14,8 +14,8 @@ import { SummaryContext } from '../../contexts/SummaryContext';
 import { useSearchParams } from 'react-router-dom';
 
 export default function Dashboard() {
-	const { error, summary, date } = useContext(SummaryContext);
-	const [searchParams, setSearchParams] = useSearchParams({ date: date })
+	const { error, summary } = useContext(SummaryContext);
+	const [searchParams, setSearchParams] = useSearchParams();
 
 	// Create empty object to populate with data on server response
 	let breakfast = [];
@@ -28,7 +28,7 @@ export default function Dashboard() {
 		carbohydrates: 0,
 		fats: 0,
 		proteins: 0
-	}
+	};
 
 	// If server doesn't find corresponding data, it'll return an empty array
 	// if the response is not an array it means that the server found some data - so the next step is to populate local variables with it
