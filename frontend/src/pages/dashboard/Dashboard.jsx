@@ -9,23 +9,13 @@ import DateSelector from '../../components/dateSelector/DateSelector';
 import Loader from '../../components/loader/Loader';
 
 // utilities
-import { useEffect, useState } from 'react';
-import useDataApi from '../../hooks/useDataApi';
-import { useParams } from 'react-router-dom';
+import { useContext } from 'react';
+import { SummaryContext } from '../../contexts/SummaryContext';
+import { useSearchParams } from 'react-router-dom';
 
 export default function Dashboard() {
-	const [summary, setSummary] = useState([]);
-	const { error, getData } = useDataApi();
-	const { date } = useParams();
-
-	useEffect(() => {
-		const fetch = async () => {
-			const data = await getData(`/daily-summary/${date}`)
-			setSummary(data);
-		}
-
-		fetch();
-	}, [date])
+	const { error, summary, date } = useContext(SummaryContext);
+	const [searchParams, setSearchParams] = useSearchParams({ date: date })
 
 	// Create empty object to populate with data on server response
 	let breakfast = [];
@@ -78,7 +68,7 @@ export default function Dashboard() {
 	return (
 		<div className='wrapper center dashboard-container'>
 			<div className="date-selector-container">
-				<DateSelector />	
+				<DateSelector date={searchParams.get('date')} setSearchParams={setSearchParams}/>	
 			</div>
 			<div className='dashboard-tables'>
 				{!error ? 

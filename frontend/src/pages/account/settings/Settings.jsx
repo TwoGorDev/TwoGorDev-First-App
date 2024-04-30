@@ -46,14 +46,8 @@ export default function Settings() {
 
 	function handleTheme(primaryColor, primaryColorDark, secondaryColor) {
 		document.documentElement.style.setProperty('--primary-color', primaryColor);
-		document.documentElement.style.setProperty(
-			'--primary-color-dark',
-			primaryColorDark
-		);
-		document.documentElement.style.setProperty(
-			'--secondary-color',
-			secondaryColor
-		);
+		document.documentElement.style.setProperty('--primary-color-dark',primaryColorDark);
+		document.documentElement.style.setProperty('--secondary-color',secondaryColor);
 	}
 
 	const logout = () => {

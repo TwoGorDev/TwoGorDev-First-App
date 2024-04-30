@@ -2,11 +2,12 @@
 import './DashboardLayout.css';
 
 // utilites
-import getFormattedDate from '../utilities/getFormattedDate';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { SummaryContext } from '../contexts/SummaryContext';
 
 export default function DashboardLayout() {
+	const { date } = useContext(SummaryContext);
 	const location = useLocation();
 	const [dashboardNavMobileActive, setDashboardNavMobileActive] = useState(false);
 
@@ -41,9 +42,9 @@ export default function DashboardLayout() {
 					<NavLink
 						onClick={() => setDashboardNavMobileActive(false)}
 						className={`dashboard-nav-link ${
-							location.pathname === `/dashboard/${getFormattedDate(new Date())}` ? 'hide-on-mobile' : ''
+							location.pathname === `/dashboard` ? 'hide-on-mobile' : ''
 						}`}
-						to={`/dashboard/${getFormattedDate(new Date())}`}
+						to={`/dashboard?date=${date}`}
 						end
 					>
 						Dashboard

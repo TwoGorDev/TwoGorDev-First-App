@@ -1,5 +1,3 @@
-import { useEffect, useState, useContext } from 'react';
-
 // styles
 import './Products.css';
 
@@ -8,7 +6,8 @@ import ProductsTable from '../../../components/productsTable/ProductsTable';
 import Loader from '../../../components/loader/Loader';
 import AddNewProductModal from '../../../components/addNewProductModal/AddNewProductModal';
 
-// hooks
+// utilities
+import { useEffect, useState, useContext } from 'react';
 import useDebounce from '../../../hooks/useDebounce';
 
 // contexts

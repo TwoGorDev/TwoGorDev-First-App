@@ -1,5 +1,5 @@
 // imports
-import { forwardRef } from 'react';
+import { forwardRef, useContext } from 'react';
 
 // styles
 import './dateSelector.css'
@@ -10,11 +10,10 @@ import DatePicker from 'react-datepicker';
 
 // utilites
 import getFormattedDate from '../../utilities/getFormattedDate';
-import { useNavigate, useParams } from 'react-router-dom';
+import { SummaryContext } from '../../contexts/SummaryContext';
 
-export default function DateSelector() {
-  const navigate = useNavigate();
-  const { date } = useParams();
+export default function DateSelector({ date, setSearchParams }) {
+  const { setDate } = useContext(SummaryContext);
 
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <button className="date-selector" onClick={onClick} ref={ref}>
@@ -22,11 +21,16 @@ export default function DateSelector() {
     </button>
   ))
 
+  const handleDateChange = (date) => {
+    setSearchParams({ date: getFormattedDate(date) });
+    setDate(getFormattedDate(date));
+  }
+
   return (
     <DatePicker
       dateFormat="dd / MM / yyyy"
       selected={date}
-      onChange={(date) => navigate(`/dashboard/${getFormattedDate(date)}`)}
+      onChange={(date) => handleDateChange(date)}
       customInput={<CustomInput />}
       withPortal
     />

@@ -2,13 +2,14 @@
 import './Navbar.css';
 
 // utilities
-import getFormattedDate from '../../utilities/getFormattedDate';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { UserAuthContext } from '../../contexts/UserAuthContext';
+import { SummaryContext } from '../../contexts/SummaryContext';
 
 export default function Navbar() {
-	const { user, setUser} = useContext(UserAuthContext);
+	const { user, setUser } = useContext(UserAuthContext);
+	const { date } = useContext(SummaryContext);
 	const [navMobileActive, setNavMobileActive] = useState(false);
 	const [dropdownActive, setDropdownActive] = useState(false);
 
@@ -56,7 +57,7 @@ export default function Navbar() {
 								className={`nav-link ${
 									pathname.startsWith('/dashboard') ? 'active' : ''
 								}`}
-								to={`/dashboard/${getFormattedDate(new Date())}`}>
+								to={`/dashboard?date=${date}`}>
 								Dashboard
 							</NavLink>
 						</li>

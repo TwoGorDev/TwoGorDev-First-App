@@ -21,6 +21,7 @@ export default function Login() {
 	const { setUser } = useContext(UserAuthContext);
 	const { isPending, error: serverError, postData } = useDataApi();
 	const navigate = useNavigate();
+	const today = getFormattedDate(new Date());
 
 	const handleLogin = async (e, formData) => {
 		e.preventDefault();
@@ -45,7 +46,7 @@ export default function Login() {
 			if (data) {
 				localStorage.setItem('user', JSON.stringify(data));
 				setUser(data);
-				navigate(`/dashboard/${getFormattedDate(new Date())}`);
+				navigate(`/dashboard?date=${today}`);
 			}
     }
 	};

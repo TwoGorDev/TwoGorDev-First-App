@@ -3,7 +3,7 @@ import './MealCard.css';
 
 // components
 import CircularProgressBar from '../circularProgressBar/CircularProgressBar';
-import AddProductModal from '../addProductModal/AddProductModal';
+import AddPortionModal from '../addPortionModal/AddPortionModal';
 import { FaCirclePlus } from 'react-icons/fa6';
 
 // utilities
@@ -12,7 +12,7 @@ import capitalizeFirstLetter from '../../utilities/capitalizeFirstLetter';
 import { useNavigate } from 'react-router-dom';
 
 export default function MealCard({ children, mealTime, caloriesToConsume, progress, meal }) {
-	const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
+	const [isAddPortionModalOpen, setIsAddPortionModalOpen] = useState(false);
 	const navigate = useNavigate();
 
 	// Define a variable to store meal ID and assign it an initial value of 0
@@ -54,16 +54,16 @@ export default function MealCard({ children, mealTime, caloriesToConsume, progre
 							navigate('/dashboard/calculator')
 							return
 						}
-							setIsAddProductModalOpen((prevState) => !prevState)
+							setIsAddPortionModalOpen((prevState) => !prevState)
 						}}
 					className='add-meal-button'
 				/>
 			</div>
 
-			{isAddProductModalOpen && (
-				<AddProductModal
+			{isAddPortionModalOpen && (
+				<AddPortionModal
 					title={mealTime}
-					setIsAddProductModalOpen={setIsAddProductModalOpen}
+					setIsAddPortionModalOpen={setIsAddPortionModalOpen}
 					mealId={mealId}
 					mealPortions={meal}
 				/>
