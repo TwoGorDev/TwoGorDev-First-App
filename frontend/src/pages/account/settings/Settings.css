@@ -87,7 +87,7 @@
 
 .danger-zone {
 	margin-block: 3em;
-	padding-block: 1.2em;
+	padding-block: 1em 1.2em;
 	border: 1px solid tomato;
 	border-radius: 15px;
 	background-color: rgba(200, 9, 9, 0.2);

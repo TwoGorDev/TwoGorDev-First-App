@@ -6,6 +6,10 @@
 	margin-top: 8em;
 }
 
+.account-layout-nav-list {
+	width: 200px; /* prevents nav-list from "jumping" - might cause bugs */
+}
+
 .account-layout-nav-item {
 	padding-inline: 0.8em;
 	border-radius: 12px;

@@ -31,14 +31,14 @@ export default function AddNewProductModal({ setIsModalOpen }) {
 	}
 
 	const createNewProduct = (e) => {
-		e.preventDefault()
+		e.preventDefault();
 
-		if (Object.values(newProductData).some(el => el === '')){
+		if (Object.values(newProductData).some((el) => el === '')) {
 			setError(true);
 			return;
-		} 
+		}
 		// else {
-		// 
+		// logic for what happens if there is no error
 		// }
 	};
 
@@ -49,7 +49,7 @@ export default function AddNewProductModal({ setIsModalOpen }) {
 					className='modal-close-icon serving-modal-close-icon'
 					onClick={() => setIsModalOpen(false)}
 				/>
-				<h2 className='add-new-product-heading'>Add your product</h2>
+				<h2 className='add-new-product-heading'>Create new product</h2>
 				<p className='add-new-product-info'>
 					<b>Note:</b> all values should be provided for a{' '}
 					<span>100g portion</span>
@@ -110,10 +110,16 @@ export default function AddNewProductModal({ setIsModalOpen }) {
 							/>
 						</label>
 					</div>
-					{error && <p className="add-new-product-error">All fields must be completed</p>}
+					{error && (
+						<p className='add-new-product-error'>
+							All fields must be completed
+						</p>
+					)}
 
-					<button onClick={(e) => createNewProduct(e)} className='add-new-product-btn'>
-						Add product to the list
+					<button
+						onClick={(e) => createNewProduct(e)}
+						className='add-new-product-btn'>
+						Create new product
 					</button>
 				</form>
 			</div>
