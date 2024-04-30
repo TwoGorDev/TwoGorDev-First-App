@@ -30,7 +30,7 @@ export default function Calculator() {
 
 	const scrollToCalculatorInfoContent = () => {
 		const calcInfo = document.querySelector('.dashboard-calculator-info');
-		calcInfo.scrollIntoView({ block: 'center', behavior: 'smooth' });
+		calcInfo.scrollIntoView({ block: 'end', behavior: 'smooth' });
 	};
 
 	// Handle change on user inputs

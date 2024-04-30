@@ -23,8 +23,71 @@ export default function Settings() {
 		confirmNewPassword: false,
 	});
 	const [isDeleteAccModalOpen, setIsDeleteAccModalOpen] = useState(false);
-
 	const navigate = useNavigate();
+
+	// table of themes properties, used for theme choice buttons
+	const themeColors = [
+		{
+			themeClass: 'default',
+			primaryColor: '#0e6aa8fa',
+			primaryColorDark: '#0d588afa',
+			secondaryColor: '#a6e1fa10',
+		},
+		{
+			themeClass: 'orange',
+			primaryColor: '#e99434fa',
+			primaryColorDark: '#ca7f29fa',
+			secondaryColor: '#e9943410',
+		},
+		{
+			themeClass: 'lavender',
+			primaryColor: '#a599ddfa',
+			primaryColorDark: '#8b7ec5fa',
+			secondaryColor: '#a599dd10',
+		},
+		{
+			themeClass: 'plum',
+			primaryColor: '#bb738ffa',
+			primaryColorDark: '#9c5973fa',
+			secondaryColor: '#bb738f10',
+		},
+		{
+			themeClass: 'green',
+			primaryColor: '#5faa5ffa',
+			primaryColorDark: '#4d964dfa',
+			secondaryColor: '#5faa5f10',
+		},
+		{
+			themeClass: 'sky',
+			primaryColor: '#68b2d4fa',
+			primaryColorDark: '#5199bbfa',
+			secondaryColor: '#68b2d410',
+		},
+		{
+			themeClass: 'brick',
+			primaryColor: '#a85d5dfa',
+			primaryColorDark: '#964d4dfa',
+			secondaryColor: '#a85d5d10',
+		},
+		{
+			themeClass: 'olive',
+			primaryColor: '#8a8b4bfa',
+			primaryColorDark: '#77793dfa',
+			secondaryColor: '#8a8b4b10',
+		},
+		{
+			themeClass: 'gray',
+			primaryColor: '#4e4b4bfa',
+			primaryColorDark: '#3a3737fa',
+			secondaryColor: '#4e4b4b10',
+		},
+		{
+			themeClass: 'baby-pink',
+			primaryColor: '#d69d9dfa',
+			primaryColorDark: '#c58989fa',
+			secondaryColor: '#d69d9d10',
+		},
+	];
 
 	function handleTogglePassword(field) {
 		setTogglePassword((prevPassword) => {
@@ -67,20 +130,16 @@ export default function Settings() {
 	};
 
 	return (
-		<div className='acc-settings'>
+		<div className='acc-settings-container'>
 			<h2 className='acc-settings-title'>Settings</h2>
 
 			<h3 className='acc-settings-subtitle'>Choose Theme</h3>
 			<div className='acc-settings-theme-container'>
-				<button
-					onClick={() => handleTheme('#0e6aa8fa', '#216999e7', '#a6e1fa10')}
-					className='choose-theme-btn default'></button>
-				<button
-					onClick={() => handleTheme('#c5772efa', '#b36c29e7', '#c5772e10')}
-					className='choose-theme-btn tomato'></button>
-				<button
-					onClick={() => handleTheme('#a599ddfa', '#8a80b8e7', '#a599dd10')}
-					className='choose-theme-btn lavender'></button>
+				{themeColors.map(theme => (
+					<button
+					onClick={() => handleTheme(theme.primaryColor, theme.primaryColorDark, theme.secondaryColor)}
+					className={`choose-theme-btn ${theme.themeClass}`}></button>
+				))}
 			</div>
 
 			<h3 className='acc-settings-subtitle'>Change Password</h3>
