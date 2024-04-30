@@ -12,7 +12,7 @@
 	--secondary-color: #0e6aa810;
 	--text-color-dark: #3d4247;
 	--text-color-light: #f2f2f2;
-	--primary-color-dark: #216999e7;
+	--primary-color-dark: #0d588afa;
 	--light-blue: #badbfe;
 	--dashboard-color: rgba(236, 245, 252);
 }
@@ -33,7 +33,7 @@ body {
 }
 
 main {
-	min-height: calc(100vh - 60px); /* 60px - height of footer */
+	min-height: calc(100vh - 50px); /* 60px - height of footer */
 	display: flex;
 	flex-direction: column;
 }

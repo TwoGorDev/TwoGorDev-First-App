@@ -1,0 +1,26 @@
+.popup-container {
+	width: 200px;
+	position: absolute;
+	top: -50%;
+	left: 0;
+	box-shadow: 1px 1px 3px gray;
+    border-radius: 10px; 
+	z-index: 50;
+
+	&::before {
+		content: '';
+		position: absolute;
+		top: 100%;
+		left: 30%;
+		transform: translateX(-50%);
+		border-width: 10px;
+		border-style: solid;
+		border-color: #f9f9f9 transparent transparent transparent;
+	}
+}
+
+.popup-content {
+	background-color: #f9f9f9;
+	padding: 1em;
+    border-radius: 10px; 
+}

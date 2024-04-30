@@ -19,14 +19,19 @@ export default function Calculator() {
 		weight: '',
 		height: '',
 		activity: 'sedentary',
-		goal: 'weight-loss'
+		goal: 'weight-loss',
 	});
 	const [userNutritonNeeds, setUserNutritionNeeds] = useState({
 		calories: 0,
 		proteins: 0,
 		carbohydrates: 0,
-		fats: 0
+		fats: 0,
 	});
+
+	const scrollToCalculatorInfoContent = () => {
+		const calcInfo = document.querySelector('.dashboard-calculator-info');
+		calcInfo.scrollIntoView({ block: 'end', behavior: 'smooth' });
+	};
 
 	// Handle change on user inputs
 	const handleChange = (e) => {
@@ -34,47 +39,51 @@ export default function Calculator() {
 
 		// If the user is editing age, weight or height - run this code
 		if (['age', 'weight', 'height'].includes(name)) {
-
 			// Check if user input is numbers only
-			if(isNumbersOnly(value)) {
-				setUserData((prevData) => ({...prevData, [name]: value }));
+			if (isNumbersOnly(value)) {
+				setUserData((prevData) => ({ ...prevData, [name]: value }));
 			}
 
-		// If the user is editing gender, activity or goal - run this code instead
+			// If the user is editing gender, activity or goal - run this code instead
 		} else {
-			setUserData((prevData) => ({...prevData, [name]: value }));
+			setUserData((prevData) => ({ ...prevData, [name]: value }));
 		}
 	};
 
 	// Calculate total nutrition requirements based on user data
 	const handleCalculate = (e) => {
 		e.preventDefault();
-    
-    // User data validation
-		const validationErrors = {}
-		
+
+		// User data validation
+		const validationErrors = {};
+
 		if (!userData.age.trim()) {
-			validationErrors.age = true
+			validationErrors.age = true;
 		}
 		if (!userData.weight.trim()) {
-			validationErrors.weight = true
+			validationErrors.weight = true;
 		}
 		if (!userData.height.trim()) {
-			validationErrors.height = true
+			validationErrors.height = true;
 		}
-		setErrors(validationErrors)
+		setErrors(validationErrors);
 
-    // If there's no errors - commence the calculation
+		// If there's no errors - commence the calculation
 		if (Object.keys(validationErrors).length === 0) {
-      
-      const { TDEE: calories, proteins, carbohydrates, fats } = calculateNutritionNeeds(userData);
+			const {
+				TDEE: calories,
+				proteins,
+				carbohydrates,
+				fats,
+			} = calculateNutritionNeeds(userData);
 
-      setUserNutritionNeeds({
-        calories,
-        carbohydrates,
-        proteins,
-        fats,
-      });
+			setUserNutritionNeeds({
+				calories,
+				carbohydrates,
+				proteins,
+				fats,
+			});
+			scrollToCalculatorInfoContent();
 		}
 	};
 
@@ -169,7 +178,7 @@ export default function Calculator() {
 					</select>
 				</label>
 
-				{Object.values(errors).some(value => value !== '') && (
+				{Object.values(errors).some((value) => value !== '') && (
 					<p className='calculator-error-info'>All fields must be completed!</p>
 				)}
 

@@ -12,6 +12,9 @@ import { UserAuthContext } from '../../../contexts/UserAuthContext';
 // hooks
 import useDataApi from '../../../hooks/useDataApi';
 
+// components
+import Achievements from '../../../components/achievements/Achievements';
+
 export default function Profile() {
 	// Outside state
 	const { user, setUser } = useContext(UserAuthContext);
@@ -125,6 +128,7 @@ export default function Profile() {
 					</div>
 				)}
 			</div>
+			<Achievements />
 		</div>
 	);
 }

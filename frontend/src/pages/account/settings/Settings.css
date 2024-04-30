@@ -1,3 +1,7 @@
+/* .acc-settings-container {
+width: min(80vw, 750px);
+} */
+
 .acc-settings-title {
 	margin-bottom: 0.2em;
 	font-size: 3rem;
@@ -16,6 +20,10 @@
 	}
 }
 
+.acc-settings-theme-container {
+	text-align: center;
+}
+
 .choose-theme-btn {
 	margin: 1em 0.5em 0;
 	padding: 1.3em;
@@ -27,13 +35,32 @@
 	&.default {
 		background-color: #0e6aa8fa;
 	}
-
-	&.tomato {
-		background-color: #c5772efa;
+	&.orange {
+		background-color: rgba(204, 130, 45, 0.774);
 	}
-
 	&.lavender {
-		background-color: #a599dd;
+		background-color: #a599ddfa;
+	}
+	&.plum {
+		background-color: #bb738ffa;
+	}
+	&.green {
+		background-color: #5faa5ffa;
+	}
+	&.sky {
+		background-color: #68b2d4fa;
+	}
+	&.brick {
+		background-color: #a85d5dfa;
+	}
+	&.olive {
+		background-color: #8a8b4bfa;
+	}
+	&.gray {
+		background-color: #4e4b4bfa;
+	}
+	&.baby-pink {
+		background-color: #d69d9dfa;
 	}
 }
 
@@ -44,7 +71,7 @@
 
 	& label {
 		position: relative;
-		width: 40%;
+		width: min(80%, 300px);
 		display: flex;
 		flex-direction: column;
 		margin-block: 0.3em;
