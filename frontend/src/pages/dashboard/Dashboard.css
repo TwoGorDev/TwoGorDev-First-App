@@ -1,9 +1,8 @@
 .dashboard-container {
-	width: 100%;
+	width: 98%;
 }
 
 .dashboard-tables {
-	
 	display: flex;
 	align-items: center;
 	flex-direction: row;

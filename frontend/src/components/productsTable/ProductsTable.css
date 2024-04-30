@@ -13,8 +13,6 @@
 	border-collapse: separate;
 	border-spacing: 0 0.7em;
 	backdrop-filter: blur(30px);
-	/* background-image: url('../../assets/images/products-table-bg-large.png'); */
-	background-position: center;
 	border-radius: 15px;
 	overflow-y: auto;
 	overflow-x: auto;
@@ -49,7 +47,6 @@ thead {
 	}
 
 	&:nth-child(2) {
-		/* text-align: left; */
 		font-weight: bold;
 	}
 

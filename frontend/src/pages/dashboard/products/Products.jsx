@@ -35,11 +35,11 @@ export default function Products() {
 	return (
 		<div className='products'>
 			<div className='products-info-container'>
-				{products.length > 0 && (
-					<h3 className='products-info-heading'>
-						Search for the desired product or create a new one
-					</h3>
-				)}
+				<h3 className='products-info-heading'>
+					{products.length > 0
+						? 'Search for the desired product or create a new one'
+						: 'Search for the product'}
+				</h3>
 
 				<div className='products-info-content'>
 					<input
@@ -56,17 +56,26 @@ export default function Products() {
 							<button
 								className='create-new-product-btn'
 								onClick={() => setIsAddNewProductModalOpen(true)}>
-								Add new product
+								Create new product
 							</button>
 						</>
 					)}
 				</div>
 			</div>
-			{isPending ? <Loader /> : <ProductsTable products={products} setIsModalOpen={setIsAddNewProductModalOpen} />}
-			{isAddNewProductModalOpen && <AddNewProductModal 
+			{isPending ? (
+				<Loader />
+			) : (
+				<ProductsTable
+					products={products}
+					setIsModalOpen={setIsAddNewProductModalOpen}
+				/>
+			)}
+			{isAddNewProductModalOpen && (
+				<AddNewProductModal
 					isModalOpen={isAddNewProductModalOpen}
 					setIsModalOpen={setIsAddNewProductModalOpen}
-					/>}
+				/>
+			)}
 		</div>
 	);
 }
