@@ -1,74 +1,44 @@
-// styles
+// Styles
 import './Register.css';
 
-// components
+// Components, Icons & Images
 import Form from '../../components/form/Form';
 
-// utilities
-import { useContext, useState } from 'react';
-import useDataApi from '../../hooks/useDataApi';
-import { useNavigate } from 'react-router-dom';
-import { UserAuthContext } from '../../contexts/UserAuthContext';
+// Utilities & Hooks
+import { useState } from 'react';
+import useUserAuth from '../../hooks/useUserAuth';
+import { validateUsername, validatePassword, validateEmail } from '../../utilities/validators';
 
 export default function Register() {
-	const [errors, setErrors] = useState({});
-	const { isPending, error: serverError, postData } = useDataApi();
-	const { setUser, setIsLoggedIn } = useContext(UserAuthContext);
-	const navigate = useNavigate();
+	// External logic/state
+	const { error: serverError, isPending, signup } = useUserAuth();
 
+	// Local logic/state
+	const [errors, setErrors] = useState({});
+
+	// Register function
 	const handleRegister = async (e, formData) => {
 		e.preventDefault();
-
+		
+		const { username, password, confirmPassword, email } = formData;
 		const validationErrors = {};
 
-		if (!formData.username.trim()) {
-			validationErrors.username = 'Username is required';
-		} else if (
-			formData.username.trim().length < 4 ||
-			formData.username.trim().length > 16
-		) {
-			validationErrors.username =
-				'Username should contain between 4 and 16 characters';
-		}
+		// validate user inputs
+		validationErrors.username = validateUsername(username);
+		validationErrors.password = validatePassword(password);
+		validationErrors.email = validateEmail(email);
 
-		if (!formData.email.trim()) {
-			validationErrors.email = 'Email is required';
-		} else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-			validationErrors.email = 'Email is not valid';
-		}
-
-		if (!formData.password.trim()) {
-			validationErrors.password = 'Password is required';
-		} else if (formData.password.length < 8) {
-			validationErrors.password = 'Password should be at least 6 char';
-		} else if (
-			/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.[\W]).{6,}$/.test(formData.password.trim())
-		) {
-			validationErrors.password =
-				'Password should contain at least one special character, one uppercase and lowercase letter and one number';
-		}
-
-		if (!formData.confirmPassword.trim()) {
+		if (!confirmPassword) {
 			validationErrors.confirmPassword = 'Confirm Password is required';
-		} else if (formData.confirmPassword !== formData.password) {
+		} else if (confirmPassword !== password) {
 			validationErrors.confirmPassword = 'Passwords do not match';
 		}
 
 		setErrors(validationErrors);
 
-		if (Object.keys(validationErrors).length === 0) {
-			const data = await postData('/signup', {
-				username: formData.username,
-				password: formData.password,
-				email: formData.email,
-			})
-
-			if (data) {
-				localStorage.setItem('user', JSON.stringify(data));
-				setUser(data);
-				setIsLoggedIn(true);
-				navigate('/dashboard/calculator');
-			}
+		// signup the user if there's no errors
+		if (Object.values(validationErrors).every((error) => error === undefined)) {
+			await signup(username.trim(), password, email)
 		}
 	};
 

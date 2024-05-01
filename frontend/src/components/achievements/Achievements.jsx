@@ -1,10 +1,16 @@
-import { useState } from 'react';
+// Styles
 import './Achievements.css';
+
+// Utilities & Hooks
+import { useState } from 'react';
+
+// Components, Icons & Images
 import achvLocked from '../../assets/achievementsIcons/achievement-locked.png';
 import hamburger from '../../assets/achievementsIcons/hamburger.png';
 import InfoPopup from '../infoPopup/InfoPopup';
 
 export default function Achievements() {
+	// Local logic/state
 	const [achievements, setAchievements] = useState(Array(6).fill(false));
 	const [showPopup, setShowPopup] = useState(null);
 

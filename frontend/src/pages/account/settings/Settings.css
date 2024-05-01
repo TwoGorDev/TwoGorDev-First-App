@@ -20,50 +20,6 @@ width: min(80vw, 750px);
 	}
 }
 
-.acc-settings-theme-container {
-	text-align: center;
-}
-
-.choose-theme-btn {
-	margin: 1em 0.5em 0;
-	padding: 1.3em;
-	border: 1px solid rgb(24, 24, 24);
-	border-radius: 50%;
-	box-shadow: 0 0 4px rgba(80, 80, 80, 0.863);
-	cursor: pointer;
-
-	&.default {
-		background-color: #0e6aa8fa;
-	}
-	&.orange {
-		background-color: rgba(204, 130, 45, 0.774);
-	}
-	&.lavender {
-		background-color: #a599ddfa;
-	}
-	&.plum {
-		background-color: #bb738ffa;
-	}
-	&.green {
-		background-color: #5faa5ffa;
-	}
-	&.sky {
-		background-color: #68b2d4fa;
-	}
-	&.brick {
-		background-color: #a85d5dfa;
-	}
-	&.olive {
-		background-color: #8a8b4bfa;
-	}
-	&.gray {
-		background-color: #4e4b4bfa;
-	}
-	&.baby-pink {
-		background-color: #d69d9dfa;
-	}
-}
-
 .acc-settings-form {
 	display: flex;
 	align-items: center;
@@ -90,6 +46,18 @@ width: min(80vw, 750px);
 	}
 }
 
+.acc-settings-message-success {
+	margin-top: 0.1em;
+	font-size: 1.4rem;
+	color: var(--primary-color);
+}
+
+.acc-settings-message-error {
+	margin-top: 0.1em;
+	font-size: 1.4rem;
+	color: red;
+}
+
 .acc-change-data-btn {
 	width: min(13em, 80%);
 	margin: 0.5em auto 0;
@@ -110,25 +78,4 @@ width: min(80vw, 750px);
 .settings-logout-btn {
 	display: block;
 	margin-inline: auto;
-}
-
-.danger-zone {
-	margin-block: 3em;
-	padding-block: 1em 1.2em;
-	border: 1px solid tomato;
-	border-radius: 15px;
-	background-color: rgba(200, 9, 9, 0.2);
-}
-
-.acc-delete-title {
-	margin-left: 1em;
-	color: rgba(200, 9, 9);
-}
-
-.acc-delete-btn {
-	background-color: rgba(200, 9, 9, 0.8);
-
-	&:hover {
-		background-color: rgba(175, 9, 9, 0.8);
-	}
 }

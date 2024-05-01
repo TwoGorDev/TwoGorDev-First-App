@@ -1,15 +1,15 @@
-// styles
+// Styles
 import './Loader.css';
 
-// components
+// Components, Icons & Images
 import { GridLoader } from 'react-spinners';
 
-export default function Loader({ style }) {
+export default function Loader({ style, size, color }) {
   return (
     <div className='loader-container' style={style}>
       <GridLoader
-        size='25px'
-        color='var(--primary-color)'
+        size={size}
+        color={color ? color : 'var(--primary-color)'}
       />
     </div>
   )

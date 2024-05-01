@@ -1,17 +1,16 @@
-// styles
+// Styles
 import './Calculator.css';
 
-// components
+// Components, Icons & Images
 import CalculatorInfoContent from '../../../components/calculatorInfo/CalculatorInfoContent';
 
-// utilities
-import { useContext, useState } from 'react';
+// Utilities & Hooks
+import { useState } from 'react';
 import calculateNutritionNeeds from '../../../utilities/calculateNutritionNeeds';
 import isNumbersOnly from '../../../utilities/allowNumbersOnly';
-import { UserAuthContext } from '../../../contexts/UserAuthContext';
 
 export default function Calculator() {
-	const { userToken } = useContext(UserAuthContext);
+	// Local logic/state
 	const [errors, setErrors] = useState({});
 	const [userData, setUserData] = useState({
 		gender: 'male',
@@ -27,7 +26,7 @@ export default function Calculator() {
 		carbohydrates: 0,
 		fats: 0,
 	});
-
+	
 	const scrollToCalculatorInfoContent = () => {
 		const calcInfo = document.querySelector('.dashboard-calculator-info');
 		calcInfo.scrollIntoView({ block: 'end', behavior: 'smooth' });
@@ -37,14 +36,14 @@ export default function Calculator() {
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 
-		// If the user is editing age, weight or height - run this code
+		// if the user is editing age, weight or height - run this code
 		if (['age', 'weight', 'height'].includes(name)) {
-			// Check if user input is numbers only
+			// check if user input is numbers only
 			if (isNumbersOnly(value)) {
 				setUserData((prevData) => ({ ...prevData, [name]: value }));
 			}
 
-			// If the user is editing gender, activity or goal - run this code instead
+			// if the user is editing gender, activity or goal - run this code instead
 		} else {
 			setUserData((prevData) => ({ ...prevData, [name]: value }));
 		}
@@ -54,7 +53,7 @@ export default function Calculator() {
 	const handleCalculate = (e) => {
 		e.preventDefault();
 
-		// User data validation
+		// user data validation
 		const validationErrors = {};
 
 		if (!userData.age.trim()) {
@@ -68,7 +67,7 @@ export default function Calculator() {
 		}
 		setErrors(validationErrors);
 
-		// If there's no errors - commence the calculation
+		// if there's no errors - commence the calculation
 		if (Object.keys(validationErrors).length === 0) {
 			const {
 				TDEE: calories,

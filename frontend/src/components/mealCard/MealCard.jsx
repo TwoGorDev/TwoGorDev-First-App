@@ -1,20 +1,23 @@
-// styles
+// Styles
 import './MealCard.css';
 
-// components
+// Components, Icons & Images
 import CircularProgressBar from '../circularProgressBar/CircularProgressBar';
 import AddPortionModal from '../addPortionModal/AddPortionModal';
 import { FaCirclePlus } from 'react-icons/fa6';
 
-// utilities
+// Utilities & Hooks
 import { useState } from 'react';
 import capitalizeFirstLetter from '../../utilities/capitalizeFirstLetter';
 import { useNavigate } from 'react-router-dom';
 
 export default function MealCard({ children, mealTime, caloriesToConsume, progress, meal }) {
-	const [isAddPortionModalOpen, setIsAddPortionModalOpen] = useState(false);
+	// External logic/state
 	const navigate = useNavigate();
 
+	// Local logic/state
+	const [isAddPortionModalOpen, setIsAddPortionModalOpen] = useState(false);
+	
 	// Define a variable to store meal ID and assign it an initial value of 0
 	let mealId = 0;
 	

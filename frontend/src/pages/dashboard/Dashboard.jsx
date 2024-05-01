@@ -1,19 +1,22 @@
-// styles
+// Styles
 import './Dashboard.css';
 
-// components
+// Components, Icons & Images
 import Calories from '../../components/calories/Calories';
 import Nutrition from '../../components/nutrition/Nutrition';
 import Advice from '../../components/advice/Advice';
 import DateSelector from '../../components/dateSelector/DateSelector';
 import Loader from '../../components/loader/Loader';
 
-// utilities
+// Utilities & Hooks
 import { useContext } from 'react';
-import { SummaryContext } from '../../contexts/SummaryContext';
 import { useSearchParams } from 'react-router-dom';
 
+// Contexts
+import { SummaryContext } from '../../contexts/SummaryContext';
+
 export default function Dashboard() {
+	// External logic/state
 	const { error, summary } = useContext(SummaryContext);
 	const [searchParams, setSearchParams] = useSearchParams();
 
@@ -82,8 +85,8 @@ export default function Dashboard() {
 									</>
 								:
 									<>
-										<Loader style={{ height: '40vh' }}/>
-										<Loader style={{ height: '40vh' }}/>
+										<Loader style={{ height: '40vh' }} size={'25px'}/>
+										<Loader style={{ height: '40vh' }} size={'25px'}/>
 									</>
 								}
 							</>

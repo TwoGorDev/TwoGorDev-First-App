@@ -1,4 +1,4 @@
-// styles 
+// Styles 
 import './InfoPopup.css'
 
 export default function InfoPopup({children}) {

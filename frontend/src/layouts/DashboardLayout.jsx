@@ -1,14 +1,19 @@
-// styles
+// Styles
 import './DashboardLayout.css';
 
-// utilites
+// Utilities & Hooks
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useContext, useState } from 'react';
+
+// Contexts
 import { SummaryContext } from '../contexts/SummaryContext';
 
 export default function DashboardLayout() {
+	// External logic/state
 	const { date } = useContext(SummaryContext);
 	const location = useLocation();
+
+	// Local logic/state
 	const [dashboardNavMobileActive, setDashboardNavMobileActive] = useState(false);
 
 	let dashboardNavText = 'Dashboard';

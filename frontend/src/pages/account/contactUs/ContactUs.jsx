@@ -1,24 +1,24 @@
-import { Link } from 'react-router-dom';
-import { useState, useRef } from 'react';
-
-// styles
+// Styles
 import './ContactUs.css';
 
-// icons
+// Components, Icons & Images
 import { FaDiscord, FaLinkedin, FaSquareInstagram } from 'react-icons/fa6';
 import { FaFacebookSquare } from 'react-icons/fa';
 
-// emailJS
+// Utilities & Hooks
+import { Link } from 'react-router-dom';
+import { useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 
 export default function ContactUs() {
+	// Local logic/state
+	const [errors, setErrors] = useState({});
+	const form = useRef();
 	const [emailData, setEmailData] = useState({
 		name: '',
 		email: '',
 		message: '',
 	});
-	const [errors, setErrors] = useState({});
-	const form = useRef();
 
 	function handleChange(e) {
 		setEmailData((prevData) => {
@@ -30,9 +30,9 @@ export default function ContactUs() {
 	}
 
 	const sendEmail = (e) => {
-			e.preventDefault();
+		e.preventDefault();
 
-	const validate = {};
+		const validate = {};
 
 		if (!emailData.name) validate.name = 'Name is required';
 		if (!emailData.email) validate.email = 'Email is required';

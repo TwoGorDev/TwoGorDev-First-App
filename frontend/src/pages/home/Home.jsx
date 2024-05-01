@@ -1,6 +1,7 @@
-// styles
+// Styles
 import './Home.css';
 
+// Components, Icons & Images
 import { Link } from 'react-router-dom';
 
 export default function Home() {

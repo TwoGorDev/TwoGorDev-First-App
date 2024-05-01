@@ -1,18 +1,24 @@
-// styles
+// Styles
 import './AddNewProductModal.css';
 
-// icons
+// Components, Icons & Images
 import { IoMdClose } from 'react-icons/io';
+import Loader from '../loader/Loader';
 
-// utilities
+// Utilities & Hooks
 import { useContext, useState } from 'react';
 import isNumbersOnly from '../../utilities/allowNumbersOnly';
 import useDataApi from '../../hooks/useDataApi';
+
+// Contexts
 import { ProductsContext } from '../../contexts/ProductsContext';
 
 export default function AddNewProductModal({ setIsModalOpen }) {
-	const { setProducts } = useContext(ProductsContext);
+	// External logic/state
 	const { isPending, error: serverError, postData } = useDataApi();
+
+	// Local logic/state
+	const { setProducts } = useContext(ProductsContext);
 	const [newProductData, setNewProductData] = useState({
 		name: '',
 		calories: '',
@@ -22,6 +28,7 @@ export default function AddNewProductModal({ setIsModalOpen }) {
 	});
 	const [error, setError] = useState(false);
 
+	// Handle user input change
 	function handleChange(e) {
 		const { name, value } = e.target;
 		if (name !== 'name') {
@@ -33,6 +40,7 @@ export default function AddNewProductModal({ setIsModalOpen }) {
 		}
 	}
 
+	// Create new product
 	const createNewProduct = async (e) => {
 		e.preventDefault();
 		setError(false)
@@ -42,12 +50,12 @@ export default function AddNewProductModal({ setIsModalOpen }) {
 			return;
 		}
 
-		const res = await postData('/products', newProductData);
+		const newProduct = await postData('/products', newProductData);
 
-		if (res) {
-			delete res.user_id;
+		if (newProduct) {
+			delete newProduct.user_id;
 			setIsModalOpen(false);
-			setProducts(prevProducts => prevProducts.concat([res]));
+			setProducts(prevProducts => prevProducts.concat([newProduct]));
 		}
 	};
 
@@ -135,7 +143,15 @@ export default function AddNewProductModal({ setIsModalOpen }) {
 						className='add-new-product-btn'
 						disabled={isPending}
 					>
-						{isPending ? 'Loading...' : 'Create new product'}
+						{isPending ?
+							<Loader
+								style={{ height: '100%', width: '100%' }}
+								size={'3px'}
+								color={'var(--dashboard-color)'}
+							/>
+						:
+						 	'Create new product'
+						}
 					</button>
 				</form>
 			</div>

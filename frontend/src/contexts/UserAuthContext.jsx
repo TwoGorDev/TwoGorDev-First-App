@@ -1,13 +1,14 @@
-// utilities
+// Utilities & Hooks
 import { createContext, useEffect, useState } from "react";
 
 export const UserAuthContext = createContext();
 
 export const UserAuthContextProvider = ({ children }) => {
+  // Local logic/state
   const [user, setUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // log the user back in if he didn't logout during previous session
+  // Log the user back in if he didn't logout during previous session
   useEffect(() => {
     const localUser = JSON.parse(localStorage.getItem('user')) || {};
 
