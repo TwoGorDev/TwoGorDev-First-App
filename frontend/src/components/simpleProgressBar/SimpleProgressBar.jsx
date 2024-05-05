@@ -1,4 +1,4 @@
-// components
+// Components, Icons & Images
 import ProgressBar from '@ramonak/react-progress-bar';
 
 export default function SimpleProgressBar({ value, max }) {

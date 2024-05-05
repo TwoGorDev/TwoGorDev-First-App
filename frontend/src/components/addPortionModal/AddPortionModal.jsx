@@ -1,33 +1,32 @@
 // Styles
-import './AddProductModal.css';
+import './AddPortionModal.css';
 
-// Icons
+// Components, Icons & Images
 import { IoMdClose } from 'react-icons/io';
 import { FaCircleMinus } from 'react-icons/fa6';
-
-// Components
 import ProductsTable from '../productsTable/ProductsTable';
 import Loader from '../loader/Loader';
 
-// Utilities
+// Utilities & Hooks
 import { useState, useEffect, useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import capitalizeFirstLetter from '../../utilities/capitalizeFirstLetter';
 import useDataApi from '../../hooks/useDataApi';
 import useDebounce from '../../hooks/useDebounce';
+
+// Contexts
 import { ProductsContext } from '../../contexts/ProductsContext';
+import { SummaryContext } from '../../contexts/SummaryContext';
 
-export default function AddProductModal({ title, setIsAddProductModalOpen, mealId, mealPortions }) {
-	// Outside state
+export default function AddPortionModal({ title, setIsAddPortionModalOpen, mealId, mealPortions }) {
+	// External logic/state
 	const { products, isPending, setEndpoint } = useContext(ProductsContext);
+	const { date, setSummary } = useContext(SummaryContext);
 	const { error, isPending: isPostRequestPending, postData, patchData } = useDataApi();
-	const { date } = useParams();
-	const navigate = useNavigate();
 
-	// Local state
+	// Local logic/state
 	const [ createNewProductModal, setCreateNewProductModal ] = useState(false)
 	const [query, setQuery] = useState('');
-	const [currentPortions, setCurrentPortions] = useState(mealPortions.filter(item => item.portion_id))
+	const [currentPortions, setCurrentPortions] = useState(mealPortions.filter(item => item.portion_id));
 	const [addedPortions, setAddedPortions] = useState([]);
 	const [deletedPortions, setDeletedPortions] = useState([]);
 
@@ -38,7 +37,7 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 	useEffect(() => {
 		// fetch data from the server everytime user types into search bar (after debouncing)
 		if (debouncedQuery) {
-			setEndpoint(`/products/search/${debouncedQuery}`)
+			setEndpoint(`/products/search/${debouncedQuery}`);
 		} else {
 			setEndpoint('/products');
 		}
@@ -70,7 +69,7 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 
 		// end the process if user didn't change any data
 		if (addedPortions.length === 0 && deletedPortions.length === 0) {
-			setIsAddProductModalOpen(false);
+			setIsAddPortionModalOpen(false);
 			return;
 		}
 
@@ -113,8 +112,11 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 			await postData('/portions', newPortionsWithMealId);
 		}
 
-		// if there's no errors, refresh the page to refetch 'daily-summary' with newly created data
-		!error && navigate(0);
+		// if there's no errors, refetch 'daily-summary' with newly created data
+		if (!error) {
+			setIsAddPortionModalOpen(false);
+			setSummary([]);
+		}
 	}
 
 	return (
@@ -122,7 +124,7 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 			<div className='product-modal-popup'>
 				<IoMdClose
 					className='modal-close-icon serving-modal-close-icon'
-					onClick={() => setIsAddProductModalOpen(false)}
+					onClick={() => setIsAddPortionModalOpen(false)}
 				/>
 				<h2 className='modal-title'>{capitalizeFirstLetter(title)}</h2>
 				<p className='modal-choose-product-text'>
@@ -177,7 +179,15 @@ export default function AddProductModal({ title, setIsAddProductModalOpen, mealI
 					className='add-products-to-meal-btn'
 					onClick={updateDatabase}
 				>
-					{isPostRequestPending ? 'Loading...' : `Add to ${capitalizeFirstLetter(title)}`}
+					{isPostRequestPending ?
+						<Loader
+							style={{ height: '100%', width: '100%' }}
+							size={'3px'}
+							color={'var(--dashboard-color)'}
+						/>
+					 :
+					 	`Add to ${capitalizeFirstLetter(title)}`
+					}
 				</button>
 			</div>
 		</div>

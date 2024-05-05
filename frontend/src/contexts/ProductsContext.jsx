@@ -1,4 +1,4 @@
-// utilities
+// Utilities & Hooks
 import { createContext, useContext, useEffect, useState } from "react";
 import useDataApi from "../hooks/useDataApi";
 import { UserAuthContext } from "./UserAuthContext";
@@ -6,23 +6,28 @@ import { UserAuthContext } from "./UserAuthContext";
 export const ProductsContext = createContext();
 
 export const ProductsContextProvider = ({ children }) => {
-  const { user } = useContext(UserAuthContext);
+  // External logic/state
+  const { isLoggedIn } = useContext(UserAuthContext);
   const { isPending, error, getData } = useDataApi();
+
+  // Local logic/state
   const [products, setProducts] = useState([]);
   const [endpoint, setEndpoint] = useState('/products');
-  const isLoggedIn = Object.keys(user).length > 0;
 
+  // Fetch products from the server if user is logged in
   useEffect(() => {
     const fetch = async () => {
       const products = await getData(endpoint);
       setProducts(products);
     }
 
-    isLoggedIn && fetch();
+    if (isLoggedIn) {
+      fetch()
+    }
   }, [endpoint, isLoggedIn])
 
   return (
-    <ProductsContext.Provider value={{ products, isPending, error, setEndpoint }}>
+    <ProductsContext.Provider value={{ products, setProducts, isPending, error, setEndpoint }}>
       {children}
     </ProductsContext.Provider>
   )

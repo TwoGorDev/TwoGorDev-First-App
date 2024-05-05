@@ -1,26 +1,25 @@
-import { useContext, useState } from 'react';
-
-// styles
+// Styles
 import './Profile.css';
 
-// images
+// Components, Icons & Images
 import anonymousUserIcon from '../../../assets/images/profile-anonymous-user-icon.png';
+import Achievements from '../../../components/achievements/Achievements';
+import Loader from '../../../components/loader/Loader';
 
-// contexts
+// Contexts
 import { UserAuthContext } from '../../../contexts/UserAuthContext';
 
-// hooks
+// Utilities & Hooks
 import useDataApi from '../../../hooks/useDataApi';
+import { useContext, useState } from 'react';
 
-// components
-import Achievements from '../../../components/achievements/Achievements';
 
 export default function Profile() {
-	// Outside state
+	// External logic/state
 	const { user, setUser } = useContext(UserAuthContext);
 	const { error, isPending, patchData } = useDataApi();
 
-	// Local state
+	// Local logic/state
 	const [showEditPreview, setShowEditPreview] = useState(false);
 	const [aboutText, setAboutText] = useState(user.bio);
 	const [newAvatarBase64, setNewAvatarBase64] = useState('');
@@ -121,8 +120,18 @@ export default function Profile() {
 							value={aboutText}></textarea>
 						<button
 							className='acc-profile-save-changes-btn'
-							onClick={updateUserData}>
-							{isPending ? 'Loading... ' : 'Save Changes'}
+							onClick={updateUserData}
+							disabled={isPending}
+						>
+							{isPending ?
+								<Loader
+									style={{ height: '100%', width: '100%' }}
+									size={'3px'}
+									color={'var(--dashboard-color)'}
+								/>
+							:
+								'Save Changes'
+							}
 						</button>
 						{error && <p className='error'>{error}</p>}
 					</div>

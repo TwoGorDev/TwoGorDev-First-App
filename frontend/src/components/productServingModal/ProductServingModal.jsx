@@ -1,14 +1,15 @@
-// styles
+// Styles
 import './ProductServingModal.css';
 
-// components
+// Components, Icons & Images
 import { IoMdClose } from 'react-icons/io';
 
-// utilities
+// Utilities & Hooks
 import { useState } from 'react';
 import isNumbersOnly from '../../utilities/allowNumbersOnly';
 
 export default function ProductServingModal({ setOpenServingModal, product, addPortion }) {
+	// Local logic/state
 	const [showError, setShowError] = useState(false);
 	const [servingData, setServingData] = useState('');
 

@@ -1,58 +1,51 @@
-import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-// styles
+// Styles
 import './Login.css';
 
-// components
+// Components, Icons & Images
 import Form from '../../components/form/Form';
 
-// hooks
-import useDataApi from '../../hooks/useDataApi';
-
-// utilities
-import getFormattedDate from '../../utilities/getFormattedDate';
-
-// contexts
-import { UserAuthContext } from '../../contexts/UserAuthContext';
+// Utilities & Hooks
+import { useState } from 'react';
+import useUserAuth from '../../hooks/useUserAuth';
 
 export default function Login() {
-	const [errors, setErrors] = useState({});
-	const { setUser } = useContext(UserAuthContext);
-	const { isPending, error: serverError, postData } = useDataApi();
-	const navigate = useNavigate();
+	// External logic/state
+	const { isPending, error: serverError, login } = useUserAuth();
 
+	// Local logic/state
+	const [errors, setErrors] = useState({});
+
+	// Login function
 	const handleLogin = async (e, formData) => {
 		e.preventDefault();
 
+		const { username, password } = formData;
 		const validationErrors = {}
-    if(!formData.username.trim()) {
-        validationErrors.username = "Incorrect username"
-    }
 
-    if(!formData.password.trim()) {
-        validationErrors.password = "Incorrect password"
+    if (!username.trim()) {
+      validationErrors.username = "Incorrect username"
+    }
+    if (!password) {
+      validationErrors.password = "Incorrect password"
     }
 
     setErrors(validationErrors);
 
     if(Object.keys(validationErrors).length === 0) {
-			const data = await postData('/login', {
-				username: formData.username,
-				password: formData.password
-			})
-			
-			if (data) {
-				localStorage.setItem('user', JSON.stringify(data));
-				setUser(data);
-				navigate(`/dashboard/${getFormattedDate(new Date())}`);
-			}
+			await login(username, password);
     }
 	};
 
 	return (
 		<div className='login-container'>
-			<Form title='Login' buttonText='Log in' handleSubmit={handleLogin} errors={errors} serverError={serverError} isPending={isPending}/>
+			<Form
+				title='Login'
+				buttonText='Log in'
+				handleSubmit={handleLogin}
+				errors={errors}
+				serverError={serverError}
+				isPending={isPending}
+			/>
 		</div>
 	);
 }

@@ -1,15 +1,24 @@
-import { useState } from 'react';
-
-// styles
+// Styles
 import './AddNewProductModal.css';
 
-// icons
+// Components, Icons & Images
 import { IoMdClose } from 'react-icons/io';
+import Loader from '../loader/Loader';
 
-// utilities
+// Utilities & Hooks
+import { useContext, useState } from 'react';
 import isNumbersOnly from '../../utilities/allowNumbersOnly';
+import useDataApi from '../../hooks/useDataApi';
+
+// Contexts
+import { ProductsContext } from '../../contexts/ProductsContext';
 
 export default function AddNewProductModal({ setIsModalOpen }) {
+	// External logic/state
+	const { isPending, error: serverError, postData } = useDataApi();
+
+	// Local logic/state
+	const { setProducts } = useContext(ProductsContext);
 	const [newProductData, setNewProductData] = useState({
 		name: '',
 		calories: '',
@@ -19,6 +28,7 @@ export default function AddNewProductModal({ setIsModalOpen }) {
 	});
 	const [error, setError] = useState(false);
 
+	// Handle user input change
 	function handleChange(e) {
 		const { name, value } = e.target;
 		if (name !== 'name') {
@@ -30,16 +40,23 @@ export default function AddNewProductModal({ setIsModalOpen }) {
 		}
 	}
 
-	const createNewProduct = (e) => {
+	// Create new product
+	const createNewProduct = async (e) => {
 		e.preventDefault();
+		setError(false)
 
 		if (Object.values(newProductData).some((el) => el === '')) {
 			setError(true);
 			return;
 		}
-		// else {
-		// logic for what happens if there is no error
-		// }
+
+		const newProduct = await postData('/products', newProductData);
+
+		if (newProduct) {
+			delete newProduct.user_id;
+			setIsModalOpen(false);
+			setProducts(prevProducts => prevProducts.concat([newProduct]));
+		}
 	};
 
 	return (
@@ -115,11 +132,26 @@ export default function AddNewProductModal({ setIsModalOpen }) {
 							All fields must be completed
 						</p>
 					)}
+					{serverError && (
+						<p className='add-new-product-error'>
+							{serverError}
+						</p>
+					)}
 
 					<button
 						onClick={(e) => createNewProduct(e)}
-						className='add-new-product-btn'>
-						Create new product
+						className='add-new-product-btn'
+						disabled={isPending}
+					>
+						{isPending ?
+							<Loader
+								style={{ height: '100%', width: '100%' }}
+								size={'3px'}
+								color={'var(--dashboard-color)'}
+							/>
+						:
+						 	'Create new product'
+						}
 					</button>
 				</form>
 			</div>

@@ -1,13 +1,14 @@
-// styles
+// Styles
 import './Nutrition.css';
 
-// components
+// Components, Icons & Images
 import MealCard from '../mealCard/MealCard';
 import { GiButterToast, GiFruitBowl, GiHotMeal, GiBowlOfRice } from 'react-icons/gi';
 
-// utilities
+// Utilities & Hooks
 import useCalculateNutritionValues from '../../hooks/useCalculateNutritionValues';
 
+// Non-changable values
 const ICONS = [
 	<GiButterToast className='dashboard-progress-icon' />,
 	<GiFruitBowl className='dashboard-progress-icon' />,
@@ -16,8 +17,10 @@ const ICONS = [
 ]
 
 export default function Nutrition({ caloriesReq, meals }) {
+	// External logic/state
 	const { calculateMealNutrition } = useCalculateNutritionValues();
 
+	// Local logic/state
 	const mealCalories = {
 		breakfast: Math.round(caloriesReq * 0.25),
 		lunch: Math.round(caloriesReq * 0.4),

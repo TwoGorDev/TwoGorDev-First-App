@@ -1,31 +1,24 @@
-// styles
+// Styles
 import './Dashboard.css';
 
-// components
+// Components, Icons & Images
 import Calories from '../../components/calories/Calories';
 import Nutrition from '../../components/nutrition/Nutrition';
 import Advice from '../../components/advice/Advice';
 import DateSelector from '../../components/dateSelector/DateSelector';
 import Loader from '../../components/loader/Loader';
 
-// utilities
-import { useEffect, useState } from 'react';
-import useDataApi from '../../hooks/useDataApi';
-import { useParams } from 'react-router-dom';
+// Utilities & Hooks
+import { useContext } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
+// Contexts
+import { SummaryContext } from '../../contexts/SummaryContext';
 
 export default function Dashboard() {
-	const [summary, setSummary] = useState([]);
-	const { error, getData } = useDataApi();
-	const { date } = useParams();
-
-	useEffect(() => {
-		const fetch = async () => {
-			const data = await getData(`/daily-summary/${date}`)
-			setSummary(data);
-		}
-
-		fetch();
-	}, [date])
+	// External logic/state
+	const { error, summary } = useContext(SummaryContext);
+	const [searchParams, setSearchParams] = useSearchParams();
 
 	// Create empty object to populate with data on server response
 	let breakfast = [];
@@ -38,7 +31,7 @@ export default function Dashboard() {
 		carbohydrates: 0,
 		fats: 0,
 		proteins: 0
-	}
+	};
 
 	// If server doesn't find corresponding data, it'll return an empty array
 	// if the response is not an array it means that the server found some data - so the next step is to populate local variables with it
@@ -78,7 +71,7 @@ export default function Dashboard() {
 	return (
 		<div className='wrapper center dashboard-container'>
 			<div className="date-selector-container">
-				<DateSelector />	
+				<DateSelector date={searchParams.get('date')} setSearchParams={setSearchParams}/>	
 			</div>
 			<div className='dashboard-tables'>
 				{!error ? 
@@ -92,8 +85,8 @@ export default function Dashboard() {
 									</>
 								:
 									<>
-										<Loader style={{ height: '40vh' }}/>
-										<Loader style={{ height: '40vh' }}/>
+										<Loader style={{ height: '40vh' }} size={'25px'}/>
+										<Loader style={{ height: '40vh' }} size={'25px'}/>
 									</>
 								}
 							</>

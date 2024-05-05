@@ -1,13 +1,11 @@
-import { Outlet, NavLink } from 'react-router-dom';
-
-// styles
+// Styles
 import './AccountLayout.css';
 
-// icons
+// Components, Icons & Images
+import { Outlet, NavLink } from 'react-router-dom';
 import { IoPerson, IoMail, IoSettingsSharp } from 'react-icons/io5';
 
 export default function AccountLayout() {
-	
 	return (
 		<div className='account-layout-container wrapper'>
 			<ul className='account-layout-nav-list'>

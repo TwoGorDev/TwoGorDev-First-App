@@ -1,19 +1,20 @@
-// styles
+// Styles
 import './Calories.css';
 
-// components
+// Components, Icons & Images
 import CircularProgressBar from '../circularProgressBar/CircularProgressBar';
 import SimpleProgressBar from '../simpleProgressBar/SimpleProgressBar';
-import React from 'react';
 
-// utilities
+// Utilities & Hooks
 import useCalculateNutritionValues from '../../hooks/useCalculateNutritionValues';
 import capitalizeFirstLetter from '../../utilities/capitalizeFirstLetter';
 
 export default function Calories({ caloriesReq, macrosReq, meals }) {
+	// External logic/state
 	const { calculateDailyNutrition } = useCalculateNutritionValues();
-	const { consumedCalories, consumedProteins, consumedCarbs, consumedFats } =
-		calculateDailyNutrition(meals);
+
+	// Local logic/state
+	const { consumedCalories, consumedProteins, consumedCarbs, consumedFats } = calculateDailyNutrition(meals);
 	const totalMacros = [consumedCarbs, consumedFats, consumedProteins];
 
 	return (

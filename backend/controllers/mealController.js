@@ -24,25 +24,6 @@ const createMeal = async (req, res, next) => {
   }
 }
 
-// Delete existing meal
-const deleteMeal = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-
-    const meal = await mealRepo.delete(id);
-
-    if (!meal) {
-      throw new CustomError(404, 'Meal not found');
-    }
-    
-    res.status(200).json(meal);
-
-  } catch(error) {
-    next(error);
-  }
-}
-
 module.exports = {
-  createMeal,
-  deleteMeal
+  createMeal
 };
