@@ -1,11 +1,13 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-
-// styles
+// Styles
 import './Form.css';
 
-// components
+// Components, Icons & Images
 import TogglePassword from '../../components/togglePassword/togglePassword';
+import Loader from '../../components/loader/Loader';
+
+// Utilities & Hooks
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Form({
 	title,
@@ -16,19 +18,19 @@ export default function Form({
 	serverError,
 	isPending
 }) {
-	
+	// Local logic/state
 	const [formData, setFormData] = useState({
 		username: '',
 		password: '',
 		confirmPassword: '',
 		email: '',
 	});
-  
 	const [togglePassword, setTogglePassword] = useState({
 		password: false,
 		confirmPassword: false,
 	});
 
+	// Handle user input change
 	function handleChange(e) {
 		setFormData((prevFormData) => {
 			return {
@@ -38,6 +40,7 @@ export default function Form({
 		});
 	}
 
+	// Show/hide password
 	function handleTogglePassword(field) {
 		setTogglePassword((prevPassword) => {
 			return {
@@ -47,8 +50,7 @@ export default function Form({
 		});
 	}
 
-	const formContainerClass =
-		title === 'Register' ? 'register-form-container' : 'login-form-container';
+	const formContainerClass = title === 'Register' ? 'register-form-container' : 'login-form-container';
 
 	return (
 		<div className={formContainerClass}>
@@ -138,8 +140,18 @@ export default function Form({
 						</Link>
 					</p>
 				)}
-				{serverError && <p className='form-error'>{serverError}</p>}
-				<button className='submit-form-btn' disabled={isPending}>{buttonText}</button>
+				{serverError && <p className='form-server-error'>{serverError}</p>}
+				<button className='submit-form-btn' disabled={isPending}>
+					{isPending ?
+						<Loader
+							style={{ height: '100%', width: '100%' }}
+							size={'3px'}
+							color={'var(--dashboard-color)'}
+						/>
+					: 
+						buttonText
+					}
+				</button>
 				{title === 'Register' && (
 					<p className='register-form-info'>
 						By clicking "Sign up" you agree to our Terms and Conditions

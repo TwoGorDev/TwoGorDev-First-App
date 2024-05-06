@@ -2,8 +2,8 @@
 const CustomError = require('../utilities/customError');
 
 const validateProductFormat = (product) => {
-  const { name, calories, proteins, carbohydrates, fats } = product;
-
+  let { name, calories, proteins, carbohydrates, fats } = product;
+  
   // Check if all data has been sent
   if (
     !name ||
@@ -24,11 +24,17 @@ const validateProductFormat = (product) => {
   if (
     0 > proteins || proteins > 100 ||
     0 > carbohydrates || carbohydrates > 100 ||
-    0 > fats || fats > 100 ||
-    (proteins + carbohydrates + fats) > 100
+    0 > fats || fats > 100
   ) {
     throw new CustomError(500, 'Macronutrients must be between 0 and 100');
   };
+
+  let total = +proteins + +carbohydrates + +fats
+
+  // Check if total nutriens value is between 0 and 100
+  if (total > 100) {
+    throw new CustomError(500, 'Total macronutriens value must be between 0 and 100');
+  }
 };
 
 module.exports = { validateProductFormat }

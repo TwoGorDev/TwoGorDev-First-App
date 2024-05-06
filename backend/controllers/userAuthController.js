@@ -1,10 +1,9 @@
 // Imports
 const userRepo = require('../repos/userRepo');
-const validator = require('validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const CustomError = require('../utilities/customError');
-const { validateUser } = require('../validators/userValidator');
+const { validatePassword, validateEmail, validateUsername } = require('../validators/userValidator');
 
 // Login a user
 const loginUser = async (req, res, next) => {
@@ -48,17 +47,12 @@ const signupUser = async (req, res, next) => {
     const user = req.body;
     
     // Check if user data format is correct
-    validateUser(user);
-
-    if (!validator.isEmail(user.email)) {
-      throw new CustomError(500, 'Incorrect email format');
-    }
-    if (!validator.isStrongPassword(user.password)) {
-      throw new CustomError(500, 'Password is not strong enough');
-    }
+    validateUsername(user.username);
+    validateEmail(user.email);
+    validatePassword(user.password);
 
     // Check if an account with provided username/email already exists
-    const existingUsername = await userRepo.findByUsername(user.username);
+    const existingUsername = await userRepo.findByUsername(user.username.trim());
     const existingEmail = await userRepo.findByEmail(user.email);
 
     if (existingUsername) {

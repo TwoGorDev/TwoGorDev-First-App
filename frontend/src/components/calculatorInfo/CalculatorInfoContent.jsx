@@ -1,17 +1,24 @@
-// styles
+// Styles
 import './CalculatorInfoContent.css';
 
-// utilities
-import { useState } from 'react';
+// Utilities & Hooks
+import { useContext, useState } from 'react';
 import useDataApi from '../../hooks/useDataApi';
-import getFormattedDate from '../../utilities/getFormattedDate';
 import { useNavigate } from 'react-router-dom';
+import getFormattedDate from '../../utilities/getFormattedDate';
+
+// Contexts
+import { SummaryContext } from '../../contexts/SummaryContext';
 
 export default function CalculatorInfoContent({ userNutritionNeeds }) {
+	// External logic/state
+	const { setSummary } = useContext(SummaryContext);
 	const { isPending, error, postData } = useDataApi();
+	const navigate = useNavigate();
+
+	// Local logic/state
 	const { calories, proteins, carbohydrates, fats } = userNutritionNeeds;
 	const [isSaved, setIsSaved] = useState(false);
-	const navigate = useNavigate();
 
 	// Add user's goal to database
 	const addGoal = async () => {
@@ -22,10 +29,10 @@ export default function CalculatorInfoContent({ userNutritionNeeds }) {
 			fats
 		})
 
-		if (res && !error) {
-			setIsSaved(true)
-			setTimeout(() => setIsSaved(false), 2500);
-			navigate(`/dashboard/${getFormattedDate(new Date())}`);
+		if (res) {
+			setIsSaved(true);
+			setSummary([]);
+			navigate(`/dashboard?date=${getFormattedDate(new Date())}`);
 		}
 	};
 

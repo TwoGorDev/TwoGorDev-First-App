@@ -1,24 +1,25 @@
-import { useEffect, useState, useContext } from 'react';
-
-// styles
+// Styles
 import './Products.css';
 
-// components
+// Components, Icons & Images
 import ProductsTable from '../../../components/productsTable/ProductsTable';
 import Loader from '../../../components/loader/Loader';
 import AddNewProductModal from '../../../components/addNewProductModal/AddNewProductModal';
 
-// hooks
+// Utilities & Hooks
+import { useEffect, useState, useContext } from 'react';
 import useDebounce from '../../../hooks/useDebounce';
 
-// contexts
+// Contexts
 import { ProductsContext } from '../../../contexts/ProductsContext';
 
 export default function Products() {
+	// External logic/state
 	const { products, isPending, setEndpoint } = useContext(ProductsContext);
+
+	// Local logic/state
 	const [query, setQuery] = useState('');
-	const [isAddNewProductModalOpen, setIsAddNewProductModalOpen] =
-		useState(false);
+	const [isAddNewProductModalOpen, setIsAddNewProductModalOpen] =useState(false);
 
 	// Debouncing search query
 	const debouncedQuery = useDebounce(query, 500);

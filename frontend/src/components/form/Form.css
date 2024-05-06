@@ -70,6 +70,9 @@ input:-webkit-autofill:active {
 }
 
 .submit-form-btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: 60%;
 	margin-top: 0.6em;
 	padding: 0.7em 2em;
@@ -101,6 +104,10 @@ input:-webkit-autofill:active {
 .form-error {
 	font-size: clamp(1rem, 0.794rem + 1.032vw, 1.6rem);
 	color: var(--primary-color);
+}
+
+.form-server-error {
+	color: red;
 }
 
 @media (width < 380px) {

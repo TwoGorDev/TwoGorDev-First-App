@@ -1,27 +1,26 @@
-// styles
+// Styles
 import './Navbar.css';
 
-// utilities
-import getFormattedDate from '../../utilities/getFormattedDate';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+// Utilities & Hooks
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useContext, useState } from 'react';
+import useUserAuth from '../../hooks/useUserAuth';
+
+// Contexts
+import { SummaryContext } from '../../contexts/SummaryContext';
 import { UserAuthContext } from '../../contexts/UserAuthContext';
 
 export default function Navbar() {
-	const { user, setUser} = useContext(UserAuthContext);
+	// External logic/state
+	const { isLoggedIn } = useContext(UserAuthContext);
+	const { date } = useContext(SummaryContext);
+	const { logout } = useUserAuth();
+	const { pathname } = useLocation();
+
+	// Local logic/state
 	const [navMobileActive, setNavMobileActive] = useState(false);
 	const [dropdownActive, setDropdownActive] = useState(false);
-
-	const { pathname } = useLocation();
-	const navigate = useNavigate();
-
-	// Logout function
-	const logout = () => {
-		localStorage.removeItem('user');
-		setUser({});
-		navigate('/');
-	};
-
+	
 	const navClass = ['/', '/register', '/login'].includes(pathname)
 		? 'home-nav'
 		: 'nav';
@@ -33,14 +32,16 @@ export default function Navbar() {
 					<Link
 						onClick={() => setNavMobileActive(false)}
 						className='logo-link'
-						to='/'>
+						to='/'
+					>
 						HealThyBody
 					</Link>
 				</div>
 
 				<div
 					className='hamburger'
-					onClick={() => setNavMobileActive((prevState) => !prevState)}>
+					onClick={() => setNavMobileActive((prevState) => !prevState)}
+				>
 					<div className='hamburger-line'></div>
 					<div className='hamburger-line'></div>
 					<div className='hamburger-line'></div>
@@ -48,7 +49,7 @@ export default function Navbar() {
 			</div>
 
 			<ul className='nav-list wrapper'>
-				{Object.keys(user).length > 0 ? (
+				{isLoggedIn ? (
 					<>
 						<li>
 							<NavLink
@@ -56,7 +57,8 @@ export default function Navbar() {
 								className={`nav-link ${
 									pathname.startsWith('/dashboard') ? 'active' : ''
 								}`}
-								to={`/dashboard/${getFormattedDate(new Date())}`}>
+								to={`/dashboard?date=${date}`}
+							>
 								Dashboard
 							</NavLink>
 						</li>
@@ -64,7 +66,8 @@ export default function Navbar() {
 						<li
 							className='dropdown-show-list-link'
 							onMouseEnter={() => setDropdownActive(true)}
-							onMouseLeave={() => setDropdownActive(false)}>
+							onMouseLeave={() => setDropdownActive(false)}
+						>
 							<NavLink
 								onClick={() => {
 									setNavMobileActive(false);
@@ -73,19 +76,22 @@ export default function Navbar() {
 								className={`nav-link ${
 									pathname.startsWith('/account') ? 'active' : ''
 								}`}
-								to='/account/profile'>
+								to='/account/profile'
+							>
 								Account
 							</NavLink>
 
 							<ul
 								className={`dropdown-list ${
 									dropdownActive ? 'dropdown-active' : ''
-								}`}>
+								}`}
+							>
 								<li>
 									<NavLink
 										onClick={() => setDropdownActive(false)}
 										className='dropdown-link'
-										to='account/profile'>
+										to='account/profile'
+									>
 										Profile
 									</NavLink>
 								</li>
@@ -93,7 +99,8 @@ export default function Navbar() {
 									<NavLink
 										onClick={() => setDropdownActive(false)}
 										className='dropdown-link'
-										to='account/contactus'>
+										to='account/contactus'
+									>
 										Contact Us
 									</NavLink>
 								</li>
@@ -101,7 +108,8 @@ export default function Navbar() {
 									<NavLink
 										onClick={() => setDropdownActive(false)}
 										className='dropdown-link'
-										to='account/settings'>
+										to='account/settings'
+									>
 										Settings
 									</NavLink>
 								</li>
@@ -112,18 +120,13 @@ export default function Navbar() {
 											logout();
 										}}
 										className='dropdown-link'
-										to='/'>
+										to='/'
+									>
 										Logout
 									</NavLink>
 								</li>
 							</ul>
 						</li>
-						{/* 
-						<li>
-							<Link onClick={() => logout()} className='nav-link' to='.'>
-								{user.username}
-							</Link>
-						</li> */}
 					</>
 				) : (
 					<>
@@ -131,7 +134,8 @@ export default function Navbar() {
 							<NavLink
 								onClick={() => setNavMobileActive(false)}
 								className='nav-link'
-								to='/register'>
+								to='/register'
+							>
 								Register
 							</NavLink>
 						</li>
@@ -139,7 +143,8 @@ export default function Navbar() {
 							<NavLink
 								onClick={() => setNavMobileActive(false)}
 								className='nav-link'
-								to='/login'>
+								to='/login'
+							>
 								Login
 							</NavLink>
 						</li>

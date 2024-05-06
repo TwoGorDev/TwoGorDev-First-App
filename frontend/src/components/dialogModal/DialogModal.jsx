@@ -1,8 +1,9 @@
-// styles
+// Styles
 import './DialogModal.css';
 
-// icons
+// Components, Icons & Images
 import { IoMdClose } from 'react-icons/io';
+import Loader from '../loader/Loader';
 
 export default function DialogModal({
 	children,
@@ -10,10 +11,13 @@ export default function DialogModal({
 	setIsModalOpen,
 	modalTitle,
 	modalConfirmText,
-    modalConfirmAction
+  modalConfirmAction,
+	isPending,
+	error
 }) {
-	const modalConfirmBtnClass =
-		modalTitle === 'Account Deletion' ? 'deletion-confirm-btn' : '';
+	// Local logic/state
+	const modalConfirmBtnClass = modalTitle === 'Account Deletion' ? 'deletion-confirm-btn' : '';
+	
 	return (
 		<>
 			{isModalOpen && (
@@ -41,11 +45,20 @@ export default function DialogModal({
 							</button>
 							<button
 								className={`dialog-modal-confirm ${modalConfirmBtnClass}`}
-                                onClick={() => modalConfirmAction()}
-                                >
-								{(modalConfirmText && modalConfirmText) || 'Confirm'}
+								onClick={() => modalConfirmAction()}
+							>
+								{isPending ?
+									<Loader
+										style={{ height: '100%', width: '100%' }}
+										size={'2px'}
+										color={'var(--dashboard-color)'}
+									/>
+								:
+									(modalConfirmText && modalConfirmText) || 'Confirm'
+								}
 							</button>
 						</div>
+						{error && <p className="error">{error}</p>}
 					</div>
 				</div>
 			)}
