@@ -11,15 +11,15 @@ import { SummaryContext } from '../contexts/SummaryContext';
 export default function DashboardLayout() {
 	// External logic/state
 	const { date } = useContext(SummaryContext);
-	const location = useLocation();
+	const { pathname } = useLocation();
 
 	// Local logic/state
 	const [dashboardNavMobileActive, setDashboardNavMobileActive] = useState(false);
 
 	let dashboardNavText = 'Dashboard';
-	if (location.pathname === '/dashboard/products') {
+	if (pathname === '/dashboard/products') {
 		dashboardNavText = 'Products';
-	} else if (location.pathname === '/dashboard/calculator') {
+	} else if (pathname === '/dashboard/calculator') {
 		dashboardNavText = 'Calculator';
 	}
 	return (
@@ -47,7 +47,7 @@ export default function DashboardLayout() {
 					<NavLink
 						onClick={() => setDashboardNavMobileActive(false)}
 						className={`dashboard-nav-link ${
-							location.pathname === `/dashboard` ? 'hide-on-mobile' : ''
+							pathname === `/dashboard` ? 'hide-on-mobile' : ''
 						}`}
 						to={`/dashboard?date=${date}`}
 						end
@@ -57,7 +57,7 @@ export default function DashboardLayout() {
 					<NavLink
 						onClick={() => setDashboardNavMobileActive(false)}
 						className={`dashboard-nav-link ${
-							location.pathname === '/dashboard/products'
+							pathname === '/dashboard/products'
 								? 'hide-on-mobile'
 								: ''
 						}`}
@@ -67,7 +67,7 @@ export default function DashboardLayout() {
 					<NavLink
 						onClick={() => setDashboardNavMobileActive(false)}
 						className={`dashboard-nav-link ${
-							location.pathname === '/dashboard/calculator'
+							pathname === '/dashboard/calculator'
 								? 'hide-on-mobile'
 								: ''
 						}`}

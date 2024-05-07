@@ -5,7 +5,11 @@
 	display: grid;
 	grid-template-columns: 1fr 2px 4fr;
 	column-gap: 1em;
-	margin-top: 8em;
+	margin: 8em 1em 1em;
+}
+
+.account-layout-mobile-nav {
+	display: none;
 }
 
 .account-layout-nav-list {
@@ -58,4 +62,85 @@
 .account-layout-nav-link.active::before {
 	width: 4px;
 	transition: all 0.3s;
+}
+
+@media (width <= 968px) {
+	.account-layout-container {
+		display: grid;
+		grid-template-columns: 100%;
+		place-items: center;
+	}
+
+	.account-layout-mobile-nav {
+		position: relative;
+		display: flex;
+		align-items: center;
+		width: max(300px, 50%);
+		padding: 1em 1.8em;
+		border-radius: 12px;
+		background-color: var(--primary-color);
+		color: var(--text-color-light);
+		transition: all 0.5s;
+	}
+
+	.account-menu-text {
+		font-size: 2.6rem;
+	}
+
+	.acc-hamburger {
+		position: absolute;
+		right: 5%;
+		top: 15%;
+	}
+
+	.account-layout-nav-list {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: max(300px, 50%);
+		max-height: 0;
+		margin-bottom: 1.5em;
+		opacity: 0;
+		visibility: hidden;
+		background-color: var(--primary-color);
+		transition: all 0.5s;
+	}
+
+	.account-mobile-active .account-layout-nav-list {
+		max-height: 200px;
+		opacity: 1;
+		visibility: visible;
+		border-bottom-left-radius: 12px;
+		border-bottom-right-radius: 12px;
+	}
+
+	.account-mobile-active .account-layout-mobile-nav {
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+		/* justify-content: center; */
+	}
+
+	.account-layout-nav-item {
+		width: 90%;
+		border-radius: 0;
+		border-bottom: 1px solid white;
+
+		/* &:first-of-type {
+			border-top: 1px solid white;
+		} */
+
+		&:last-of-type {
+			border: none;
+		}
+	}
+
+	.account-layout-nav-link,
+	.account-layout-nav-link > svg {
+		color: var(--text-color-light);
+		justify-content: center;
+	}
+
+	.account-layout-nav-link::before {
+		background-color: var(--text-color-light);
+	}
 }

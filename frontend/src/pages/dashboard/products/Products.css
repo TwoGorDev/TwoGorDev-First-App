@@ -1,9 +1,9 @@
 .products {
-	margin-block: 1em;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	flex-wrap: wrap;
+	margin-block: 1em;
 	text-align: center;
 	font-size: 1.8rem;
 }
@@ -13,7 +13,7 @@
 	flex-direction: column;
 	align-items: center;
 	gap: 0.5em;
-	margin-bottom: 0.5em;
+	margin: 0 1em 0.5em;
 	padding: 1.5em;
 	background-color: var(--text-color-light);
 	border-radius: 15px;
@@ -61,5 +61,16 @@
 
 	&:hover {
 		background-color: var(--primary-color-dark);
+	}
+}
+
+@media (width < 600px) {
+	.products {
+		width: 100%;
+	}
+
+	.products-info-content {
+		flex-direction: column;
+		gap: 0.3em;
 	}
 }

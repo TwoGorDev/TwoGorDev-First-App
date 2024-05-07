@@ -87,3 +87,13 @@
 		background-color: var(--primary-color-dark);
 	}
 }
+
+@media (width <= 500px) {
+	.add-new-product-heading {
+		padding-inline: 1.2em;
+	}
+	
+	.add-new-product-form-macro {
+		gap: .3em;
+	}
+}

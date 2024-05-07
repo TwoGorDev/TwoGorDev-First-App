@@ -102,7 +102,7 @@
 }
 
 .acc-social-media-icons {
-	font-size: clamp(1.1rem, 0.722rem + 1.892vw, 2.2rem);
+	font-size: clamp(1.8rem, 0.722rem + 1.892vw, 2.2rem);
 	color: var(--text-color-light);
 }
 
@@ -128,4 +128,22 @@
 	text-align: center;
 	font-size: 1.5rem;
 	color: var(--primary-color);
+}
+
+@media (width <= 600px) {
+	.acc-contact-boxes {
+		grid-template-columns: 100%;
+	}
+
+	.acc-contact-social-media-box,
+	.social-media-box-shadow {
+		padding-bottom: 1em;
+		border-radius: 0;
+		border-bottom-left-radius: 8px;
+		border-bottom-right-radius: 8px;
+	}
+	
+	.acc-social-media-title {
+		margin: 0;
+	}
 }

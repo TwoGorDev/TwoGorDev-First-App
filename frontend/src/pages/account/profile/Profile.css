@@ -111,3 +111,9 @@
         background-color: var(--primary-color-dark);
     }
 }
+
+@media (width <= 600px) {
+	.acc-profile-box {
+		flex-direction: column;
+	}
+}
