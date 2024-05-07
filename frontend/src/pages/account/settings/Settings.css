@@ -1,6 +1,6 @@
-/* .acc-settings-container {
-width: min(80vw, 750px);
-} */
+.acc-settings-container {
+	margin-inline: .5em;
+}
 
 .acc-settings-title {
 	margin-bottom: 0.2em;
