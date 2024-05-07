@@ -33,7 +33,7 @@ export default function Achievements() {
 						<img
 							className='achievement'
 							src={isUnlocked ? hamburger : achvLocked}
-							alt='achievement icon'
+							alt='Achievement icon'
 						/>
 						{showPopup === index && (
 							<InfoPopup>You have not unlocked this achievement yet</InfoPopup>

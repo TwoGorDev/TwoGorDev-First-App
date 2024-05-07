@@ -7,15 +7,14 @@
 
 .products-table {
 	display: block;
-	width: 100%;
+	/* width: 100%; */
 	height: 50vh;
 	padding-inline: 1em;
 	border-collapse: separate;
 	border-spacing: 0 0.7em;
 	backdrop-filter: blur(30px);
 	border-radius: 15px;
-	overflow-y: auto;
-	overflow-x: auto;
+	overflow: auto;
 	-webkit-overflow-scrolling: touch;
 	scrollbar-width: thin;
 	scrollbar-color: var(--primary-color) var(--secondary-color);
@@ -103,4 +102,8 @@ thead {
 	}
 }
 
-
+@media (width < 600px) {
+	/* .products-table {
+	   max-width: 80%;
+	 } */
+   }
