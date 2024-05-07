@@ -38,26 +38,28 @@ export default function ContactUs() {
 		if (!emailData.email) validate.email = 'Email is required';
 		else {
 			const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
-			if (!emailRegex.test(emailData.email)) validate.email = 'Email is invalid';
+			if (!emailRegex.test(emailData.email))
+				validate.email = 'Email is invalid';
 		}
 		if (!emailData.message) validate.message = 'Message is required';
-		
+
 		if (Object.keys(validate).length === 0) {
-			emailjs.sendForm('service_ucm2c7h', 'template_k8hq6tt', form.current, {
-				publicKey: 'w4kC8caQxlHg1v9sf',
-			})
-			.then(
-				() => {
-					setEmailData({
-						name: '',
-						email: '',
-						message: '',
-					});
-				},
-				(error) => {
-					console.error(error.text);
-				}
-			);
+			emailjs
+				.sendForm('service_ucm2c7h', 'template_k8hq6tt', form.current, {
+					publicKey: 'w4kC8caQxlHg1v9sf',
+				})
+				.then(
+					() => {
+						setEmailData({
+							name: '',
+							email: '',
+							message: '',
+						});
+					},
+					(error) => {
+						console.error(error.text);
+					}
+				);
 		} else {
 			setErrors(validate);
 		}
@@ -92,7 +94,9 @@ export default function ContactUs() {
 							className='acc-contact-input'
 							onChange={handleChange}
 						/>
-						{errors.email && <p className='contact-form-error'>{errors.email}</p>}
+						{errors.email && (
+							<p className='contact-form-error'>{errors.email}</p>
+						)}
 					</label>
 
 					<label>
@@ -102,7 +106,9 @@ export default function ContactUs() {
 							name='message'
 							className='acc-contact-input'
 							onChange={handleChange}></textarea>
-						{errors.message && <p className='contact-form-error'>{errors.message}</p>}
+						{errors.message && (
+							<p className='contact-form-error'>{errors.message}</p>
+						)}
 					</label>
 
 					<button className='acc-contact-btn'>Send</button>
