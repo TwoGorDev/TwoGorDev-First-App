@@ -41,9 +41,9 @@ export default function DateSelector({ date, setSearchParams } : { date: string,
 
   return (
     <DatePicker
-      dateFormat="dd / MM / yyyy"
-      selected={date}
-      onChange={(date: Date) => handleDateChange(date)}
+      value={date.replaceAll('-', ' / ')}
+      selected={new Date(date)}
+      onChange={(date: Date) => {console.log(date); handleDateChange(date)}}
       customInput={<CustomInput />}
       withPortal
     />

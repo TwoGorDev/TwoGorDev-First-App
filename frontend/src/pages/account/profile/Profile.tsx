@@ -33,13 +33,14 @@ export default function Profile() {
 		day: 'numeric',
 	});
 
-	const handleFileChange = (e) => {
+	const handleFileChange = (e: any) => {
 		const file = e.target.files[0];
 		const reader = new FileReader();
 		reader.readAsDataURL(file);
 
 		reader.onload = () => {
 			const avatarImg: HTMLImageElement | null = document.querySelector('.acc-profile-box-avatar');
+			// @ts-ignore
 			avatarImg.src = reader.result;
 			setNewAvatarBase64(String(reader.result));
 		};
