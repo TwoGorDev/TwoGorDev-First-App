@@ -15,16 +15,19 @@ export default function ContactUs() {
 	const [errors, setErrors] = useState({
 		name: '',
 		email: '',
-		message: ''
+		message: '',
 	});
 	const form = useRef(null);
 	const [emailData, setEmailData] = useState({
 		name: '',
 		email: '',
 		message: '',
+		sent: false,
 	});
 
-	function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+	function handleChange(
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) {
 		setEmailData((prevData) => {
 			return {
 				...prevData,
@@ -39,7 +42,7 @@ export default function ContactUs() {
 		const validate = {
 			name: '',
 			email: '',
-			message: ''
+			message: '',
 		};
 
 		if (!emailData.name) validate.name = 'Name is required';
@@ -52,9 +55,10 @@ export default function ContactUs() {
 		if (!emailData.message) validate.message = 'Message is required';
 
 		if (Object.values(validate).length === 0) {
+			console.log('message sent');
 			emailjs
 				.sendForm('service_ucm2c7h', 'template_k8hq6tt', String(form.current), {
-					publicKey: 'w4kC8caQxlHg1v9sf',
+					publicKey: 'xpRIJ24MfmwA49wHE',
 				})
 				.then(
 					() => {
@@ -62,6 +66,7 @@ export default function ContactUs() {
 							name: '',
 							email: '',
 							message: '',
+							sent: true,
 						});
 					},
 					(error) => {
@@ -119,7 +124,9 @@ export default function ContactUs() {
 						)}
 					</label>
 
-					<button className='acc-contact-btn'>Send</button>
+					<button className='acc-contact-btn'>
+						{emailData.sent ? 'Message sent' : 'Send'}
+					</button>
 				</form>
 
 				<div className='acc-contact-social-media-box'>

@@ -87,6 +87,10 @@
 	}
 }
 
+.logout-nav-link {
+	display: none;
+}
+
 .dropdown-show-list-link {
 	position: relative;
 }
@@ -162,7 +166,7 @@
 	.home-nav.mobile-active .nav-list,
 	.nav.mobile-active .nav-list {
 		margin-bottom: 2em;
-		max-height: 500px;
+		max-height: 400px;
 		overflow: visible;
 	}
 
@@ -183,6 +187,10 @@
 		&:hover {
 			transform: scale(1.05);
 		}
+	}
+
+	.logout-nav-link {
+		display: block;
 	}
 
 	.home-nav.mobile-active .nav-link,

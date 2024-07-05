@@ -140,7 +140,7 @@ export default function AddPortionModal({title, setIsAddPortionModalOpen, mealId
 					Choose your product:
 				</p>
 				<div className='modal-products-container'>
-					<div>
+					<div className='modal-search-table-container'>
 						<input
 							className='products-table-search'
 							type='text'
