@@ -2,7 +2,7 @@
 import './Profile.css';
 
 // Components, Icons & Images
-import anonymousUserIcon from '../../../assets/images/profile-anonymous-user-icon.png';
+import anonymousUserIcon from '../../../assets/images/profile-anonymous-user-icon.webp';
 // import Achievements from '../../../components/achievements/Achievements';
 import Loader from '../../../components/loader/Loader';
 

@@ -4,7 +4,7 @@
 	flex-direction: column;
 	align-items: center;
 	flex-grow: 1; 
-	background-image: url('../assets/images/home-intro-large4.jpg');
+	background-image: url('../assets/images/home-intro-large4.webp');
 	background-size: cover;
 	background-position: center;
 }

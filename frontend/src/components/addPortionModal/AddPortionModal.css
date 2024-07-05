@@ -57,10 +57,6 @@
 	margin-bottom: 1em;
 }
 
-.modal-products-container .search-bar {
-	width: 90%;
-}
-
 .modal-added-products {
 	display: flex;
 	flex-direction: column;
@@ -135,10 +131,15 @@
 	}
 }
 
-@media (width < 480px) {
+@media (width <= 600px) {
+	.modal-search-table-container {
+		width: 100%;
+	}
+}
 
+@media (width < 480px) {
 	.added-products-list {
-		min-width: 15em;	
+		min-width: 15em;
 	}
 
 	.added-products-item {

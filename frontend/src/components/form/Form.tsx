@@ -12,14 +12,22 @@ import { Link } from 'react-router-dom';
 // Types
 import { AuthFromData, TogglePasswordObject } from '../../types/types';
 type FormProps = {
-	title: string
-	buttonText: string
-	authType?: string
-	handleSubmit: (e: FormEvent<HTMLFormElement>, formData : AuthFromData) => Promise<void>
-	errors: { username?: string, password?: string, confirmPassword?: string, email?: string}
-	serverError: string
-	isPending: boolean
-}
+	title: string;
+	buttonText: string;
+	authType?: string;
+	handleSubmit: (
+		e: FormEvent<HTMLFormElement>,
+		formData: AuthFromData
+	) => Promise<void>;
+	errors: {
+		username?: string;
+		password?: string;
+		confirmPassword?: string;
+		email?: string;
+	};
+	serverError: string;
+	isPending: boolean;
+};
 
 export default function Form({
 	title,
@@ -28,8 +36,8 @@ export default function Form({
 	handleSubmit,
 	errors,
 	serverError,
-	isPending
-} : FormProps) {
+	isPending,
+}: FormProps) {
 	// Local logic/state
 	const [formData, setFormData] = useState({
 		username: '',
@@ -43,7 +51,7 @@ export default function Form({
 	});
 
 	// Handle user input change
-	function handleChange(e : React.ChangeEvent<HTMLInputElement>) {
+	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
 		setFormData((prevFormData) => {
 			return {
 				...prevFormData,
@@ -62,11 +70,14 @@ export default function Form({
 		});
 	}
 
-	const formContainerClass = title === 'Register' ? 'register-form-container' : 'login-form-container';
+	const formContainerClass =
+		title === 'Register' ? 'register-form-container' : 'login-form-container';
 
 	return (
 		<div className={formContainerClass}>
-			<form onSubmit={(e : FormEvent<HTMLFormElement>) => handleSubmit(e, formData)} className='form'>
+			<form
+				onSubmit={(e: FormEvent<HTMLFormElement>) => handleSubmit(e, formData)}
+				className='form'>
 				<h2 className='form-title'>{title}</h2>
 				<label className='form-label'>
 					<h3>Username</h3>
@@ -154,15 +165,15 @@ export default function Form({
 				)}
 				{serverError && <p className='form-server-error'>{serverError}</p>}
 				<button className='submit-form-btn' disabled={isPending}>
-					{isPending ?
+					{isPending ? (
 						<Loader
 							style={{ height: '100%', width: '100%' }}
 							size={'3px'}
 							color={'var(--dashboard-color)'}
 						/>
-					: 
+					) : (
 						buttonText
-					}
+					)}
 				</button>
 				{title === 'Register' && (
 					<p className='register-form-info'>
